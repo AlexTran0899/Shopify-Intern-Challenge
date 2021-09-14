@@ -11,7 +11,6 @@ function getMyImage(user_id) {
   return db('image').where({ user_id }).orderBy('image_id')
 }
 function updateImage(user_id, image_key, data) {
-  console.log("here", data)
   return db('image').where({ user_id, image_key }).update(data, ['*'])
 }
 
