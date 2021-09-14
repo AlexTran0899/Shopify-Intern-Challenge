@@ -14,6 +14,8 @@ exports.up = async (knex) => {
         image.integer('views').defaultTo(1)
         image.integer('inventory').defaultTo(1)
         image.string('price').defaultTo("1")
+        image.integer('public').defaultTo(0)
+
       })
   }
 

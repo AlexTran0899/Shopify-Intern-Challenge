@@ -51,6 +51,7 @@ const UploadCase = ({ getPendingCases }) => {
                 .then(() => onFileChange(e));
         } else {
             setIsLoading(false);
+            window.location.reload(false)
         }
     };
 
