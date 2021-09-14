@@ -18,7 +18,7 @@ function HomePage() {
                 <div className='each'>
                     <img src={each.url} alt='img'/>
                     <h1>{each.image_title}</h1>
-                    <p>${(each.price/100).toFixed(2)}</p>
+                    <p>${each.price}</p>
                 </div>
             )
                 : null}

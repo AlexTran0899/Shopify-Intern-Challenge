@@ -6,7 +6,6 @@ const Upload = require('./upload_image-model')
 const restricted = require('../middleware/restricted')
 
 router.post('/',restricted,  async (req, res) => {
-  console.log(req.decodedJwt)
   singleUpload(req, res, () => {
     if (req?.file?.key) {
       const data = {

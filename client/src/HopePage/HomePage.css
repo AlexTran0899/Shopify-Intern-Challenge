@@ -11,6 +11,10 @@
     border: 1px solid black;
     margin: 10px;
 }
+.HomePage .each:hover{
+    opacity: .7;
+    cursor: pointer;
+}
 
 .HomePage .each img{
     width: 300px;
@@ -24,6 +28,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-family: "Roboto", sans-serif;
+    margin-top: 10px;
 }
 .HomePage .each p{
     font-size: 1.2rem;
@@ -32,5 +37,4 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-family: "Roboto", sans-serif;
-    
 }

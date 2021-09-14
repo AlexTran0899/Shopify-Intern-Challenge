@@ -24,6 +24,9 @@ function Nav() {
                     className='searchbar'
                     onSearch={onSearch}
                 />
+                <Button size='large' className='button' >
+                    Your Account
+                </Button>
                 <Upload />
                 <Button size='large'  onClick={clearToken}>
                     Logout

@@ -3,7 +3,7 @@ import './App.css';
 import Home from './HopePage/HomePage'
 import Nav from './Nav/Nav'
 import NavLogedIn from './Nav/NavLogedIn'
-
+import Myhomepage from'./HopePage/Myhomepage'
 
 
 function App() {
@@ -19,7 +19,13 @@ function App() {
   
   return (
     <div className="App">
-      {isLogedIn?<div> <NavLogedIn/> </div>: <div><Nav/> <Home /></div>}
+      {isLogedIn?<div> 
+        <NavLogedIn/> 
+        <Myhomepage />
+        </div>:
+        <div>
+          <Nav/>
+           <Home /></div>}
     </div>
   );
 }
