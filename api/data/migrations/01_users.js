@@ -12,8 +12,8 @@ exports.up = async (knex) => {
       users.string('city',200)
       users.integer('phone',20)
       users.timestamps(false, true)
-      users.string('first_name').notNullable()
-      users.string('last_name').notNullable()
+      users.string('first_name')
+      users.string('last_name')
     })
 }
 

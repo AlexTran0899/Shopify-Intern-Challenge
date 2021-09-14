@@ -63,7 +63,6 @@ const checkCreateAccount = async (req, res, next) => {
         res.status(400).json({message: err.message })
     }
 }
-
 const checkUsernameUnique = async (req, res, next) => {
     Auth.getByUsername(req.body.username)
       .then(data => {

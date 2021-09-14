@@ -86,7 +86,7 @@ const UploadCase = ({ getPendingCases }) => {
     return (
         <div className="uploadPage">
             <div className="uploadButton">
-                <Button className='button' size='large' onClick={showModal}>
+                <Button  size='large' onClick={showModal}>
                     <span>Upload Image</span>
                 </Button>
                 <Modal

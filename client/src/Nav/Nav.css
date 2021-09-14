@@ -1,13 +1,22 @@
 .Nav {
-  display: flex;
   margin-top: 20px;
   margin-bottom: 10px;
   padding-bottom: 20px;
   border-bottom: 2px solid rgb(199, 197, 197);
-  justify-content: space-evenly;
 }
-
+.inner{
+  width: 95vw;
+  display: flex;
+  justify-content: space-between;
+  margin:auto;
+}
 .Nav .button {
   text-align: center;
-  margin: 0 10px;
+  margin-right: 10px;
+}
+.Nav .searchbar {
+  margin-right: 10px;
+} 
+.form{
+  align-items: left;
 }
