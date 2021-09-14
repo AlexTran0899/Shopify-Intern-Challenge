@@ -7,7 +7,6 @@ import {
     LoadingOutlined,
 } from '@ant-design/icons';
 import './Upload.less';
-import axios from 'axios'
 
 // Icons for modal
 import Icon from '@ant-design/icons';
@@ -46,8 +45,8 @@ const UploadCase = ({ getPendingCases }) => {
             setIsLoading(true);
             const fd = new FormData();
             fd.append('image', file, file.name);
-            axios
-            .post(`${process.env.REACT_APP_API_URI}/api/uploadImage`, fd)
+            axiosWithAuth()
+                .post('/api/uploadImage', fd)
                 .then(res => console.log(res.data.imageURL))
                 .then(() => onFileChange(e));
         } else {
@@ -68,7 +67,7 @@ const UploadCase = ({ getPendingCases }) => {
     };
 
     const DragProps = {
-        name: 'file',
+        name: 'image',
         multiple: true,
         accept: '.PNG',
         progress: false,

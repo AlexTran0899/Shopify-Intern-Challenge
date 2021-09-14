@@ -9,11 +9,11 @@ router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, nex
   const hash = bcrypt.hashSync(user.password, 8)
   user.password = hash
   Auth.Add(user)
-    .then(user => {
-      const token = buildToken(user)
+    .then(data => {
+      const token = buildToken(data[0])
         res.status(200).json({
-          user_id: user.user_id,
-          username: user.username,
+          user_id: data.user_id,
+          username: data.username,
           token
         })
     })

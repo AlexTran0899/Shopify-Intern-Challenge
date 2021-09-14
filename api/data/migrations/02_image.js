@@ -13,7 +13,7 @@ exports.up = async (knex) => {
         image.string('url').notNullable()
         image.integer('views').defaultTo(1)
         image.integer('inventory').defaultTo(1)
-        image.integer('price').defaultTo(1).notNullable()
+        image.integer('price').defaultTo(1)
       })
   }
 
