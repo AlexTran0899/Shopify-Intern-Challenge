@@ -16,7 +16,7 @@ function Nav() {
             <div className='inner'>
             <Search
                 className='searchbox'
-                placeholder="input search text"
+                placeholder="Search anything"
                 enterButton="Search"
                 size="large"
                 className='searchbar'
@@ -24,7 +24,6 @@ function Nav() {
             />
             <Login size='large' />
             <Signup size='large'/>
-            {/* <Upload /> */}
             </div>
         </div >
     );

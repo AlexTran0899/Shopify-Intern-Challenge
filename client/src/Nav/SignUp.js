@@ -21,7 +21,8 @@ const Login = () => {
         axios
         .post(`${process.env.REACT_APP_API_URI}/api/auth/register`, user)
         .then(res=>{
-          console.log(res)
+          localStorage.setItem("token", res.data.token);
+          window.location.reload(false)
         })
         .catch(error=>{
             alert(error.response.data.message);

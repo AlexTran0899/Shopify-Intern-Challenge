@@ -14,9 +14,12 @@
   text-align: center;
   margin-right: 10px;
 }
-.Nav .searchbar {
+.searchbar {
   margin-right: 10px;
 } 
 .form{
   align-items: left;
+}
+.searchbar {
+  margin-right: 10px;
 }

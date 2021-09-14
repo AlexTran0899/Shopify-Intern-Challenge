@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import Home from './HopePage/HomePage'
 import Nav from './Nav/Nav'
+import NavLogedIn from './Nav/NavLogedIn'
+
 
 
 function App() {
@@ -13,12 +15,11 @@ function App() {
     } else {
       setisLogedIn(false)
     }
-  }, )
+  },[])
+  
   return (
     <div className="App">
-
-      <Nav />
-      {isLogedIn? null: <Home />}
+      {isLogedIn?<div> <NavLogedIn/> </div>: <div><Nav/> <Home /></div>}
     </div>
   );
 }

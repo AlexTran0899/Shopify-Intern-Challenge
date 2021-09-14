@@ -1,7 +1,8 @@
 exports.up = async (knex) => {
     await knex.schema
       .createTable('image', (image) => {
-        image.increments('image_id')
+        image.integer('image_id')
+        image.string('image_key')
         image.integer('user_id')
         .references('user_id')
         .inTable('users')
