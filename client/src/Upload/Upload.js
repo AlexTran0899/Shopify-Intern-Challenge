@@ -18,27 +18,6 @@ const UploadCase = ({ getPendingCases }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-    const successNotification = () => {
-        getPendingCases();
-        notification.open({
-            message: 'Upload Status',
-            description: 'Case uploaded successfully!',
-            top: 128,
-            icon: <CheckCircleOutlined style={{ color: 'green' }} />,
-        });
-    };
-
-    const failNotification = () => {
-        notification.open({
-            message: 'Upload Status',
-            description:
-                'There was an issue with the upload. Please try again and if the issue persists contact the site administrator.',
-            top: 128,
-            duration: 8,
-            icon: <CloseCircleOutlined style={{ color: 'red' }} />,
-        });
-    };
-
     const onFileChange = e => {
         let file = e.pop();
         if (file) {

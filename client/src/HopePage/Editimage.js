@@ -20,7 +20,7 @@ function editImage(props) {
 
     const deleteOneImage = () => {
         axiosWithAuth()
-            .delete(`/api/images/${current.image_key}`)
+            .delete(`/api/images/deleteOneImage/${current.image_key}`)
             .then(res => console.log(res))
             .then(() => setcurrent(false))
             .then(() => window.location.reload(false))

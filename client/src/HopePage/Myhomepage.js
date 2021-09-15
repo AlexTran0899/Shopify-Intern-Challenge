@@ -37,21 +37,35 @@ function HomePage() {
     }
     const deleteAllSelectedImage = (data) => {
         const lastImage = data.pop()
-        if(lastImage){
+        if (lastImage) {
             axiosWithAuth()
-            .delete(`/api/images/${lastImage}`)
-            .then(stuff => console.log(stuff))
-            .then(()=> deleteAllSelectedImage(data))
+                .delete(`/api/images/deleteOneImage/${lastImage}`)
+                .then(stuff => console.log(stuff))
+                .then(() => deleteAllSelectedImage(data))
         } else {
             window.location.reload(false)
         }
     }
+    const onCancel = () =>{
+        setSelected([])
+        setnumberofImage(0)
+    }
+    const deleteAllImage = () => {
+        console.log("here")
+        axiosWithAuth()
+        .delete('/api/images/deleteAll')
+        .then(res => console.log(res))
+        .then(()=> window.location.reload(false))
+
+    }
     return (
         <div>
             {numberofImage || selected[0] ?
-                <div>
-                    <Button style={{ width: "50vw" }} size='large' danger type='primary' onClick={()=> deleteAllSelectedImage(selected)}>Delete All {numberofImage} images</Button>
-                    <Button style={{ width: "50vw" }} size='large' type='primary'>Cancel Selected</Button>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={deleteAllImage}>Delete All images</Button>
+
+                    <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={() => deleteAllSelectedImage(selected)}>Delete All {numberofImage} images</Button>
+                    <Button style={{ margin: '10px', width: "30vw" }} size='large' type='primary'  onClick={onCancel}>Cancel Selected</Button>
 
                 </div>
                 : null

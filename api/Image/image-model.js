@@ -17,11 +17,15 @@ function updateImage(user_id, image_key, data) {
 function deleteOneImage(user_id, image_key) {
   return db('image').where({ user_id, image_key }).del()
 }
-
+async function deleteAllImage(user_id) {
+  // const data = await db('image').where({user_id}, ['image_key'])
+  return db('image').where({ user_id }).del(['image_key'])
+}
 module.exports = {
   getAll,
   Add,
   getMyImage,
   updateImage,
-  deleteOneImage
+  deleteOneImage,
+  deleteAllImage
 }
