@@ -10,9 +10,8 @@ function HomePage() {
     const [data, setdata] = useState(false)
     const [current, setcurrent] = useState(null)
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [kop, setKop] = useState(false)
-    let selected = {}
-
+    const [selected, setSelected] = useState([])
+    const [numberofImage, setnumberofImage] = useState(0)
     useEffect(() => {
         axiosWithAuth()
             .get(`/api/images/Myimage`)
@@ -25,23 +24,35 @@ function HomePage() {
         setIsModalVisible(true);
     };
     const onChange = (data) => {
-        if (selected[data.image_key]) {
-            delete selected[data.image_key]
+        const indexofImage = selected.indexOf(data.image_key)
+        if (indexofImage === -1) {
+            setSelected([...selected, data.image_key])
+            setnumberofImage(selected.length + 1)
+        } else {
+            const temp = selected
+            temp.pop(indexofImage)
+            setSelected(temp)
+            setnumberofImage(temp.length)
         }
-        else {
-            selected[data.image_key] = true
-        }
-        if (Object.keys(selected).length !== 0){
-            setKop(true)
-        }else{
-            setKop(false)
+    }
+    const deleteAllSelectedImage = (data) => {
+        const lastImage = data.pop()
+        if(lastImage){
+            axiosWithAuth()
+            .delete(`/api/images/${lastImage}`)
+            .then(stuff => console.log(stuff))
+            .then(()=> deleteAllSelectedImage(data))
+        } else {
+            window.location.reload(false)
         }
     }
     return (
         <div>
-            {kop ?
+            {numberofImage || selected[0] ?
                 <div>
-                    <Button style={{ width: "50vw" }} size='large' danger type='primary'>Delete All 14 images</Button>
+                    <Button style={{ width: "50vw" }} size='large' danger type='primary' onClick={()=> deleteAllSelectedImage(selected)}>Delete All {numberofImage} images</Button>
+                    <Button style={{ width: "50vw" }} size='large' type='primary'>Cancel Selected</Button>
+
                 </div>
                 : null
             }
@@ -53,7 +64,8 @@ function HomePage() {
                         <h1>{each.image_title ? each.image_title : "Please add title"}</h1>
                         <span>{each.inventory} in stock | </span>
                         <span>${each.price}</span>
-                        <Checkbox onChange={() => onChange(each)}>Checkbox</Checkbox>
+                        <br />
+                        <Checkbox onChange={() => onChange(each)}>Select Image</Checkbox>
                     </div>
                 )
                     : null}

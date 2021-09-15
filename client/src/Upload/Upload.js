@@ -51,7 +51,7 @@ const UploadCase = ({ getPendingCases }) => {
                 .then(() => onFileChange(e));
         } else {
             setIsLoading(false);
-            window.location.reload(false)
+            setTimeout(() => window.location.reload(false) , 2000);
         }
     };
 
