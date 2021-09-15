@@ -5,17 +5,24 @@ import Editimage from './Editimage'
 import { Button } from 'antd';
 import { Checkbox } from 'antd';
 
-function HomePage(props) {
+function Myhomepage(props) {
     const [data, setdata] = useState(false)
     const [current, setcurrent] = useState(null)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selected, setSelected] = useState([])
 
     useEffect(() => {
-        axiosWithAuth()
-            .get(`/api/images/Myimage`)
-            .then(stuff => setdata(stuff.data))
-    }, [])
+        if (props.search) {
+            axiosWithAuth()
+                .get(`/api/images/findMyImage/${props.search}`)
+                .then(stuff => setdata(stuff.data))
+                .then(() => console.log(data))
+        } else {
+            axiosWithAuth()
+                .get(`/api/images/Myimage`)
+                .then(stuff => setdata(stuff.data))
+        }
+    }, [props.search])
 
     const showModal = (each) => {
         setcurrent(each)
@@ -42,15 +49,15 @@ function HomePage(props) {
             window.location.reload(false)
         }
     }
-    const onCancel = () =>{
-         window.location.reload(false)
+    const onCancel = () => {
+        window.location.reload(false)
     }
     const deleteAllImage = () => {
         console.log("here")
         axiosWithAuth()
-        .delete('/api/images/deleteAll')
-        .then(res => console.log(res))
-        .then(()=> window.location.reload(false))
+            .delete('/api/images/deleteAll')
+            .then(res => console.log(res))
+            .then(() => window.location.reload(false))
     }
     return (
         <div>
@@ -58,7 +65,7 @@ function HomePage(props) {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={deleteAllImage}>Delete all of your images</Button>
                     <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={() => deleteAllSelectedImage(selected)}>Delete selected images</Button>
-                    <Button style={{ margin: '10px', width: "30vw" }} size='large' type='primary'  onClick={onCancel}>Cancel Selected</Button>
+                    <Button style={{ margin: '10px', width: "30vw" }} size='large' type='primary' onClick={onCancel}>Cancel Selected</Button>
 
                 </div>
                 : null
@@ -82,4 +89,4 @@ function HomePage(props) {
     );
 }
 
-export default HomePage;
+export default Myhomepage;

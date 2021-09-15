@@ -12,8 +12,11 @@ function clearToken(){
 }
 
 const { Search } = Input;
-function Nav() {
-    const onSearch = value => console.log(value);
+function Mynav(props) {
+    const { setSearch } = props
+    const onSearch = value => {
+        setSearch(value)
+    }
     return (
         <div className="Nav">
             <div className='inner'>
@@ -36,4 +39,4 @@ function Nav() {
     );
 }
 
-export default Nav;
+export default Mynav;

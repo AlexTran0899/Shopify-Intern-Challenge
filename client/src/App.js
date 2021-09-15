@@ -9,10 +9,6 @@ import Myhomepage from './HopePage/Myhomepage'
 function App() {
   const [isLogedIn, setisLogedIn] = useState(false)
   const [search, setSearch] = useState(false)
-  
-  useEffect(()=>{
-    console.log(search)
-  }, [search])
 
   useEffect(() => {
     const token = window.localStorage.getItem('token')

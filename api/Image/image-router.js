@@ -54,6 +54,11 @@ router.get('/find/:item_name', (req, res, next) => {
         .then(data => res.json(data))
         .catch(next)
 })
+router.get('/findMyImage/:item_name', restricted, (req, res, next) => {
+    image.findMyImage(req.decodedJwt.subject, req.params.item_name)
+        .then(data => res.json(data))
+        .catch(next)
+})
 
 router.delete('/deleteAll', restricted, (req, res, next) => {
     image.deleteAllImage(req.decodedJwt.subject)
