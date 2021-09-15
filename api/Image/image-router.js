@@ -25,5 +25,10 @@ router.put('/:image_key', restricted, (req, res, next) => {
         .then(data => res.json(data))
         .catch(next)
 })
+router.delete('/:image_key', restricted, (req, res, next) => {
+    image.deleteOneImage(req.decodedJwt.subject, req.params.image_key)
+        .then(() => res.json("image deleted"))
+        .catch(next)
+})
 
 module.exports = router;

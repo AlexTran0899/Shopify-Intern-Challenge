@@ -17,6 +17,14 @@ function editImage(props) {
             .then(() => setcurrent(false))
             .then(() => window.location.reload(false))
     };
+
+    const deleteOneImage = () => {
+        axiosWithAuth()
+            .delete(`/api/images/${current.image_key}`)
+            .then(res => console.log(res))
+            .then(() => setcurrent(false))
+            .then(() => window.location.reload(false))
+    };
     return (
         <div>
             {current ?
@@ -66,7 +74,7 @@ function editImage(props) {
                             <Checkbox>Make item public</Checkbox>
                         </Form.Item>
                         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button style={{ marginRight: '22px' }} danger>
+                            <Button style={{ marginRight: '22px' }} danger onClick={deleteOneImage}>
                                 Delete Item
                             </Button>
                             <Button type="primary" htmlType="submit">

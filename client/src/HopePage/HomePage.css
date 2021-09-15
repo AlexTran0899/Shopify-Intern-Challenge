@@ -11,7 +11,7 @@
     border: 1px solid black;
     margin: 10px;
 }
-.HomePage .each:hover{
+.HomePage .each img:hover{
     opacity: .7;
     cursor: pointer;
 }

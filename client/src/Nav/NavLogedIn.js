@@ -28,7 +28,7 @@ function Nav() {
                     Your Account
                 </Button>
                 <Upload />
-                <Button size='large'  onClick={clearToken}>
+                <Button size='large' onClick={clearToken}>
                     Logout
                 </Button>
             </div>
