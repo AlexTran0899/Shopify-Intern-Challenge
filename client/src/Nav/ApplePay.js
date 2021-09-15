@@ -1,41 +1,82 @@
-import React, {useState, useEffect} from 'react';
-import {PaymentRequestButtonElement, useStripe, useElements} from '@stripe/react-stripe-js';
+import React, { useEffect, useState } from 'react';
+import { PaymentRequestButtonElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import StatusMessages, { useMessages } from './StatusMessages';
 
-
-const CheckoutForm = () => {
+const ApplePay = () => {
   const stripe = useStripe();
+  const elements = useElements();
   const [paymentRequest, setPaymentRequest] = useState(null);
-    const elements = useElements()
+  const [messages, addMessage] = useMessages();
+
   useEffect(() => {
-    if (stripe) {
-      const pr = stripe.paymentRequest({
-        country: 'US',
-        currency: 'usd',
-        total: {
-          label: 'Demo total',
-          amount: 1099,
-        },
-        requestPayerName: true,
-        requestPayerEmail: true,
-      });
-
-      // Check the availability of the Payment Request API.
-      pr.canMakePayment().then(result => {
-        if (result) {
-          setPaymentRequest(pr);
-        }
-      });
+    if (!stripe || !elements) {
+      return;
     }
-  }, [stripe, elements]);
 
-  if (paymentRequest) {
-    return <PaymentRequestButtonElement options={{paymentRequest}} />
-  }
+    const pr = stripe.paymentRequest({
+      country: 'US',
+      currency: 'usd',
+      total: {
+        label: 'Demo total',
+        amount: 60,
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
+
+    // Check the availability of the Payment Request API.
+    pr.canMakePayment().then(result => {
+      if (result) {
+        setPaymentRequest(pr);
+      }
+    });
+
+    pr.on('paymentmethod', async (e) => {
+      const { error: backendError, clientSecret } = await fetch(
+        '/api/auth/create-payment-intent',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            paymentMethodType: 'card',
+            currency: 'usd',
+          }),
+        }
+      ).then((r) => r.json());
+
+      if (backendError) {
+        addMessage(backendError.message);
+        return;
+      }
+
+      addMessage('Client secret returned');
+
+      const {
+        error: stripeError,
+        paymentIntent,
+      } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: e.paymentMethod.id,
+      }, { handleActions: false });
+
+      if (stripeError) {
+        addMessage(stripeError.message);
+        return;
+      }
+
+      addMessage(`Payment ${paymentIntent.status}: ${paymentIntent.id}`);
+    });
+  }, [stripe, elements, addMessage]);
 
   return (
-  <>
-  <h1>Apple Pay</h1>
-  </>)
-  ;
-}
-export default CheckoutForm;
+    <>
+      {paymentRequest && <PaymentRequestButtonElement options={{ paymentRequest }} />}
+
+      <StatusMessages messages={messages} />
+
+    </>
+  );
+};
+
+export default ApplePay;

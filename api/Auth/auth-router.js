@@ -3,6 +3,8 @@ const Auth = require('./auth-model')
 const bcrypt = require('bcryptjs')
 const buildToken = require('./token-builder')
 const { checkCreateAccount, checkUsernameUnique } = require('../middleware/checkInput')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 
 router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, next) => {
   let user = req.body
@@ -11,11 +13,11 @@ router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, nex
   Auth.Add(user)
     .then(data => {
       const token = buildToken(data[0])
-        res.status(200).json({
-          user_id: data.user_id,
-          username: data.username,
-          token
-        })
+      res.status(200).json({
+        user_id: data.user_id,
+        username: data.username,
+        token
+      })
     })
     .catch(next)
 });
@@ -48,10 +50,41 @@ router.post('/login', (req, res, next) => {
     .catch(next)
 });
 
-router.put('/update',(req, res, next) => {
+router.put('/update', (req, res, next) => {
   router.update(req.body)
-  .then(data => res.json(data))
-  .catch(next)
+    .then(data => res.json(data))
+    .catch(next)
 })
+
+router.post('/create-payment-intent', async (req, res) => {
+  const { paymentMethodType, currency, amount } = req.body;
+  const params = {
+    payment_method_types: [paymentMethodType],
+    amount: amount,
+    currency: currency,
+  }
+  if (paymentMethodType === 'acss_debit') {
+    params.payment_method_options = {
+      acss_debit: {
+        mandate_options: {
+          payment_schedule: 'sporadic',
+          transaction_type: 'personal',
+        },
+      },
+    }
+  }
+  try {
+    const paymentIntent = await stripe.paymentIntents.create(params);
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (e) {
+    return res.status(400).send({
+      error: {
+        message: e.message,
+      },
+    });
+  }
+});
 
 module.exports = router;
