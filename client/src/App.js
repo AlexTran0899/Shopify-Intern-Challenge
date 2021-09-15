@@ -4,8 +4,6 @@ import Home from './HopePage/HomePage'
 import Nav from './Nav/Nav'
 import NavLogedIn from './Nav/NavLogedIn'
 import Myhomepage from './HopePage/Myhomepage'
-
-
 function App() {
   const [isLogedIn, setisLogedIn] = useState(false)
   const [search, setSearch] = useState(false)

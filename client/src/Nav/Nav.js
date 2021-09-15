@@ -6,6 +6,7 @@ import "antd/dist/antd.css";
 import Upload from '../Upload/Upload'
 import Login from './Login'
 import Signup from './SignUp'
+import Cart from './Cart'
 
 const { Search } = Input;
 function Nav(props) {
@@ -26,6 +27,7 @@ function Nav(props) {
                 />
                 <Login size='large' />
                 <Signup size='large' />
+                <Cart />
             </div>
         </div >
     );
