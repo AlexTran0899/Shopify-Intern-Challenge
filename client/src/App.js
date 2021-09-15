@@ -3,11 +3,17 @@ import './App.css';
 import Home from './HopePage/HomePage'
 import Nav from './Nav/Nav'
 import NavLogedIn from './Nav/NavLogedIn'
-import Myhomepage from'./HopePage/Myhomepage'
+import Myhomepage from './HopePage/Myhomepage'
 
 
 function App() {
   const [isLogedIn, setisLogedIn] = useState(false)
+  const [search, setSearch] = useState(false)
+  
+  useEffect(()=>{
+    console.log(search)
+  }, [search])
+
   useEffect(() => {
     const token = window.localStorage.getItem('token')
     if (token) {
@@ -15,17 +21,17 @@ function App() {
     } else {
       setisLogedIn(false)
     }
-  },[])
-  
+  }, [])
+
   return (
     <div className="App">
-      {isLogedIn?<div> 
-        <NavLogedIn/> 
-        <Myhomepage />
-        </div>:
+      {isLogedIn ? <div>
+        <NavLogedIn search={search} setSearch={setSearch} />
+        <Myhomepage search={search} setSearch={setSearch} />
+      </div> :
         <div>
-          <Nav/>
-           <Home /></div>}
+          <Nav search={search} setSearch={setSearch} />
+          <Home search={search} setSearch={setSearch} /></div>}
     </div>
   );
 }

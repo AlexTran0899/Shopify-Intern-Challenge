@@ -16,6 +16,7 @@ function deleteImage(data) {
     s3.deleteObject({
         Bucket: process.env.AWS_BUCKET,
         Key: data
+        // eslint-disable-next-line no-unused-vars
     }, function (err, data) { })
 }
 
@@ -48,10 +49,16 @@ router.delete('/deleteOneImage/:image_key', restricted, (req, res, next) => {
         .then(() => res.json("image deleted"))
         .catch(next)
 })
+router.get('/find/:item_name', (req, res, next) => {
+    image.find(req.params.item_name)
+        .then(data => res.json(data))
+        .catch(next)
+})
+
 router.delete('/deleteAll', restricted, (req, res, next) => {
     image.deleteAllImage(req.decodedJwt.subject)
         .then(data => data.map(each => deleteImage(each.image_key)))
-        .then(()=> res.json("deleted all images"))
+        .then(() => res.json("deleted all images"))
         .catch(next)
 })
 

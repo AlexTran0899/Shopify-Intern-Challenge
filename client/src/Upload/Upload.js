@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import axiosWithAuth from '../Utils/axiosWithAuth';
-import { notification, Upload, Modal, Button, Spin } from 'antd';
+import {Upload, Modal, Button, Spin } from 'antd';
 import {
-    CheckCircleOutlined,
-    CloseCircleOutlined,
     LoadingOutlined,
 } from '@ant-design/icons';
 import './Upload.less';

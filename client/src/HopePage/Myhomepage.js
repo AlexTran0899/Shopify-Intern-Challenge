@@ -4,20 +4,18 @@ import axiosWithAuth from '../Utils/axiosWithAuth';
 import Editimage from './Editimage'
 import { Button } from 'antd';
 import { Checkbox } from 'antd';
-import { useForm } from 'rc-field-form';
 
-function HomePage() {
+function HomePage(props) {
     const [data, setdata] = useState(false)
     const [current, setcurrent] = useState(null)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selected, setSelected] = useState([])
-    const [numberofImage, setnumberofImage] = useState(0)
+
     useEffect(() => {
         axiosWithAuth()
             .get(`/api/images/Myimage`)
             .then(stuff => setdata(stuff.data))
     }, [])
-
 
     const showModal = (each) => {
         setcurrent(each)
@@ -27,12 +25,10 @@ function HomePage() {
         const indexofImage = selected.indexOf(data.image_key)
         if (indexofImage === -1) {
             setSelected([...selected, data.image_key])
-            setnumberofImage(selected.length + 1)
         } else {
             const temp = selected
             temp.pop(indexofImage)
             setSelected(temp)
-            setnumberofImage(temp.length)
         }
     }
     const deleteAllSelectedImage = (data) => {
@@ -47,8 +43,7 @@ function HomePage() {
         }
     }
     const onCancel = () =>{
-        setSelected([])
-        setnumberofImage(0)
+         window.location.reload(false)
     }
     const deleteAllImage = () => {
         console.log("here")
@@ -56,15 +51,13 @@ function HomePage() {
         .delete('/api/images/deleteAll')
         .then(res => console.log(res))
         .then(()=> window.location.reload(false))
-
     }
     return (
         <div>
-            {numberofImage || selected[0] ?
+            {selected[0] ?
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={deleteAllImage}>Delete All images</Button>
-
-                    <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={() => deleteAllSelectedImage(selected)}>Delete All {numberofImage} images</Button>
+                    <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={deleteAllImage}>Delete all of your images</Button>
+                    <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={() => deleteAllSelectedImage(selected)}>Delete selected images</Button>
                     <Button style={{ margin: '10px', width: "30vw" }} size='large' type='primary'  onClick={onCancel}>Cancel Selected</Button>
 
                 </div>

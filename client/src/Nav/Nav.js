@@ -8,21 +8,24 @@ import Login from './Login'
 import Signup from './SignUp'
 
 const { Search } = Input;
-function Nav() {
-    const onSearch = value => console.log(value);
+function Nav(props) {
+    const { setSearch } = props
+    const onSearch = value => {
+        setSearch(value)
+    }
     return (
         <div className="Nav">
             <div className='inner'>
-            <Search
-                className='searchbox'
-                placeholder="Search anything"
-                enterButton="Search"
-                size="large"
-                className='searchbar'
-                onSearch={onSearch}
-            />
-            <Login size='large' />
-            <Signup size='large'/>
+                <Search
+                    className='searchbox'
+                    placeholder="Search anything"
+                    enterButton="Search"
+                    size="large"
+                    className='searchbar'
+                    onSearch={onSearch}
+                />
+                <Login size='large' />
+                <Signup size='large' />
             </div>
         </div >
     );

@@ -17,6 +17,10 @@ function updateImage(user_id, image_key, data) {
 function deleteOneImage(user_id, image_key) {
   return db('image').where({ user_id, image_key }).del()
 }
+function find(char) {
+  return db('image').where('image_title' ,'like', `%${char}%`)
+  .andWhere({ public: 1 })}
+
 async function deleteAllImage(user_id) {
   // const data = await db('image').where({user_id}, ['image_key'])
   return db('image').where({ user_id }).del(['image_key'])
@@ -27,5 +31,6 @@ module.exports = {
   getMyImage,
   updateImage,
   deleteOneImage,
-  deleteAllImage
+  deleteAllImage,
+  find
 }
