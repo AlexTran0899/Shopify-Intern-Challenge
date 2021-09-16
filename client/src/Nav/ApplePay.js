@@ -14,7 +14,6 @@ const ApplePay = () => {
       return;
     }
     
-
     const pr = stripe.paymentRequest({
       country: 'US',
       currency: 'usd',
@@ -52,8 +51,6 @@ const ApplePay = () => {
         addMessage(backendError.message);
         return;
       }
-
-      addMessage('Client secret returned');
 
       const { error: stripeError, paymentIntent, } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: e.paymentMethod.id,
