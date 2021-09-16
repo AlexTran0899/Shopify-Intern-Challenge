@@ -8,7 +8,7 @@ const ApplePay = () => {
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [messages, addMessage] = useMessages();
   stripe.completeNativePayRequest();
-  
+
   useEffect(() => {
     if (!stripe || !elements) {
       return;
@@ -66,9 +66,7 @@ const ApplePay = () => {
       e.complete('sucess');
       if (paymentIntent.status === 'requires_action') {
         stripe.confirmCardPayment(clientSecret)
-      } else {
-        return
-      }
+      } 
     });
   }, [stripe, elements, addMessage]);
 
@@ -83,3 +81,4 @@ const ApplePay = () => {
 };
 
 export default ApplePay;
+

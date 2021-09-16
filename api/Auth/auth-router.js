@@ -4,7 +4,9 @@ const bcrypt = require('bcryptjs')
 const buildToken = require('./token-builder')
 const { checkCreateAccount, checkUsernameUnique } = require('../middleware/checkInput')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
+stripe.applePayDomains.create({
+  domain_name: process.env.REACT_APP_API_URI
+});
 
 router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, next) => {
   let user = req.body
@@ -58,6 +60,8 @@ router.put('/update', (req, res, next) => {
 
 router.post('/create-payment-intent', async (req, res) => {
   const { paymentMethodType, currency } = req.body;
+
+
   const params = {
     payment_method_types: [paymentMethodType],
     amount: 60,
