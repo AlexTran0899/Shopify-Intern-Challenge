@@ -7,11 +7,13 @@ const ApplePay = () => {
   const elements = useElements();
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [messages, addMessage] = useMessages();
-
+  stripe.completeNativePayRequest();
+  
   useEffect(() => {
     if (!stripe || !elements) {
       return;
     }
+    
 
     const pr = stripe.paymentRequest({
       country: 'US',
