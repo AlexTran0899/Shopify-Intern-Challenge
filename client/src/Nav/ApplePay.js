@@ -62,8 +62,10 @@ const ApplePay = () => {
         return;
       }
       e.complete('sucess');
-      if (paymentIntent.status == 'requires_action') {
+      if (paymentIntent.status === 'requires_action') {
         stripe.confirmCardPayment(clientSecret)
+      } else {
+        return
       }
     });
   }, [stripe, elements, addMessage]);

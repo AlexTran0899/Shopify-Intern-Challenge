@@ -57,7 +57,7 @@ router.put('/update', (req, res, next) => {
 })
 
 router.post('/create-payment-intent', async (req, res) => {
-  const { paymentMethodType, currency, amount } = req.body;
+  const { paymentMethodType, currency } = req.body;
   const params = {
     payment_method_types: [paymentMethodType],
     amount: 60,
