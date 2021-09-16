@@ -1,34 +1,52 @@
 import React, { useState } from 'react';
 import axiosWithAuth from '../Utils/axiosWithAuth';
-import {Upload, Modal, Button, Spin } from 'antd';
+import { Upload, Modal, Button, Spin } from 'antd';
 import {
     LoadingOutlined,
 } from '@ant-design/icons';
 import './Upload.less';
-
 // Icons for modal
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../Icons/upload-box.svg';
+import imageCompression from 'browser-image-compression';
 
 const UploadCase = ({ getPendingCases }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { Dragger } = Upload;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+    const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+    }
+
 
     const onFileChange = e => {
         let file = e.pop();
         if (file) {
+            const original = new FormData();
+            original.append('image', file, file.name);
             setIsLoading(true);
-            const fd = new FormData();
-            fd.append('image', file, file.name);
-            axiosWithAuth()
-                .post('/api/uploadImage', fd)
-                .then(res => console.log(res.data.imageURL))
-                .then(() => onFileChange(e));
+            imageCompression(file, options)
+                .then(function (compressedFile) {
+                    const fd = new FormData();
+                    fd.append('image', compressedFile, file.name);
+                    axiosWithAuth()
+                        .post('/api/uploadImage', fd)
+                        .then(() =>
+                            axiosWithAuth()
+                                .put('/api/uploadImage/original_image', original)
+                                .then(() => console.log("uploaded"))
+                                .then(() => onFileChange(e))
+                        );
+                })
+                .catch(function (error) {
+                    console.log(error.message);
+                });
         } else {
             setIsLoading(false);
-            setTimeout(() => window.location.reload(false) , 2000);
+            setTimeout(() => window.location.reload(false), 2000);
         }
     };
 
@@ -47,7 +65,7 @@ const UploadCase = ({ getPendingCases }) => {
     const DragProps = {
         name: 'image',
         multiple: true,
-        accept: '.jpeg',
+        accept: '.jpeg, .png',
         progress: false,
         fileList: [],
         beforeUpload: (file, fileList) => {
@@ -58,7 +76,7 @@ const UploadCase = ({ getPendingCases }) => {
     return (
         <div className="uploadPage">
             <div className='button'>
-                <Button  size='large' onClick={showModal}>
+                <Button size='large' onClick={showModal}>
                     <span>Upload Image</span>
                 </Button>
                 <Modal

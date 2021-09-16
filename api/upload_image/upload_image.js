@@ -47,4 +47,20 @@ router.post('/', restricted, (req, res) => {
   });
 });
 
+router.put('/original_image', restricted, (req, res) => {
+  singleUpload(req, res, async () => {
+    if (req?.file?.key) {
+      const data = {
+        user_id: req.decodedJwt.subject,
+        original_image: req.file.location,
+      }
+      Upload.original_image(data)
+        .then(() => res.json({ imageURL: req?.file?.location }))
+        .then(() => imageSearch(req.file.location))
+    } else {
+      res.status(400).json('failed to upload');
+    }
+  });
+});
+
 module.exports = router;
