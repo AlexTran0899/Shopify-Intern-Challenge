@@ -16,7 +16,7 @@ async function imageSearch(url) {
       "features": [
         {
           "type": "LABEL_DETECTION",
-          "maxResults": 5
+          "maxResults": 10
         }
       ]
     }
