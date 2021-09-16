@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PaymentRequestButtonElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { withRouter } from 'react-router-dom';
 import StatusMessages, { useMessages } from './StatusMessages';
 
 const ApplePay = () => {
@@ -53,19 +54,18 @@ const ApplePay = () => {
 
       addMessage('Client secret returned');
 
-      const {
-        error: stripeError,
-        paymentIntent,
-      } = await stripe.confirmCardPayment(clientSecret, {
+      const { error: stripeError, paymentIntent, } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: e.paymentMethod.id,
       }, { handleActions: false });
 
       if (stripeError) {
-        addMessage(stripeError.message);
+        e.complete('fail')
         return;
       }
-
-      addMessage(`Payment ${paymentIntent.status}: ${paymentIntent.id}`);
+      e.complete('sucess');
+      if (paymentIntent.status == 'requires_action') {
+        stripe.confirmCardPayment(clientSecret)
+      }
     });
   }, [stripe, elements, addMessage]);
 
@@ -79,4 +79,4 @@ const ApplePay = () => {
   );
 };
 
-export default ApplePay;
+export default withRouter(ApplePay);
