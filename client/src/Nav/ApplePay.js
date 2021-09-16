@@ -33,7 +33,7 @@ const ApplePay = () => {
 
     pr.on('paymentmethod', async (e) => {
       const { error: backendError, clientSecret } = await fetch(
-        '/api/auth/create-payment-intent',
+        `${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`,
         {
           method: 'POST',
           headers: {

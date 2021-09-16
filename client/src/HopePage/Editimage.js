@@ -1,7 +1,6 @@
 
 import { Form, Input, Button, Checkbox, Modal, InputNumber } from 'antd';
 import axiosWithAuth from '../Utils/axiosWithAuth';
-import { useEffect, useState } from 'react';
 
 
 
