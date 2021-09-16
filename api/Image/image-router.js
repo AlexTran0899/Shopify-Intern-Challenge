@@ -2,7 +2,6 @@ const router = require('express').Router()
 const restricted = require('../middleware/restricted')
 const image = require('./image-model')
 const aws = require('aws-sdk');
-
 aws.config.update({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -20,6 +19,8 @@ function deleteImage(data) {
     }, function (err, data) { })
 }
 
+
+
 router.get('/', (req, res, next) => {
     image.getAll()
         .then(data => res.json(data))
@@ -27,12 +28,6 @@ router.get('/', (req, res, next) => {
 })
 router.get('/Myimage', restricted, (req, res, next) => {
     image.getMyImage(req.decodedJwt.subject)
-        .then(data => res.json(data))
-        .catch(next)
-})
-
-router.post('/', (req, res, next) => {
-    image.Add(req.body)
         .then(data => res.json(data))
         .catch(next)
 })

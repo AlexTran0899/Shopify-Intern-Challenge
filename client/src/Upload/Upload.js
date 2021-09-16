@@ -47,7 +47,7 @@ const UploadCase = ({ getPendingCases }) => {
     const DragProps = {
         name: 'image',
         multiple: true,
-        accept: '.PNG',
+        accept: '.jpeg',
         progress: false,
         fileList: [],
         beforeUpload: (file, fileList) => {

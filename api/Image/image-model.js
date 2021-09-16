@@ -18,11 +18,13 @@ function deleteOneImage(user_id, image_key) {
   return db('image').where({ user_id, image_key }).del()
 }
 function find(char) {
-  return db('image').where('image_title', 'like', `%${char}%`)
+  return db('image').where('image_title', 'ilike', `%${char}%`)
+    .orWhere('tags', 'ilike', `%${char}%`)
     .andWhere({ public: 1 })
 }
 function findMyImage(user_id, char) {
-  return db('image').where('image_title', 'like', `%${char}%`)
+  return db('image').where('image_title', 'ilike', `%${char}%`)
+    .orWhere('tags', 'ilike', `%${char}%`)
     .andWhere({ user_id })
 }
 

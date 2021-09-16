@@ -5,10 +5,15 @@ function Add(data) { // done for you
     return db('image').insert(data, ['*'])
 }
 function update(data) { // done for you
-    return db('image').where({image_id: data.image_id}).update(data, ['*'])
+    return db('image').where({ image_id: data.image_id }).update(data, ['*'])
+}
+
+function addingTags(url, data) { // done for you
+    return db('image').where({ url }).update({tags: data}, ['*'])
 }
 
 module.exports = {
     Add,
-    update
+    update,
+    addingTags
 }
