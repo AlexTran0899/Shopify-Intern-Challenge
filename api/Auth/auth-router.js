@@ -60,7 +60,7 @@ router.post('/create-payment-intent', async (req, res) => {
   const { paymentMethodType, currency, amount } = req.body;
   const params = {
     payment_method_types: [paymentMethodType],
-    amount: amount,
+    amount: 60,
     currency: currency,
   }
   if (paymentMethodType === 'acss_debit') {
