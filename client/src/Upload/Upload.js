@@ -46,7 +46,7 @@ const UploadCase = ({ getPendingCases }) => {
                 });
         } else {
             setIsLoading(false);
-            setTimeout(() => window.location.reload(false), 2000);
+            setTimeout(() => window.location.reload(false), 5000);
         }
     };
 
