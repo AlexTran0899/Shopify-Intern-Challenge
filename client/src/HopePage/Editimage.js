@@ -33,7 +33,7 @@ function editImage(props) {
                         name="basic"
                         labelCol={{ span: 8 }}
                         wrapperCol={{ span: 16 }}
-                        initialValues={{ image_title: current.image_title, inventory: current.inventory, price: current.price, public: current.public }}
+                        initialValues={{ image_title: current.image_title, inventory: current.inventory, price: current.price/100, public: current.public }}
                         onFinish={onFinish}
                         autoComplete="off"
                     >

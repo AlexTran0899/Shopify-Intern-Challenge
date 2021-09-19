@@ -34,6 +34,7 @@ router.get('/Myimage', restricted, (req, res, next) => {
 
 router.put('/:image_key', restricted, (req, res, next) => {
     req.body.public = req.body.public === true ? 1 : 0
+    req.body.price = parseInt(req.body.price * 100)
     image.updateImage(req.decodedJwt.subject, req.params.image_key, req.body)
         .then(data => res.json(data))
         .catch(next)

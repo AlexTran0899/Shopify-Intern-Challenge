@@ -77,7 +77,7 @@ function Myhomepage(props) {
                         <img src={each.url} alt='img' onClick={() => showModal(each)} />
                         <h1>{each.image_title ? each.image_title : "Please add title"}</h1>
                         <span>{each.inventory} in stock | </span>
-                        <span>${each.price}</span>
+                        <span>${each.price/100}</span>
                         <br />
                         <Checkbox onChange={() => onChange(each)}>Select Image</Checkbox>
                     </div>
