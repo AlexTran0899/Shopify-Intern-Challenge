@@ -62,7 +62,6 @@ const ApplePay = (props) => {
         const pi = paymentIntent.id
         axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
-        setloading(false)
       }
     });
   }, [stripe, elements, addMessage]);
