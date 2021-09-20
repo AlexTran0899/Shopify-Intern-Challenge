@@ -12,12 +12,13 @@ const ApplePay = (props) => {
   const [loading, setloading] = useState(false)
   const [link, setLink] = useState(false)
 
-
   useEffect(() => {
     if (!stripe || !elements) {
       return;
     }
-    console.log("here")
+    console.log(props.price)
+    console.log(props.image_key)
+
 
     const pr = stripe.paymentRequest({
       country: 'US',
@@ -93,6 +94,9 @@ const ApplePay = (props) => {
   const cardOption = {
     hidePostalCode: true
   }
+  const closeModal = ()=>{
+    props.setIsModalVisible(false)
+  }
 
   return (
     <>
@@ -104,10 +108,9 @@ const ApplePay = (props) => {
         <br />
         {loading ? <div><p>loading...</p></div> : null}
         <br />
-        {link ? <a href={link}>click here to download image</a> : <button>pay {props.price}</button>}
-        <button onClick={()=> props.setIsModalVisible(false)}>close</button>
+        {link ? <a href={link}>click here to download image</a> : <button>pay ${props.price/100}</button>}
+        <button onClick={closeModal}>close</button>
       </form>
-
     </>
   );
 };
