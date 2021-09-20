@@ -5,6 +5,7 @@ import axios from 'axios'
 
 
 const ApplePay = (props) => {
+  const {isModalVisible} = props
   const stripe = useStripe();
   const elements = useElements();
   const [paymentRequest, setPaymentRequest] = useState(null);
@@ -64,7 +65,7 @@ const ApplePay = (props) => {
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
     });
-  }, [props]);
+  }, [isModalVisible]);
 
   const pay = async (e) => {
     e.preventDefault()
