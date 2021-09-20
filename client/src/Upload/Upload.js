@@ -84,16 +84,7 @@ const UploadCase = ({ getPendingCases }) => {
                     visible={isModalVisible}
                     onOk={handleOk}
                     onCancel={handleCancel}
-                    footer={[
-                        <div key="footer" className="footer-btn">
-                            <Button className="not-now-btn" key="back" onClick={handleCancel}>
-                                Not Now
-                            </Button>
-                            <Button className="review-btn" key="review" onClick={handleOk}>
-                                Review Cases
-                            </Button>
-                        </div>,
-                    ]}
+                    footer={null}
                 >
                     <div className="pdf-container">
                         <div>
