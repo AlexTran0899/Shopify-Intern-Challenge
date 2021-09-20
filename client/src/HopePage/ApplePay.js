@@ -17,6 +17,7 @@ const ApplePay = (props) => {
     if (!stripe || !elements) {
       return;
     }
+    console.log("here")
 
     const pr = stripe.paymentRequest({
       country: 'US',
@@ -103,7 +104,7 @@ const ApplePay = (props) => {
         <br />
         {loading ? <div><p>loading...</p></div> : null}
         <br />
-        {link ? <a href={link}>click here to download image</a> : <button>pay</button>}
+        {link ? <a href={link}>click here to download image</a> : <button>pay {props.price}</button>}
         <button onClick={()=> props.setIsModalVisible(false)}>close</button>
       </form>
 
