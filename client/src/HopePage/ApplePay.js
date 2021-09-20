@@ -64,7 +64,7 @@ const ApplePay = (props) => {
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
     });
-  }, [stripe, elements, addMessage]);
+  }, [props]);
 
   const pay = async (e) => {
     e.preventDefault()
@@ -81,11 +81,11 @@ const ApplePay = (props) => {
       image_key: props.image_key
     }).then(res => res.data)
     const confirmPayment = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: paymentMethodRequest.paymentMethod.id,
+      payment_method: paymentMethodRequest?.paymentMethod?.id,
     })
 
     if (confirmPayment) {
-      const pi = confirmPayment.paymentIntent.id
+      const pi = confirmPayment?.paymentIntent?.id
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
       setloading(false)
@@ -106,6 +106,7 @@ const ApplePay = (props) => {
         {loading ? <div><p>loading...</p></div> : null}
         <br />
         {link ? <a href={link}>click here to download image</a> : <button>pay</button>}
+        <button onClick={()=> props.setIsModalVisible(false)}>close</button>
       </form>
 
     </>
