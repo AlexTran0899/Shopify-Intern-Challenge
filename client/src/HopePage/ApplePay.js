@@ -10,6 +10,7 @@ const ApplePay = (props) => {
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [messages, addMessage] = useMessages();
   const [loading, setloading] = useState(false)
+  const [link, setLink] = useState(false)
 
 
 
@@ -67,41 +68,45 @@ const ApplePay = (props) => {
     setloading(true)
     const cardElement = elements.getElement(CardElement);
     const paymentMethodRequest = await stripe.createPaymentMethod({
-      type:'card',
+      type: 'card',
       card: cardElement,
-      billing_details:null
+      billing_details: null
     });
 
     const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
       amount: props.price,
       image_key: props.image_key
     }).then(res => res.data)
-
     const confirmPayment = await stripe.confirmCardPayment(clientSecret, {
       payment_method: paymentMethodRequest.paymentMethod.id,
     })
-    if(confirmPayment){
-      props.setIsModalVisible(false)
+
+    if (confirmPayment) {
+      const pi = confirmPayment.paymentIntent.id
+      axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
+      .then(res => setLink(res.data.original_image))
+      setloading(false)
     }
-}
-const cardOption={
-  hidePostalCode:true
-}
+  }
+  const cardOption = {
+    hidePostalCode: true
+  }
 
-return (
-  <>
-    {paymentRequest && <PaymentRequestButtonElement options={{ paymentRequest }} />}
+  return (
+    <>
+      {paymentRequest && <PaymentRequestButtonElement options={{ paymentRequest }} />}
+      <br />
 
+      <form id='payment-form' onSubmit={pay}>
+        <CardElement options={cardOption} />
+        <br />
+        {loading ? <div><p>loading...</p></div> : null}
+        <br />
+        {link ? <a href={link}>click here to download image</a> : <button>pay</button>}
+      </form>
 
-    <form id='payment-form' onSubmit={pay}>
-      <CardElement options={cardOption}/>
-      {loading? <div><p>loading...</p></div>: null}
-      <button>pay</button>
-
-    </form>
-
-  </>
-);
+    </>
+  );
 };
 
 export default ApplePay;

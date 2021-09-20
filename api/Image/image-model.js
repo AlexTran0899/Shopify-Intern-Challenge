@@ -10,6 +10,10 @@ function Add(data) {
 function getMyImage(user_id) {
   return db('image').where({ user_id }).orderBy('image_id')
 }
+
+function getImageByKey(image_key) {
+  return db('image').where({ image_key }).select(['original_image']).first()
+}
 function updateImage(user_id, image_key, data) {
   return db('image').where({ user_id, image_key }).update(data, ['*'])
 }
@@ -40,5 +44,6 @@ module.exports = {
   deleteOneImage,
   deleteAllImage,
   find,
-  findMyImage
+  findMyImage,
+  getImageByKey
 }
