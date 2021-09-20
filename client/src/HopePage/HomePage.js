@@ -24,7 +24,6 @@ function HomePage(props) {
 
     const showModal = (stuff) => {
         setCurrent(stuff)
-        console.log(current)
         setIsModalVisible(true);
     };
 
