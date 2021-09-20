@@ -59,10 +59,10 @@ const ApplePay = (props) => {
       e.complete('success');
       if (paymentIntent.status === 'requires_action') {
         stripe.confirmCardPayment(clientSecret)
-        const pi = paymentIntent.id
-        axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
-        .then(res => setLink(res.data.original_image))
       }
+      const pi = paymentIntent.id
+      axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
+        .then(res => setLink(res.data.original_image))
     });
   }, [stripe, elements, addMessage]);
 
@@ -87,7 +87,7 @@ const ApplePay = (props) => {
     if (confirmPayment) {
       const pi = confirmPayment.paymentIntent.id
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
-      .then(res => setLink(res.data.original_image))
+        .then(res => setLink(res.data.original_image))
       setloading(false)
     }
   }

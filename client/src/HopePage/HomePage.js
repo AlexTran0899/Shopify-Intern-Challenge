@@ -8,6 +8,7 @@ import { Modal } from 'antd';
 
 function HomePage(props) {
     const [data, setdata] = useState(false)
+    const [current, setCurrent] = useState(false)
     useEffect(() => {
         if (props.search) {
             axios.get(`${process.env.REACT_APP_API_URI}/api/images/find/${props.search}`)
@@ -21,24 +22,25 @@ function HomePage(props) {
     }, [props.search])
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const showModal = () => {
+    const showModal = (data) => {
+        setCurrent(data)
         setIsModalVisible(true);
     };
-  
+
 
     return (
         <div className="HomePage" >
             {data ? data.map(each =>
-                <div className='each' onClick={showModal} >
+                <div className='each' onClick={(each) => showModal(each)} >
                     <img src={each.url} alt='img' />
                     <h1>{each.image_title}</h1>
                     <p>${each.price / 100}</p>
-                    <Modal footer={null} width='350px' title={null}  visible={isModalVisible} closeIcon>
-                        <ApplePay price={each.price} image_key={each.image_key} setIsModalVisible={setIsModalVisible}/>
-                    </Modal>
                 </div>
             )
                 : null}
+            <Modal footer={null} width='350px' title={null} visible={isModalVisible} closeIcon>
+                <ApplePay price={current.price} image_key={current.image_key} setIsModalVisible={setIsModalVisible} />
+            </Modal>
 
         </div>
     );
