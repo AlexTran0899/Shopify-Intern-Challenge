@@ -12,7 +12,7 @@ const ApplePay = (props) => {
   const [loading, setloading] = useState(false)
   const [link, setLink] = useState(false)
 
-  const AppleClick = () => {
+  useEffect(() => {
     if (!stripe || !elements) {
       return;
     }
@@ -64,7 +64,7 @@ const ApplePay = (props) => {
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
     });
-  }
+  }, [stripe, elements, addMessage, props.image_key]);
 
   const pay = async (e) => {
     e.preventDefault()
@@ -94,13 +94,13 @@ const ApplePay = (props) => {
   const cardOption = {
     hidePostalCode: true
   }
-  const closeModal = () => {
+  const closeModal = ()=>{
     props.setIsModalVisible(false)
   }
 
   return (
     <>
-      <PaymentRequestButtonElement options={{ paymentRequest }} onClick={AppleClick}/>
+      {paymentRequest && <PaymentRequestButtonElement options={{ paymentRequest }} />}
       <br />
 
       <form id='payment-form' onSubmit={pay}>
@@ -108,7 +108,7 @@ const ApplePay = (props) => {
         <br />
         {loading ? <div><p>loading...</p></div> : null}
         <br />
-        {link ? <a href={link}>click here to download image</a> : <button>pay ${props.price / 100}</button>}
+        {link ? <a href={link}>click here to download image</a> : <button>pay ${props.price/100}</button>}
         <button onClick={closeModal}>close</button>
       </form>
     </>
