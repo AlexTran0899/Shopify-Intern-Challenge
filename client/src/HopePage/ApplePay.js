@@ -12,7 +12,6 @@ const ApplePay = (props) => {
   const [loading, setloading] = useState(false)
   const [link, setLink] = useState(false)
 
-  useEffect(() => {
     if (!stripe || !elements) {
       return;
     }
@@ -64,7 +63,6 @@ const ApplePay = (props) => {
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
     });
-  }, [stripe, elements, addMessage, props.image_key]);
 
   const pay = async (e) => {
     e.preventDefault()
