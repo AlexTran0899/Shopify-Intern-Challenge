@@ -100,7 +100,7 @@ const ApplePay = (props) => {
 
   return (
     <>
-      {paymentRequest && <PaymentRequestButtonElement options={{ paymentRequest }} onClick={AppleClick}/>}
+      <PaymentRequestButtonElement options={{ paymentRequest }} onClick={AppleClick}/>
       <br />
 
       <form id='payment-form' onSubmit={pay}>
