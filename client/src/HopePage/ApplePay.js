@@ -65,7 +65,7 @@ const ApplePay = (props) => {
     });
   }, [stripe, elements, addMessage, props.image_key]);
 
-  const pay = async (price, image_key) => {
+  const pay = async (e) => {
     e.preventDefault()
     setloading(true)
     const cardElement = elements.getElement(CardElement);
@@ -76,8 +76,8 @@ const ApplePay = (props) => {
     });
 
     const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
-      amount: price,
-      image_key: image_key
+      amount: props.price,
+      image_key: props.image_key
     }).then(res => res.data)
     const confirmPayment = await stripe.confirmCardPayment(clientSecret, {
       payment_method: paymentMethodRequest?.paymentMethod?.id,
@@ -102,7 +102,7 @@ const ApplePay = (props) => {
       {paymentRequest && <PaymentRequestButtonElement options={{ paymentRequest }} />}
       <br />
 
-      <form id='payment-form' onSubmit={()=> pay(props.price, props.image_key)}>
+      <form id='payment-form' onSubmit={pay}>
         <CardElement options={cardOption} />
         <br />
         {loading ? <div><p>loading...</p></div> : null}
