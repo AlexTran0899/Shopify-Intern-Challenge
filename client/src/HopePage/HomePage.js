@@ -22,8 +22,8 @@ function HomePage(props) {
     }, [props.search])
     const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const showModal = (data) => {
-        setCurrent(data)
+    const showModal = (stuff) => {
+        setCurrent(stuff)
         setIsModalVisible(true);
     };
 
@@ -31,7 +31,7 @@ function HomePage(props) {
     return (
         <div className="HomePage" >
             {data ? data.map(each =>
-                <div className='each' onClick={(each) => showModal(each)} >
+                <div className='each' onClick={() => showModal(each)} >
                     <img src={each.url} alt='img' />
                     <h1>{each.image_title}</h1>
                     <p>${each.price / 100}</p>
