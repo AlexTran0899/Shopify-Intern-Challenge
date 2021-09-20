@@ -27,7 +27,6 @@ function HomePage(props) {
         setIsModalVisible(true);
     };
 
-
     return (
         <div className="HomePage" >
             {data ? data.map(each =>
@@ -38,9 +37,9 @@ function HomePage(props) {
                 </div>
             )
                 : null}
-            {current ? <Modal footer={null} width='350px' title={null} visible={isModalVisible} closeIcon>
+            <Modal footer={null} width='350px' title={null} visible={isModalVisible} closeIcon>
                 <ApplePay price={current.price} image_key={current.image_key} setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible}  />
-            </Modal> : null}
+            </Modal> 
         </div>
     );
 }

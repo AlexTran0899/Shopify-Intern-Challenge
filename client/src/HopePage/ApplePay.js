@@ -94,6 +94,7 @@ const ApplePay = (props) => {
     hidePostalCode: true
   }
   const closeModal = ()=>{
+    window.location.reload(false);
     props.setIsModalVisible(false)
   }
 
