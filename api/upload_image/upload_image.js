@@ -25,8 +25,8 @@ async function imageSearch(url) {
   axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_API_KEY}`, requests)
     .then(res => data = res.data.responses[0])
     .then(() => data.labelAnnotations.map(each => word.push(each.description)))
-    .then(() => word = word.join())
-    .then(() => Upload.addingTags(url, word))
+    .then(()=> word = word.join())
+    .then(()=> Upload.addingTags(url,word))
 }
 
 router.post('/', restricted, (req, res) => {
@@ -39,7 +39,8 @@ router.post('/', restricted, (req, res) => {
         url: req.file.location,
       }
       Upload.Add(data)
-        .then(() => res.json({ image_key: req?.file?.key }))
+        .then(() => res.json({ imageURL: req?.file?.location }))
+        .then(() => imageSearch(req.file.location))
     } else {
       res.status(400).json('failed to upload');
     }
@@ -55,7 +56,6 @@ router.put('/original_image/:image_key', restricted, (req, res) => {
       }
       Upload.original_image(req.params.image_key, data)
         .then(() => res.json({ imageURL: req?.file?.location }))
-        .then(() => imageSearch(req.file.location))
     } else {
       res.status(400).json('failed to upload');
     }
