@@ -95,7 +95,10 @@ const ApplePay = (props) => {
   const cardOption = {
     hidePostalCode: true
   }
-  const closeModal = ()=>{
+  const closeModal = () => {
+    if (link) {
+      window.location.reload(false);
+    }
     props.setIsModalVisible(false)
   }
 
@@ -110,7 +113,7 @@ const ApplePay = (props) => {
         {loading ? <div><p>loading...</p></div> : null}
         <br />
       </form>
-      {link ? <a href={link}>click here to download image</a> : <button onClick={pay}>pay ${props.price/100}</button>}
+      {link ? <a href={link}>click here to download image</a> : <button onClick={pay}>pay ${props.price / 100}</button>}
       <button onClick={closeModal}>close</button>
 
     </>
