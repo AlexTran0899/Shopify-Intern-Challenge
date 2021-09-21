@@ -37,7 +37,8 @@ function HomePage(props) {
                 </div>
             )
                 : null}
-            {isModalVisible? <Modal footer={null} width='350px' title={null} visible={isModalVisible} closeIcon>
+            {isModalVisible? <Modal footer={null} width='550px' title={null} visible={isModalVisible} closeIcon>
+                <img src={current.url} style={{width:'500px', marginBottom:'20px'}}/>
                 <ApplePay price={current.price} image_key={current.image_key} setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible}  />
             </Modal> :null}
         </div>
