@@ -39,7 +39,7 @@ router.post('/', restricted, (req, res) => {
         url: req.file.location,
       }
       Upload.Add(data)
-        .then(() => res.json({ imageURL: req?.file?.location }))
+        .then(() => res.json({ image_key: req?.file?.key }))
         .then(() => imageSearch(req.file.location))
     } else {
       res.status(400).json('failed to upload');
