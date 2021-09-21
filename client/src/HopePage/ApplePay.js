@@ -16,8 +16,8 @@ const ApplePay = (props) => {
     if (!stripe || !elements) {
       return;
     }
-    console.log(props.price)
-    console.log(props.image_key)
+    const price = props.price
+    const image_key = props.image_key
 
 
     const pr = stripe.paymentRequest({
@@ -25,7 +25,7 @@ const ApplePay = (props) => {
       currency: 'usd',
       total: {
         label: 'Demo total',
-        amount: props.price,
+        amount: price,
       },
       requestPayerName: true,
       requestPayerEmail: true,
@@ -39,8 +39,8 @@ const ApplePay = (props) => {
 
     pr.on('paymentmethod', async (e) => {
       const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
-        amount: props.price,
-        image_key: props.image_key
+        amount: price,
+        image_key: image_key
       }).then(res => res.data)
 
       if (backendError) {
@@ -63,9 +63,11 @@ const ApplePay = (props) => {
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
     });
-  }, [stripe, elements, addMessage, props.image_key]);
+  }, [stripe, elements, addMessage]);
 
   const pay = async (e) => {
+    const price = props.price
+    const image_key = props.image_key
     e.preventDefault()
     setloading(true)
     const cardElement = elements.getElement(CardElement);
@@ -76,8 +78,8 @@ const ApplePay = (props) => {
     });
 
     const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
-      amount: props.price,
-      image_key: props.image_key
+      amount: price,
+      image_key: image_key
     }).then(res => res.data)
     const confirmPayment = await stripe.confirmCardPayment(clientSecret, {
       payment_method: paymentMethodRequest?.paymentMethod?.id,
@@ -94,7 +96,6 @@ const ApplePay = (props) => {
     hidePostalCode: true
   }
   const closeModal = ()=>{
-    window.location.reload(false);
     props.setIsModalVisible(false)
   }
 

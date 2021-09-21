@@ -128,5 +128,4 @@ const UploadCase = ({ getPendingCases }) => {
         </div>
     );
 };
-
 export default UploadCase;
