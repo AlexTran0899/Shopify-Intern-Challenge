@@ -18,6 +18,7 @@ const ApplePay = (props) => {
     }
     const price = props.price
     const image_key = props.image_key
+    console.log(price)
 
 
     const pr = stripe.paymentRequest({
