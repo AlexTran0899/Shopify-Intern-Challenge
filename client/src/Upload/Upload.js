@@ -25,6 +25,7 @@ const UploadCase = ({ getPendingCases }) => {
     const onFileChange = e => {
         let file = e.pop();
         if (file) {
+            let originalImageKey = null
             const original = new FormData();
             original.append('image', file, file.name);
             setIsLoading(true);
@@ -34,12 +35,12 @@ const UploadCase = ({ getPendingCases }) => {
                     fd.append('image', compressedFile, file.name);
                     axiosWithAuth()
                         .post('/api/uploadImage', fd)
+                        .then(res => originalImageKey = res.data.image_key)
                         .then(() =>
                             axiosWithAuth()
-                                .put('/api/uploadImage/original_image', original)
+                                .put(`/api/uploadImage/original_image/${originalImageKey}`, original)
                                 .then(() => console.log("uploaded"))
-                                .then(() => onFileChange(e))
-                        );
+                                .then(() => onFileChange(e)))
                 })
                 .catch(function (error) {
                     console.log(error.message);
@@ -65,7 +66,7 @@ const UploadCase = ({ getPendingCases }) => {
     const DragProps = {
         name: 'image',
         multiple: true,
-        accept: '.jpeg, .png, .JPG' ,
+        accept: '.jpeg, .png, .JPG',
         progress: false,
         fileList: [],
         beforeUpload: (file, fileList) => {

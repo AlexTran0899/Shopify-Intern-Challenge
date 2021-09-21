@@ -63,7 +63,7 @@ const ApplePay = (props) => {
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
     });
-  }, [stripe, elements, addMessage]);
+  }, [stripe, elements, addMessage, props.image_key]);
 
   const pay = async (e) => {
     const price = props.price
@@ -104,14 +104,15 @@ const ApplePay = (props) => {
       {paymentRequest && <PaymentRequestButtonElement options={{ paymentRequest }} />}
       <br />
 
-      <form id='payment-form' onSubmit={pay}>
+      <form id='payment-form' >
         <CardElement options={cardOption} />
         <br />
         {loading ? <div><p>loading...</p></div> : null}
         <br />
-        {link ? <a href={link}>click here to download image</a> : <button>pay ${props.price/100}</button>}
-        <button onClick={closeModal}>close</button>
       </form>
+      {link ? <a href={link}>click here to download image</a> : <button onClick={pay}>pay ${props.price/100}</button>}
+      <button onClick={closeModal}>close</button>
+
     </>
   );
 };
