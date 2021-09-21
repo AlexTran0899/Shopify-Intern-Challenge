@@ -73,8 +73,8 @@ function editImage(props) {
                             wrapperCol={{ offset: 8, span: 16 }}>
                             <Checkbox>Make item public</Checkbox>
                         </Form.Item>
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button style={{ marginRight: '22px' }} danger onClick={deleteOneImage}>
+                        <Form.Item wrapperCol={{ offset: 8, span: 40 }}>
+                            <Button style={{ marginRight: '15px' }} danger onClick={deleteOneImage}>
                                 Delete Item
                             </Button>
                             <Button type="primary" htmlType="submit">
