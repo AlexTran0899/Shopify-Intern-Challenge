@@ -37,7 +37,6 @@ function findMyImage(user_id, char) {
 }
 
 async function deleteAllImage(user_id) {
-  // const data = await db('image').where({user_id}, ['image_key'])
   return db('image').where({ user_id }).del(['image_key'])
 }
 module.exports = {
