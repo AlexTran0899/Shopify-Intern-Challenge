@@ -20,7 +20,6 @@ function deleteImage(data) {
 }
 
 
-
 router.get('/', (req, res, next) => {
     image.getAll()
         .then(data => res.json(data))
