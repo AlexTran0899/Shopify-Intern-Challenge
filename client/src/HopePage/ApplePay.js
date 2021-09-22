@@ -12,14 +12,15 @@ const ApplePay = (props) => {
   const [loading, setloading] = useState(false)
   const [link, setLink] = useState(false)
 
+
+  axios.put(`${process.env.REACT_APP_API_URI}/api/images/views/${props.image_key}`)
+
   useEffect(() => {
     if (!stripe || !elements) {
       return;
     }
     const price = props.price
     const image_key = props.image_key
-    console.log(price)
-
 
     const pr = stripe.paymentRequest({
       country: 'US',
@@ -63,7 +64,7 @@ const ApplePay = (props) => {
       const pi = paymentIntent.id
       axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
-        .then(()=> console.log(link))
+        .then(() => console.log(link))
     });
   }, [stripe, elements, addMessage, props.image_key]);
 

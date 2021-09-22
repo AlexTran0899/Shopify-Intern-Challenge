@@ -62,7 +62,6 @@ router.put('/update', (req, res, next) => {
 
 router.post('/create-payment-intent', async (req, res) => {
   const { paymentMethodType , image_key} = req.body;
-  console.log(req.body)
   const {price} = await Image.getImageByKey(image_key)
   const params = {
     payment_method_types: [paymentMethodType],

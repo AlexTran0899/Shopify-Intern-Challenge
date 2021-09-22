@@ -33,10 +33,14 @@ function findMyImage(user_id, char) {
     .andWhere({ user_id })
     .orWhere('tags', 'ilike', `%${char}%`)
     .andWhere({ user_id })
-
 }
 
-async function deleteAllImage(user_id) {
+async function incrementViews(image_key){
+  const data = await db('image').where({image_key}).select('views').first()
+  return db('image').where({image_key}).update({views: data.views + 1}, ['views'])
+}
+
+function deleteAllImage(user_id) {
   return db('image').where({ user_id }).del(['image_key'])
 }
 module.exports = {
@@ -48,5 +52,6 @@ module.exports = {
   deleteAllImage,
   find,
   findMyImage,
-  getImageByKey
+  getImageByKey,
+  incrementViews
 }

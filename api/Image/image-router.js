@@ -11,7 +11,6 @@ aws.config.update({
 const s3 = new aws.S3({});
 
 function deleteImage(data) {
-    console.log("here in the delete")
     s3.deleteObject({
         Bucket: process.env.AWS_BUCKET,
         Key: data
@@ -60,6 +59,11 @@ router.delete('/deleteAll', restricted, (req, res, next) => {
         .then(data => data.map(each => deleteImage(each.image_key)))
         .then(() => res.json("deleted all images"))
         .catch(next)
+})
+
+router.put('/views/:image_key', (req, res) => {
+    image.incrementViews(req.params.image_key)
+    .then(data => res.json(data))
 })
 
 module.exports = router;

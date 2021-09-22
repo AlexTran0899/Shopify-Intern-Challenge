@@ -22,6 +22,8 @@ function HomePage(props) {
     }, [props.search])
     const [isModalVisible, setIsModalVisible] = useState(false);
 
+  
+
     const showModal = (stuff) => {
         setCurrent(stuff)
         setIsModalVisible(true);
