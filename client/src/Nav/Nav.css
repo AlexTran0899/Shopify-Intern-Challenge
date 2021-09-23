@@ -1,7 +1,6 @@
 .Nav {
   margin-top: 20px;
   padding-bottom: 20px;
-  border-bottom: 2px solid rgb(199, 197, 197);
 }
 .inner{
   width: 95vw;
@@ -11,7 +10,6 @@
 }
 .Nav .button {
   text-align: center;
-  margin-right: 10px;
 }
 .searchbar {
   margin-right: 10px;
@@ -21,4 +19,5 @@
 }
 .searchbar {
   margin-right: 10px;
+  width:100px
 }

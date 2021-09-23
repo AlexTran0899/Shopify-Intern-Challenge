@@ -4,7 +4,7 @@ import { Upload, Modal, Button, Spin } from 'antd';
 import {
     LoadingOutlined,
 } from '@ant-design/icons';
-import './Upload.less';
+import './Upload.css';
 // Icons for modal
 import Icon from '@ant-design/icons';
 import UploadCaseBox from '../Icons/upload-box.svg';
@@ -14,7 +14,7 @@ const UploadCase = ({ getPendingCases }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { Dragger } = Upload;
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const spinner = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+    const spinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
     const options = {
         maxSizeMB: 1,
         maxWidthOrHeight: 1920,
@@ -93,10 +93,6 @@ const UploadCase = ({ getPendingCases }) => {
                             <p className="divider"></p>
                         </div>
                         <div className="pdfUpload">
-                            <h2 className="h2Styles">
-                                Once your files have finished uploading, please make any
-                                necessary corrections to the fields before submitting.
-                            </h2>
                             <form>
                                 <div className="pdf-upload">
                                     <Dragger {...DragProps}>
@@ -111,15 +107,12 @@ const UploadCase = ({ getPendingCases }) => {
                                             Click here or drag files to this area to upload
                                         </p>
                                     </Dragger>
-                                    <>
+                                    <div className="spinner_container">
                                         {isLoading ? (
-                                            <div className="spinner_container">
-                                                <Spin indicator={spinner} />
-                                            </div>
-                                        ) : (
-                                            <p />
-                                        )}
-                                    </>
+                                            <div >
+                                                <Spin indicator={spinner}  />
+                                            </div>) : null}
+                                    </div>
                                 </div>
                             </form>
                         </div>

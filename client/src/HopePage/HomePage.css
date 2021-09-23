@@ -3,34 +3,46 @@
   display: flex;
   flex-flow: wrap;
   margin:auto;
-  width: 95vw;
+  height:100vh;
+  flex-direction: column;
   justify-content: space-between;
+  height:100vh
 }
-.HomePage .each {
-  width: 300px;
-  height: 300px;
-  border: 1px solid black;
-  margin:10px 0;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
 }
-.HomePage .each img:hover {
-  opacity: 0.7;
+
+/* Create four equal columns that sits next to each other */
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+.column img:hover {
+  opacity: .50;
   cursor: pointer;
 }
 
-.HomePage .each img {
-  width: 300px;
-  height: 200px;
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
 }
-.HomePage .each h1 {
-  font-size: 1.2rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-family: "Roboto", sans-serif;
-  margin: 0px 1px;
-  margin-top: 5px;
-}
-.HomePage .each p {
-  font-size: 1.2rem;
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
 }

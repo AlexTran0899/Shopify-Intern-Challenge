@@ -11,17 +11,28 @@ function Myhomepage(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selected, setSelected] = useState([])
 
+    const dividngData = (stuff) => {
+        let counter = 0;
+        setdata(stuff.map(each => {
+            each.index = counter
+            counter += 1
+            if (counter === 4) {
+                counter = 0
+            }
+            return each
+        }))
+        console.log(data)
+    }
     
     useEffect(() => {
         if (props.search) {
             axiosWithAuth()
                 .get(`/api/images/findMyImage/${props.search}`)
-                .then(stuff => setdata(stuff.data))
-                .then(() => console.log(data))
+                .then(stuff => dividngData(stuff.data))
         } else {
             axiosWithAuth()
                 .get(`/api/images/Myimage`)
-                .then(stuff => setdata(stuff.data))
+                .then(stuff => dividngData(stuff.data))
         }
     }, [props.search])
 
@@ -73,17 +84,32 @@ function Myhomepage(props) {
             }
 
             <div className="HomePage">
-                {data ? data.map(each =>
-                    <div className='each' >
-                        <img src={each.url} alt='img' onClick={() => showModal(each)} />
-                        <h1>{each.image_title ? each.image_title : "Please add title"}</h1>
-                        <span>{each.inventory} in stock | </span>
-                        <span>${each.price/100}</span>
-                        <br />
-                        <Checkbox onChange={() => onChange(each)}>Select Image</Checkbox>
-                    </div>
-                )
-                    : null}
+            <div className="row">
+                <div class="column">
+                    {data ? data.map(each =>
+                        each.index === 0? <img src={each.url} alt='img' onClick={() => showModal(each)} />: null
+                    )
+                        : null}
+                </div>
+                <div class="column">
+                    {data ? data.map(each =>
+                        each.index === 1? <img src={each.url} alt='img' onClick={() => showModal(each)} />: null
+                    )
+                        : null}
+                </div>
+                <div class="column">
+                    {data ? data.map(each =>
+                        each.index === 2? <img src={each.url} alt='img' onClick={() => showModal(each)} />: null
+                    )
+                        : null}
+                </div>
+                <div class="column">
+                    {data ? data.map(each =>
+                        each.index === 3? <img src={each.url} alt='img' onClick={() => showModal(each)} />: null
+                    )
+                        : null}
+                </div>
+            </div>
                 <Editimage current={current} setcurrent={setcurrent} isModalVisible={isModalVisible} />
             </div>
         </div>
