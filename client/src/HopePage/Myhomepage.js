@@ -72,7 +72,7 @@ function Myhomepage(props) {
                 : null
             }
 
-            <div className="HomePage">
+            <div className="MyHomePage">
                 {data ? data.map(each =>
                     <div className='each' >
                         <img src={each.url} alt='img' onClick={() => showModal(each)} />

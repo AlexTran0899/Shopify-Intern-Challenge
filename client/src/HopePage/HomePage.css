@@ -7,7 +7,7 @@ body::-webkit-scrollbar {
   display: flex;
   flex-flow: wrap;
   margin:auto;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
 }
 .row {
@@ -16,7 +16,6 @@ body::-webkit-scrollbar {
   padding: 0 4px;
 }
 
-/* Create four equal columns that sits next to each other */
 .column {
   flex: 25%;
   max-width: 25%;
@@ -32,6 +31,30 @@ body::-webkit-scrollbar {
   opacity: .50;
   cursor: pointer;
 }
+.MyHomePage {
+  display: flex;
+  flex-flow: wrap;
+  margin:auto;
+  flex-direction: row;
+  justify-content: space-between;
+  width:95vw;
+}
+.MyHomePage .each {
+  width: 300px;
+  height: 320px;
+  border: 1px solid black;
+  margin:10px 0;
+}
+.MyHomePage .each img:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.MyHomePage .each img {
+  width: 300px;
+  height: 200px;
+}
+
 
 /* Responsive layout - makes a two column-layout instead of four columns */
 @media screen and (max-width: 800px) {
