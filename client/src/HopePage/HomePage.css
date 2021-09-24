@@ -9,6 +9,7 @@ body::-webkit-scrollbar {
   margin:auto;
   flex-direction: row;
   justify-content: space-between;
+  padding-bottom: 50px;
 }
 .row {
   display: flex;
@@ -21,7 +22,6 @@ body::-webkit-scrollbar {
   max-width: 25%;
   padding: 0 4px;
 }
-
 .column img {
   margin-top: 8px;
   vertical-align: middle;
@@ -38,6 +38,8 @@ body::-webkit-scrollbar {
   flex-direction: row;
   justify-content: space-between;
   width:95vw;
+  padding-bottom: 50px;
+
 }
 .MyHomePage .each {
   width: 300px;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PaymentRequestButtonElement, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import StatusMessages, { useMessages } from '../Nav/StatusMessages';
 import axios from 'axios'
+import { Button } from 'antd';
 
 
 const ApplePay = (props) => {
@@ -116,8 +117,8 @@ const ApplePay = (props) => {
         {loading ? <div><p>loading...</p></div> : null}
         <br />
       </form>
-      {link ? <a href={link}>click here to download image</a> : <button onClick={pay}>pay ${props.price / 100}</button>}
-      <button onClick={closeModal}>close</button>
+      {link ? <a href={link}>click here to download image</a> : <Button className='payButton' onClick={pay}>pay ${props.price / 100}</Button>}
+      <Button onClick={closeModal}>close</Button>
 
     </>
   );

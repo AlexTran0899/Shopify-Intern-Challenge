@@ -1,6 +1,8 @@
 .Nav {
-  margin-top: 20px;
-  padding-bottom: 20px;
+  /* margin-top: 20px; */
+  padding-bottom: 10px;
+  padding-top: 15px;
+
 }
 .inner{
   width: 95vw;
@@ -12,9 +14,9 @@
   text-align: center;
   margin-left: 10px;
 }
-.searchbar {
-  margin-right: 10px;
-} 
 .form{
   align-items: left;
+}
+.payButton{
+  margin-right: 10px;
 }

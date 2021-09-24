@@ -1,9 +1,6 @@
 import './Nav.css'
-import axios from 'axios'
-import { useEffect, useState } from 'react';
-import { Input, Space } from 'antd';
+import { Input } from 'antd';
 import "antd/dist/antd.css";
-import Upload from '../Upload/Upload'
 import Login from './Login'
 import Signup from './SignUp'
 import Cart from './Cart'
