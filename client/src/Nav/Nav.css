@@ -10,13 +10,11 @@
 }
 .Nav .button {
   text-align: center;
+  margin-left: 10px;
 }
 .searchbar {
   margin-right: 10px;
 } 
 .form{
   align-items: left;
-}
-.searchbar {
-  margin-right: 10px;
 }

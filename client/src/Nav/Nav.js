@@ -27,7 +27,7 @@ function Nav(props) {
                 />
                 <Login size='large' />
                 <Signup size='large' />
-                <Cart />
+                {/* <Cart /> */}
             </div>
         </div >
     );

@@ -31,7 +31,7 @@ function Mynav(props) {
                     Your Account
                 </Button>
                 <Upload />
-                <Button size='large' onClick={clearToken}>
+                <Button size='large'className='button' onClick={clearToken}>
                     Logout
                 </Button>
             </div>
