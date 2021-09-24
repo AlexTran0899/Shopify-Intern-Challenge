@@ -33,11 +33,8 @@ function Myhomepage(props) {
         const indexofImage = await selected.indexOf(data.image_key)
         if (indexofImage === -1) {
             selected.push(data.image_key)
-            console.log(selected)
         } else {
             selected.splice(indexofImage, 1)
-            console.log(selected)
-
         }
         if(selected.length === 0){
             setdeletemenu(false)
