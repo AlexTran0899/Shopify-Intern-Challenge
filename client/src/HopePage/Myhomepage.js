@@ -10,8 +10,8 @@ function Myhomepage(props) {
     const [current, setcurrent] = useState(null)
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selected, setSelected] = useState([])
+    const [deletemenu, setdeletemenu] = useState(false)
 
-    
     useEffect(() => {
         if (props.search) {
             axiosWithAuth()
@@ -29,15 +29,22 @@ function Myhomepage(props) {
         setcurrent(each)
         setIsModalVisible(true);
     };
-    const onChange = (data) => {
-        const indexofImage = selected.indexOf(data.image_key)
+    const onChange = async (data) => {
+        const indexofImage = await selected.indexOf(data.image_key)
         if (indexofImage === -1) {
-            setSelected([...selected, data.image_key])
+            selected.push(data.image_key)
+            console.log(selected)
         } else {
-            const temp = selected
-            temp.pop(indexofImage)
-            setSelected(temp)
+            selected.splice(indexofImage, 1)
+            console.log(selected)
+
         }
+        if(selected.length === 0){
+            setdeletemenu(false)
+        } else {
+            setdeletemenu(true)
+        }
+
     }
     const deleteAllSelectedImage = (data) => {
         const lastImage = data.pop()
@@ -54,7 +61,6 @@ function Myhomepage(props) {
         window.location.reload(false)
     }
     const deleteAllImage = () => {
-        console.log("here")
         axiosWithAuth()
             .delete('/api/images/deleteAll')
             .then(res => console.log(res))
@@ -62,7 +68,7 @@ function Myhomepage(props) {
     }
     return (
         <div>
-            {selected[0] ?
+            {deletemenu ?
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={deleteAllImage}>Delete all of your images</Button>
                     <Button style={{ margin: '10px', width: "30vw" }} size='large' danger type='primary' onClick={() => deleteAllSelectedImage(selected)}>Delete selected images</Button>
@@ -78,13 +84,13 @@ function Myhomepage(props) {
                         <img src={each.url} alt='img' onClick={() => showModal(each)} />
                         <h1>{each.image_title ? each.image_title : "Please add title"}</h1>
                         <span>{each.inventory} in stock | </span>
-                        <span>${each.price/100}</span>
+                        <span>${each.price / 100}</span>
                         <br />
                         <Checkbox onChange={() => onChange(each)}>Select Image</Checkbox>
                     </div>
                 )
                     : null}
-                <Editimage current={current} setcurrent={setcurrent} isModalVisible={isModalVisible} />
+                <Editimage current={current} setcurrent={setcurrent} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
             </div>
         </div>
     );

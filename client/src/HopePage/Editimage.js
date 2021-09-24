@@ -9,21 +9,12 @@ function editImage(props) {
     const current = props.current
     let setcurrent = props.setcurrent
     const onFinish = (data) => {
-        console.log(current.image_key)
         axiosWithAuth()
             .put(`/api/images/${current.image_key}`, data)
-            .then(res => console.log(res))
             .then(() => setcurrent(false))
-            .then(() => window.location.reload(false))
+        .then(() => window.location.reload(false))
     };
 
-    const deleteOneImage = () => {
-        axiosWithAuth()
-            .delete(`/api/images/deleteOneImage/${current.image_key}`)
-            .then(res => console.log(res))
-            .then(() => setcurrent(false))
-            .then(() => window.location.reload(false))
-    };
     return (
         <div>
             {current ?
@@ -33,7 +24,12 @@ function editImage(props) {
                         name="basic"
                         labelCol={{ span: 8 }}
                         wrapperCol={{ span: 16 }}
-                        initialValues={{ image_title: current.image_title, inventory: current.inventory, price: current.price/100, public: current.public }}
+                        initialValues={{
+                            image_title: current.image_title,
+                            inventory: current.inventory,
+                            price: current.price / 100,
+                            public: current.public ? true : null
+                        }}
                         onFinish={onFinish}
                         autoComplete="off"
                     >
@@ -74,8 +70,8 @@ function editImage(props) {
                             <Checkbox>Make item public</Checkbox>
                         </Form.Item>
                         <Form.Item wrapperCol={{ offset: 8, span: 40 }}>
-                            <Button style={{ marginRight: '15px' }} danger onClick={deleteOneImage}>
-                                Delete Item
+                            <Button style={{ marginRight: '15px' }} onClick={() => props.setIsModalVisible(false)} >
+                                Cancel Edit
                             </Button>
                             <Button type="primary" htmlType="submit">
                                 Submit
