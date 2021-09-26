@@ -16,7 +16,7 @@ const UploadCase = ({ getPendingCases }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const spinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
     const options = {
-        maxSizeMB: .3,
+        maxSizeMB: .1,
         maxWidthOrHeight: 1920,
         useWebWorker: true
     }
