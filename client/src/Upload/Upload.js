@@ -20,7 +20,7 @@ const UploadCase = ({ getPendingCases }) => {
         maxWidthOrHeight: 1920,
         useWebWorker: true
     }
-
+//
     const onFileChange = e => {
         let file = e.pop();
         if (file) {
