@@ -26,11 +26,8 @@ router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, nex
     .catch(next)
 });
 
-router.get('/getall', (req, res) => {
-  Auth.getAll()
-    .then(data => {
-      res.json(data)
-    })
+router.get('/', (req, res) => {
+      res.json("keep it up")
 })
 
 router.post('/login', (req, res, next) => {
