@@ -21,7 +21,7 @@ const UploadCase = ({ getPendingCases }) => {
         useWebWorker: true
     }
 
-
+//
     const onFileChange = e => {
         let file = e.pop();
         if (file) {
