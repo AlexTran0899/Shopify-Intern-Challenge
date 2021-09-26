@@ -16,12 +16,11 @@ const UploadCase = ({ getPendingCases }) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const spinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
     const options = {
-        maxSizeMB: 1,
+        maxSizeMB: .3,
         maxWidthOrHeight: 1920,
         useWebWorker: true
     }
 
-//
     const onFileChange = e => {
         let file = e.pop();
         if (file) {
