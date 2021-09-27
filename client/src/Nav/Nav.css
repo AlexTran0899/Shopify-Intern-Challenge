@@ -3,6 +3,12 @@
   padding-top: 15px;
   margin-left: 5vw;
 }
+.NavLogedIn{
+  padding-top: 15px;
+  width: 95vw;
+  margin: auto;
+  margin-bottom: 10px;
+}
 .Nav:hover {
   padding-top: 15px;
 }
@@ -10,7 +16,7 @@
   display: flex;
   margin:auto;
 }
-.Nav .button {
+.NavLogedIn .button {
   text-align: center;
   margin-left: 10px;
 }

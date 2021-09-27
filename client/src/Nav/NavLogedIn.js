@@ -18,7 +18,7 @@ function Mynav(props) {
         setSearch(value)
     }
     return (
-        <div className="Nav">
+        <div className="NavLogedIn">
             <div className='inner'>
                 <Search
                     placeholder="Search for your item"

@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Modal } from 'antd';
 import axios from 'axios';
-
-
-const Login = () => {
-    const [isModalVisible, setIsModalVisible] = useState(false);
-
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
+const Login = (props) => {
+    const { isModalVisible, setIsModalVisible } = props
     const handleOk = () => {
         setIsModalVisible(false);
     };
@@ -31,9 +24,6 @@ const Login = () => {
 
     return (
         <>
-            <Button size='large' className='button' onClick={showModal}>
-                Sign in
-            </Button>
             <Modal footer={null} width='350px' title="Sign in" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                 <Form
                     className='form'
