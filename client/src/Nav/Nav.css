@@ -30,14 +30,18 @@
   all: unset;
   text-align: left;
   padding-bottom: 10px;
-  transition: .3s;
+  transition: .2s;
   width: 87vw;
+  text-align: center;
+  caret-color: transparent;
+  border-bottom: 0px solid rgb(207, 207, 207);
+
 }
 .search input:hover {
   border-bottom: 4px solid rgb(207, 207, 207);
 }
 .search input:focus {
-  border-bottom: 4px solid rgb(95, 95, 95);
+  border-bottom: 5px solid rgb(95, 95, 95);
 }
 .search input[type="search"] {
   font-size: 300%;
