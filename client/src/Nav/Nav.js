@@ -8,7 +8,7 @@ function Nav(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalVisible2, setIsModalVisible2] = useState(false);
     const { setSearch } = props
-    const [values, setValues] = useState('')
+    const [values, setValues] = useState(null)
     const onSubmit = e => {
         e.preventDefault()
         if (values.toLowerCase() === 'login') {
@@ -68,7 +68,7 @@ function Nav(props) {
                 <form className="search" onSubmit={onSubmit}>
                     <input
                         type='search'
-                        value={values.input}
+                        value={values}
                         onChange={onChange}
                         placeholder={`Search ${text}`}>
                     </input>
