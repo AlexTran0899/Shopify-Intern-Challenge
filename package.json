@@ -21,7 +21,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.17.1",
     "aws-sdk": "^2.987.0",
     "axios": "^0.21.4",
@@ -43,7 +42,6 @@
     "multer-s3": "^2.9.0",
     "ngrok": "^4.2.2",
     "pg": "8.7.1",
-    "react-stripe-elements": "^6.1.2",
     "sqlite3": "^5.0.2",
     "stripe": "^8.175.0",
     "yup": "^0.32.9"
