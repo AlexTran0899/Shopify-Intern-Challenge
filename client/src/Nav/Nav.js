@@ -6,7 +6,7 @@ import Signup from './SignUp'
 
 function Nav(props) {
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [isModalVisible2, setIsModalVisible2] = useState(false);
+    // const [isModalVisible2, setIsModalVisible2] = useState(false);
     const { setSearch } = props
     const [values, setValues] = useState(null)
     const onSubmit = e => {
@@ -15,7 +15,7 @@ function Nav(props) {
             setIsModalVisible(true)
         } 
         else if (values.toLowerCase() === 'signup') {
-            setIsModalVisible2(true)
+            // setIsModalVisible2(true)
         }
         else if(values.toLowerCase() === 'github'){
             window.location.href = 'https://github.com/AlexTran0899/Shopify-Developer-Intern-Challenge';
@@ -74,7 +74,7 @@ function Nav(props) {
                     </input>
                 </form>
                 <Login isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
-                <Signup isModalVisible={isModalVisible2} setIsModalVisible={setIsModalVisible2} />
+                {/* <Signup isModalVisible2={isModalVisible2} setIsModalVisible2={setIsModalVisible2} /> */}
             </div>
         </div >
     );
