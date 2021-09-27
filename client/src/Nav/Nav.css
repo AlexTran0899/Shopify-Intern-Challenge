@@ -1,22 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda&display=swap");
 .Nav {
-  /* margin-top: 20px; */
-  padding-bottom: 10px;
   padding-top: 15px;
-
+  margin-left: 5vw;
 }
-.inner{
-  width: 95vw;
+.Nav:hover {
+  padding-top: 15px;
+}
+.inner {
   display: flex;
-  justify-content: space-between;
   margin:auto;
 }
 .Nav .button {
   text-align: center;
   margin-left: 10px;
 }
-.form{
+.form {
   align-items: left;
 }
-.payButton{
+.payButton {
   margin-right: 10px;
+}
+.search input {
+  all: unset;
+  text-align: left;
+  padding-bottom: 10px;
+  transition: .3s;
+  width: 87vw;
+}
+.search input[type="search"] {
+  font-size: 200%;
+  font-family: "Merienda", cursive;
+  margin: 2vw;
+
 }
