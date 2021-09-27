@@ -30,7 +30,7 @@ function Nav(props) {
     };
     const [text, setText] = useState(null)
     let isDeleting = false
-    const words = ['"login"', '"signup"', '"github"', 'anything']
+    const words = ["'login'", "'signup'", "'github'", 'anything']
     const wait = 2000
     let txt = ''
     let wordIndex = 0
