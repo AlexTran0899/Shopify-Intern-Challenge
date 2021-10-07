@@ -7,7 +7,7 @@ const server = express()
 const Auth = require('./Auth/auth-router')
 const uploadImage = require('./upload_image/upload_image')
 const images = require('./Image/image-router')
-
+const Payment = require('./Payment/payment-router')
 
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use(express.json())
@@ -15,11 +15,10 @@ server.use(helmet())
 server.use(cors())
 
 server.use('/api/auth', Auth)
+server.use('/api/payment', Payment)
+
 server.use('/api/uploadImage', uploadImage)
 server.use('/api/images', images)
-
-
-
   
 server.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'))

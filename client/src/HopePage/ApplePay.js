@@ -24,7 +24,7 @@ const ApplePay = (props) => {
       country: 'US',
       currency: 'usd',
       total: {
-        label: 'Demo total',
+        label: 'Payment total',
         amount: props.price,
       },
       requestPayerName: true,
@@ -38,7 +38,7 @@ const ApplePay = (props) => {
     });
 
     pr.on('paymentmethod', async (e) => {
-      const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
+      const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/payment/create-payment-intent`, {
         amount: props.price,
         image_key: props.image_key
       }).then(res => res.data)
@@ -60,7 +60,7 @@ const ApplePay = (props) => {
         stripe.confirmCardPayment(clientSecret)
       }
       const pi = paymentIntent.id
-      axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
+      axios.get(`${process.env.REACT_APP_API_URI}/api/payment/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
         .then(() => console.log(link))
     });
@@ -76,7 +76,7 @@ const ApplePay = (props) => {
       billing_details: null
     });
 
-    const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
+    const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/payment/create-payment-intent`, {
       amount: props.price,
       image_key: props.image_key
     }).then(res => res.data)
@@ -86,7 +86,7 @@ const ApplePay = (props) => {
 
     if (confirmPayment) {
       const pi = confirmPayment?.paymentIntent?.id
-      axios.get(`${process.env.REACT_APP_API_URI}/api/auth/confirm/${pi}`)
+      axios.get(`${process.env.REACT_APP_API_URI}/api/payment/confirm/${pi}`)
         .then(res => setLink(res.data.original_image))
       setloading(false)
     }
