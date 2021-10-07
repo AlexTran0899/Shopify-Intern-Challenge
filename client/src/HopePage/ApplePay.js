@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { PaymentRequestButtonElement, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import StatusMessages, { useMessages } from '../Nav/StatusMessages';
 import axios from 'axios'
 import { Button } from 'antd';
 
@@ -9,7 +8,7 @@ const ApplePay = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   const [paymentRequest, setPaymentRequest] = useState(null);
-  const [messages, addMessage] = useMessages();
+  const [messages, addMessage] = useState(false);
   const [loading, setloading] = useState(false)
   const [link, setLink] = useState(false)
 
@@ -20,15 +19,13 @@ const ApplePay = (props) => {
     if (!stripe || !elements) {
       return;
     }
-    const price = props.price
-    const image_key = props.image_key
 
     const pr = stripe.paymentRequest({
       country: 'US',
       currency: 'usd',
       total: {
         label: 'Demo total',
-        amount: price,
+        amount: props.price,
       },
       requestPayerName: true,
       requestPayerEmail: true,
@@ -42,8 +39,8 @@ const ApplePay = (props) => {
 
     pr.on('paymentmethod', async (e) => {
       const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
-        amount: price,
-        image_key: image_key
+        amount: props.price,
+        image_key: props.image_key
       }).then(res => res.data)
 
       if (backendError) {
@@ -70,8 +67,6 @@ const ApplePay = (props) => {
   }, [stripe, elements, addMessage, props.image_key]);
 
   const pay = async (e) => {
-    const price = props.price
-    const image_key = props.image_key
     e.preventDefault()
     setloading(true)
     const cardElement = elements.getElement(CardElement);
@@ -82,8 +77,8 @@ const ApplePay = (props) => {
     });
 
     const { clientSecret, error: backendError } = await axios.post(`${process.env.REACT_APP_API_URI}/api/auth/create-payment-intent`, {
-      amount: price,
-      image_key: image_key
+      amount: props.price,
+      image_key: props.image_key
     }).then(res => res.data)
     const confirmPayment = await stripe.confirmCardPayment(clientSecret, {
       payment_method: paymentMethodRequest?.paymentMethod?.id,
@@ -115,6 +110,7 @@ const ApplePay = (props) => {
         <CardElement options={cardOption} />
         <br />
         {loading ? <div><p>loading...</p></div> : null}
+        {messages ? <div><p>{messages}</p></div> : null}
         <br />
       </form>
       {link ? <a href={link}>click here to download image</a> : <Button className='payButton' onClick={pay}>pay ${props.price / 100}</Button>}

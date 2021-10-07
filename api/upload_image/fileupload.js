@@ -12,6 +12,7 @@ aws.config.update({
 const s3 = new aws.S3({});
 
 const upload = multer({
+  limits : {fileSize: 10240000},
   storage: multerS3({
     s3,
     bucket: process.env.AWS_BUCKET,

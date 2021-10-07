@@ -12,6 +12,7 @@ import imageCompression from 'browser-image-compression';
 
 const UploadCase = ({ getPendingCases }) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [errormessage, setErrormessage] = useState(null)
     const { Dragger } = Upload;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const spinner = <LoadingOutlined style={{ fontSize: 50 }} spin />;
@@ -20,7 +21,11 @@ const UploadCase = ({ getPendingCases }) => {
         maxWidthOrHeight: 1920,
         useWebWorker: true
     }
-//
+    const failedtoupload = ()=> {
+        setErrormessage(true)
+        setIsLoading(false)
+    }
+    //
     const onFileChange = e => {
         let file = e.pop();
         if (file) {
@@ -29,7 +34,7 @@ const UploadCase = ({ getPendingCases }) => {
             original.append('image', file, file.name);
             setIsLoading(true);
             imageCompression(file, options)
-                .then(function (compressedFile) {
+                .then(compressedFile => {
                     const fd = new FormData();
                     fd.append('image', compressedFile, file.name);
                     axiosWithAuth()
@@ -39,14 +44,12 @@ const UploadCase = ({ getPendingCases }) => {
                             axiosWithAuth()
                                 .put(`/api/uploadImage/original_image/${originalImageKey}`, original)
                                 .then(() => console.log("uploaded"))
-                                .then(() => onFileChange(e)))
+                                .then(() => onFileChange(e))
+                                .catch(message => failedtoupload()))
+                        .catch(message => failedtoupload());
                 })
-                .catch(function (error) {
-                    console.log(error.message);
-                });
         } else {
-            setIsLoading(false);
-            setTimeout(() => window.location.reload(false), 5000);
+            setTimeout(() => window.location.reload(false),setIsLoading(false), 5000);
         }
     };
 
@@ -88,7 +91,7 @@ const UploadCase = ({ getPendingCases }) => {
                 >
                     <div className="pdf-container">
                         <div>
-                            <h1 className="uploadh1">Upload Images</h1>
+                            <h1 className="uploadh1">Max single file size 100MB</h1>
                             <p className="divider"></p>
                         </div>
                         <div className="pdfUpload">
@@ -109,9 +112,11 @@ const UploadCase = ({ getPendingCases }) => {
                                     <div className="spinner_container">
                                         {isLoading ? (
                                             <div >
-                                                <Spin indicator={spinner}  />
+                                                <Spin indicator={spinner} />
                                             </div>) : null}
                                     </div>
+                                    {errormessage? <h1>Failed to upload</h1>: null}
+
                                 </div>
                             </form>
                         </div>

@@ -8,10 +8,11 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 stripe.applePayDomains.create({
   domain_name: process.env.REACT_APP_API_URI
-});
+}).catch(err => console.log("Apple pay require https"));
 
 router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, next) => {
   let user = req.body
+  user.username = user.username.toLowerCase()
   const hash = bcrypt.hashSync(user.password, 8)
   user.password = hash
   Auth.Add(user)
@@ -34,6 +35,7 @@ router.get('/getall', (req, res) => {
 })
 
 router.post('/login', (req, res, next) => {
+  req.body.username = req.body.username.toLowerCase()
   const { username, password } = req.body
   Auth.findBy({ username })
     .then(user => {

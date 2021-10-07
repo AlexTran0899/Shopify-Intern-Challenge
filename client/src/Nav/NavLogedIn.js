@@ -27,9 +27,6 @@ function Mynav(props) {
                     className='searchbar'
                     onSearch={onSearch}
                 />
-                {/* <Button size='large' className='button' >
-                    Your Account
-                </Button> */}
                 <Upload />
                 <Button size='large'className='button' onClick={clearToken}>
                     Logout

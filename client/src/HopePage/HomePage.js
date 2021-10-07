@@ -45,31 +45,31 @@ function HomePage(props) {
             <div className="row">
                 <div class="column">
                     {data ? data.map(each =>
-                        each.index == 0 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
+                        each.index === 0 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
                     )
                         : null}
                 </div>
                 <div class="column">
                     {data ? data.map(each =>
-                        each.index == 1 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
+                        each.index === 1 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
                     )
                         : null}
                 </div>
                 <div class="column">
                     {data ? data.map(each =>
-                        each.index == 2 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
+                        each.index === 2 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
                     )
                         : null}
                 </div>
                 <div class="column">
                     {data ? data.map(each =>
-                        each.index == 3 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
+                        each.index === 3 ? <img src={each.url} alt='img' onClick={() => showModal(each)} /> : null
                     )
                         : null}
                 </div>
             </div>
             {isModalVisible ? <Modal footer={null} width='550px' title={null} visible={isModalVisible} closeIcon>
-                <img src={current.url} style={{ width: '500px', marginBottom: '20px' }} />
+                <img src={current.url} style={{ width: '500px', marginBottom: '20px' }} alt='failed to load img' />
                 <ApplePay price={current.price} image_key={current.image_key} setIsModalVisible={setIsModalVisible} isModalVisible={isModalVisible} />
             </Modal> : null}
         </div>

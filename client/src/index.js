@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
+
 const stripePromise = loadStripe('pk_live_51Ja4hPJw6DDPcga4M8z4TcsaH6hjEsibJGdRIi77cIflXNYXVRGHWFUoZRWicoGw8V9OaudAF1nQ3k0yVtlrXW0W00l0CTF6uA');
 ReactDOM.render(
   <React.StrictMode>

@@ -25,12 +25,12 @@ async function imageSearch(url) {
   axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_API_KEY}`, requests)
     .then(res => data = res.data.responses[0])
     .then(() => data.labelAnnotations.map(each => word.push(each.description)))
-    .then(()=> word = word.join())
-    .then(()=> Upload.addingTags(url,word))
+    .then(() => word = word.join())
+    .then(() => Upload.addingTags(url, word))
 }
 
 router.post('/', restricted, (req, res) => {
-  singleUpload(req, res, async () => {
+  singleUpload(req, res, async (err) => {
     if (req?.file?.key) {
       const data = {
         image_key: req.file.key,
@@ -42,13 +42,13 @@ router.post('/', restricted, (req, res) => {
         .then(() => res.json({ image_key: req?.file?.key }))
         .then(() => imageSearch(req.file.location))
     } else {
-      res.status(400).json('failed to upload');
+      res.status(400).json(err.message)
     }
-  });
+  })
 });
 
 router.put('/original_image/:image_key', restricted, (req, res) => {
-  singleUpload(req, res, async () => {
+  singleUpload(req, res, (err) => {
     if (req?.file?.key) {
       const data = {
         user_id: req.decodedJwt.subject,
@@ -57,9 +57,9 @@ router.put('/original_image/:image_key', restricted, (req, res) => {
       Upload.original_image(req.params.image_key, data)
         .then(() => res.json({ imageURL: req?.file?.location }))
     } else {
-      res.status(400).json('failed to upload');
+      res.status(400).send({message: err.message})
     }
-  });
+  })
 });
 
 module.exports = router;

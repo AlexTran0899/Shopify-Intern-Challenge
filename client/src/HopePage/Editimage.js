@@ -57,6 +57,7 @@ function editImage(props) {
                         >
                             <InputNumber
                                 style={{ width: 200 }}
+                                min='.50'
                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                 step="0.10"
