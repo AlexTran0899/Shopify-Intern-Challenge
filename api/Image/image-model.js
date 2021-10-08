@@ -2,7 +2,7 @@ const db = require('../data/db-config')
 
 
 function getAll() {
-  return db('image').where({ public: 1 })
+  return db('image').where({ public: 1 }).select('url','price','image_key')
 }
 function Add(data) {
   return db('image').insert(data, ['*'])
@@ -26,6 +26,7 @@ async function find(char) {
     .andWhere({ public: 1 })
     .orWhere('tags', 'ilike', `%${char}%`)
     .andWhere({ public: 1 })
+    .select('url','price','image_key')
 }
 function findMyImage(user_id, char) {
   return db('image').where('image_title', 'ilike', `%${char}%`)
