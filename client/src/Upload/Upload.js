@@ -21,7 +21,7 @@ const UploadCase = ({ getPendingCases }) => {
         maxWidthOrHeight: 1920,
         useWebWorker: true
     }
-    const failedtoupload = ()=> {
+    const failedtoupload = () => {
         setErrormessage(true)
         setIsLoading(false)
     }
@@ -49,7 +49,7 @@ const UploadCase = ({ getPendingCases }) => {
                         .catch(message => failedtoupload());
                 })
         } else {
-            setTimeout(() => window.location.reload(false),setIsLoading(false), 5000);
+            setTimeout(() => window.location.reload(false), 5000);
         }
     };
 
@@ -115,7 +115,7 @@ const UploadCase = ({ getPendingCases }) => {
                                                 <Spin indicator={spinner} />
                                             </div>) : null}
                                     </div>
-                                    {errormessage? <h1>Failed to upload</h1>: null}
+                                    {errormessage ? <h1>Failed to upload</h1> : null}
 
                                 </div>
                             </form>

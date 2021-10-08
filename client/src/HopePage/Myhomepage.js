@@ -9,8 +9,8 @@ function Myhomepage(props) {
     const [data, setdata] = useState(false)
     const [current, setcurrent] = useState(null)
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selected, setSelected] = useState([])
     const [deletemenu, setdeletemenu] = useState(false)
+    const [selected, setSelected] = useState([])
 
     useEffect(() => {
         if (props.search) {

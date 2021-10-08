@@ -4,7 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 stripe.applePayDomains.create({
   domain_name: process.env.REACT_APP_API_URI
-}).catch(() => console.log("Apple pay require https"));
+}).catch(() => process.env.NODE_ENV !== 'testing' ? console.log("Apple pay require https"): null);
 
 
 router.post('/create-payment-intent', async (req, res) => {

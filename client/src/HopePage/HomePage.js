@@ -12,15 +12,16 @@ function HomePage(props) {
 
     const dividngData = (stuff) => {
         let counter = 0;
-        setdata(stuff.map(each => {
-            each.index = counter
-            counter += 1
-            if (counter === 4) {
-                counter = 0
-            }
-            return each
-        }))
-        console.log(data)
+        if(stuff){
+            setdata(stuff.map(each => {
+                each.index = counter
+                counter += 1
+                if (counter === 4) {
+                    counter = 0
+                }
+                return each
+            }))
+        }
     }
     useEffect(() => {
         if (props.search) {
