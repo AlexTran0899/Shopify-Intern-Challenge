@@ -33,6 +33,7 @@ const UploadCase = ({ getPendingCases }) => {
             const original = new FormData();
             original.append('image', file, file.name);
             setIsLoading(true);
+            console.log(original)
             imageCompression(file, options)
                 .then(compressedFile => {
                     const fd = new FormData();
@@ -49,7 +50,7 @@ const UploadCase = ({ getPendingCases }) => {
                         .catch(message => failedtoupload());
                 })
         } else {
-            setTimeout(() => window.location.reload(false), 5000);
+            // setTimeout(() => window.location.reload(false), 5000);
         }
     };
 

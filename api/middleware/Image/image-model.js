@@ -22,7 +22,7 @@ function deleteOneImage(user_id, image_key) {
   return db('image').where({ user_id, image_key }).del()
 }
 async function find(char) {
-  return db('image').where('image_title', 'ilike', `%${char}%`)
+  return db('image').where('tags', 'ilike', `%${char}%`)
     .andWhere({ public: 1 })
     .orWhere('tags', 'ilike', `%${char}%`)
     .andWhere({ public: 1 })
