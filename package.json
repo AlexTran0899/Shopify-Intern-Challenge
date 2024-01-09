@@ -4,8 +4,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "up": "knex migrate:latest",
-    "down": "knex migrate:rollback",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "migrateh": "heroku run knex migrate:latest -a YOUR_HEROKU_APP_NAME",
     "rollbackh": "heroku run knex migrate:rollback -a YOUR_HEROKU_APP_NAME",
