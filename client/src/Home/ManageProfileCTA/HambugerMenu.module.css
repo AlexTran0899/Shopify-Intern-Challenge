@@ -22,12 +22,12 @@
     height: 70px;
     border-radius: 35px;
 }
+
 .icon:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
 
 .icon:active {
-
     transform: scale(1.0);
 }
