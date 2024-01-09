@@ -13,12 +13,11 @@ export default function Home() {
 
     return (
         <div>
-            {images && images.map((image, index) => {
-                if(image.url) {
-                    return <img key={index} src={image.url} alt="Image" />;
-                }
-                return null; // Always include a return in map function
-            })}
+            {images.filter(image => image.url).map(renderImage)}
         </div>
     );
+
+    const renderImage = (image) => {
+        return <img key={image.id} src={image.url} alt={`Image ${image.id}`} />;
+    };
 }
