@@ -4,18 +4,23 @@ import hamburgerMenuSVG from "../../svg-icon/hamburger-menu.svg"
 
 export default function HambugerMenu() {
     const [showingMenu,setShowingMenu] = useState(false)
+    const openMenu = () => {
+        setShowingMenu(true);
+    };
 
     return (
         <div className={style.menu}>
-
-
-            <div className={style.menuIcon}>
-                <img src={hamburgerMenuSVG} alt="svg"
-                     height="50"
-                     width="50"
-                />
+            <div
+                className={`${style.menu} ${showingMenu ? style.rectangle : style.icon}`}
+                onClick={openMenu}
+            >
+                {!showingMenu && <img
+                    src={hamburgerMenuSVG}
+                    alt="Menu"
+                    height="50"
+                    width="50"
+                />}
             </div>
-
         </div>
     )
 }

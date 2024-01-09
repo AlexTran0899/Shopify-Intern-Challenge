@@ -1,4 +1,4 @@
-.menuIcon {
+.menu {
     background-color: white;
     position: fixed;
     bottom: 50px;
@@ -7,29 +7,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    box-shadow: 0 0 15px rgb(0 0 0 / 0.4);
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.2);
     transition: all 0.3s ease;
 }
 
 .rectangle {
-    width: 300px;
-    height: 150px;
-    border-radius: 10px;
+    border-radius: 35px;
+    width: 400px;
+    height: 500px;
 }
 
-.menuIcon:hover {
+.icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+}
+.icon:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
 
-.menuIcon:active {
-    transform: scale(1.0);
-}
+.icon:active {
 
-
-.menuIcon .rectangle:active {
     transform: scale(1.0);
 }
