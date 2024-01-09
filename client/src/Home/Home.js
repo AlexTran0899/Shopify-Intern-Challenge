@@ -11,13 +11,13 @@ export default function Home() {
         ).catch(err => console.log(err));
     }, []);
 
+    const renderImage = (image) => {
+        return <img key={image.id} src={image.url} alt={`Image ${image.id}`} />;
+    };
+
     return (
         <div>
             {images.filter(image => image.url).map(renderImage)}
         </div>
     );
-
-    const renderImage = (image) => {
-        return <img key={image.id} src={image.url} alt={`Image ${image.id}`} />;
-    };
 }
