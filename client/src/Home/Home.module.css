@@ -1,3 +1,22 @@
-.h1{
-    color:green;
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+.column {
+    flex: 22%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+
+.column img {
+    vertical-align: middle;
+    width: 100%;
+    padding-top: 8px;
+}
+
+.column img:hover {
+    opacity: .50;
+    cursor: pointer;
 }
