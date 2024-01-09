@@ -1,29 +1,6 @@
-.image_grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: auto;
-    grid-gap: 10px;
-}
-
-.grid_item {
-    /*text-align: center;*/
-}
-
-.grid_item img {
-    width: 100%;
-    height: auto;
-}
-
-/* For tablets or smaller screens */
-@media (max-width: 800px) {
-    .image-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* For mobile screens */
-@media (max-width: 500px) {
-    .image-grid {
-        grid-template-columns: repeat(1, 1fr);
-    }
+.body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
 }

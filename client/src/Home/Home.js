@@ -3,6 +3,7 @@ import style from './Home.module.css';
 import axios from "axios";
 import SearchBar from "./SearchBar/SearchBar";
 import PhotoGrid from "./PhotoGrid/PhotoGrid";
+import HambugerMenu from "./ManageProfileCTA/HambugerMenu";
 
 export default function Home() {
     const [images, setImages] = useState([]);
@@ -13,11 +14,11 @@ export default function Home() {
         ).catch(err => console.log(err));
     }, []);
 
-
     return (
-        <div >
+        <div className={style.body}>
+            <HambugerMenu/>
             <SearchBar/>
-            {images && <PhotoGrid images={images}/>}
+            {images && <PhotoGrid imageArray={images}/>}
         </div>
     );
 }

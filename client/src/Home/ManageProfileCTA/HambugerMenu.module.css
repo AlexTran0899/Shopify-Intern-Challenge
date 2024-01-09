@@ -1,0 +1,18 @@
+
+
+.menuIcon {
+    background-color: white;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    box-shadow:  10px 10px 20px rgb(0 0 0 / 0.4)
+
+
+}
