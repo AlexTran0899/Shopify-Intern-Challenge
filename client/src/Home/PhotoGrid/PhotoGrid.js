@@ -17,7 +17,6 @@ export default function PhotoGrid({imageArray}) {
         assignIndex(imageArray)
     }, [imageArray]);
 
-
     return (
         <div className={style.row}>
             <div className={style.column}>

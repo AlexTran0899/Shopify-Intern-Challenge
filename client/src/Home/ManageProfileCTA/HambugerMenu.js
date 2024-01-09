@@ -5,6 +5,8 @@ import hamburgerMenuSVG from "../../svg-icon/hamburger-menu.svg"
 export default function HambugerMenu() {
     return (
         <div className={style.menu}>
+
+
             <div className={style.menuIcon}>
                 <img src={hamburgerMenuSVG} alt="svg"
                      height="50"

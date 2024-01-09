@@ -1,33 +1,33 @@
+* {
+    box-sizing: border-box;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
+    padding: 0 4px;
 }
 
 .column {
     flex: 25%;
-    width: 25vw;
+    max-width: 25%;
+    padding: 0 4px;
 }
 
 .column img {
-    vertical-align: center;
+    margin-top: 8px;
+    vertical-align: middle;
     width: 100%;
-    box-sizing: border-box;
-    padding: 4px;
 }
 
 .column img:hover {
-    opacity: .50;
+    opacity: 0.5;
     cursor: pointer;
-}
-@media screen and (max-width: 800px) {
-    .column {
-        flex: 48%;
-        max-width: 50%;
-    }
 }
 
 @media screen and (max-width: 600px) {
     .column {
+        -ms-flex: 100%;
         flex: 100%;
         max-width: 100%;
     }
