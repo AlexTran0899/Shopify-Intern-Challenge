@@ -1,15 +1,24 @@
-import React, {useEffect} from 'react'
-import style from './Home.module.css'
+import React, { useEffect, useState } from 'react';
+import style from './Home.module.css';
 import axios from "axios";
 
 export default function Home() {
+    const [images, setImages] = useState([]);
+
     useEffect(() => {
-        axios.get('/')
+        axios.get(`${process.env.REACT_APP_API_URL}/api/images`).then(
+            res => setImages(res.data)
+        ).catch(err => console.log(err));
     }, []);
 
     return (
         <div>
-            <h1 className={style.h1}>this is the home page</h1>
+            {images && images.map((image, index) => {
+                if(image.url) {
+                    return <img key={index} src={image.url} alt="Image" />;
+                }
+                return null; // Always include a return in map function
+            })}
         </div>
-    )
+    );
 }
