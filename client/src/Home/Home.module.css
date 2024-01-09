@@ -20,6 +20,7 @@
     opacity: .50;
     cursor: pointer;
 }
+
 @media screen and (max-width: 800px) {
     .column {
         flex: 48%;
