@@ -4,10 +4,13 @@
 }
 
 .main {
+    opacity: 0;
     height: 400px;
     width: 300px;
     display: flex;
     flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out forwards;
+    animation-delay: 0.2s;
 }
 
 .main h1 {
@@ -22,8 +25,6 @@
     font-size: 18px;
     display: flex;
     flex-direction: column;
-    animation: fadeIn 0.2s ease-in-out forwards;
-    animation-delay: 0.2s;
 }
 
 .inputField {

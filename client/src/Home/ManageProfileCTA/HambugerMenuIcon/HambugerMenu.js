@@ -9,7 +9,8 @@ export default function HambugerMenu() {
         setIsShowingMenu(true);
     };
 
-    const closeMenu = (event) => {
+    const closeMenu = () => {
+
         setIsShowingMenu(false)
     }
 
@@ -21,7 +22,6 @@ export default function HambugerMenu() {
         <div className={style.menu}>
             <div
                 className={`${style.menu} ${isShowingMenu ? style.rectangle : style.icon}`}
-                onClick={openMenu}
             >
                 {isShowingMenu && <LoginAndRegisterForm closeMenu={closeMenu}/>}
                 {!isShowingMenu && <img
@@ -29,6 +29,7 @@ export default function HambugerMenu() {
                     alt="Menu"
                     height="50"
                     width="50"
+                    onClick={openMenu}
                 />}
             </div>
         </div>
