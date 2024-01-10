@@ -19,6 +19,8 @@ export default function LoginAndRegisterForm({closeMenu}) {
                     <input
                         type="email"
                         id="email"
+                        placeholder='Please enter your email'
+                        autoComplete="off"
                         value={email}
                         className={style.inputBox}
                         onChange={(e) => setEmail(e.target.value)}
@@ -29,6 +31,8 @@ export default function LoginAndRegisterForm({closeMenu}) {
                     <input
                         type="password"
                         id="password"
+                        placeholder='Please enter your password'
+                        autoComplete="off"
                         value={password}
                         className={style.inputBox}
                         onChange={(e) => setPassword(e.target.value)}
