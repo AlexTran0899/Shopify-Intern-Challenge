@@ -54,7 +54,6 @@ export default function LoginAndRegisterForm({closeMenu}) {
                     <CloseIconSVG className={style.closeButton} onClick={closeMenu}/>
                 </div>
             </form>
-
         </div>
     )
 }
