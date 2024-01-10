@@ -4,8 +4,8 @@ export default function SearchBar() {
     const [searchText, setSearchText] = useState("")
 
     return (
-        <div>
-            <input type="text" className={style.searchBar}/>
+        <div  className={style.searchBar}>
+            <input type="text" maxLength='255' className={style.inputBox}/>
         </div>
     )
 }

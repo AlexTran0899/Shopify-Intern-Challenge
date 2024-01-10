@@ -34,6 +34,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     font-family: 'Roboto',sans-serif;
+    caret-color: black;
     line-height: 1;
 }
 ol, ul {
@@ -51,3 +52,4 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
