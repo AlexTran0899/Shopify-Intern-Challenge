@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import style from "./HambugerMenu.module.css"
 import hamburgerMenuSVG from "../../../svg-icon/hamburger-menu.svg"
 import LoginAndRegisterForm from "../LoginAndRegisterForm/LoginAndRegisterForm";
+import {ReactComponent as MenuIconSvg} from "../../../svg-icon/hamburger-menu.svg";
 
 export default function HambugerMenu() {
     const [isShowingMenu,setIsShowingMenu] = useState(false)
@@ -13,14 +14,13 @@ export default function HambugerMenu() {
         setIsShowingMenu(false)
     }
 
-
     return (
         <div className={style.menu}>
             <div
                 className={`${style.menu} ${isShowingMenu ? style.rectangle : style.icon}`}
             >
                 {isShowingMenu && <LoginAndRegisterForm closeMenu={closeMenu}/>}
-                {!isShowingMenu && <img
+                {!isShowingMenu && <MenuIconSvg
                     src={hamburgerMenuSVG}
                     alt="Menu"
                     height="50"

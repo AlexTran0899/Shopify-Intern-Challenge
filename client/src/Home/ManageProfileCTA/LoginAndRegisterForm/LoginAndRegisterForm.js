@@ -8,7 +8,6 @@ export default function LoginAndRegisterForm({closeMenu}) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('email:', email, 'Password:', password);
     };
     return (
         <div className={style.main}>
@@ -20,6 +19,7 @@ export default function LoginAndRegisterForm({closeMenu}) {
                         type="email"
                         id="email"
                         placeholder='Please enter your email'
+                        maxLength='255'
                         autoComplete="off"
                         value={email}
                         className={style.inputBox}
@@ -31,6 +31,8 @@ export default function LoginAndRegisterForm({closeMenu}) {
                     <input
                         type="password"
                         id="password"
+                        minLength='6'
+                        maxLength='255'
                         placeholder='Please enter your password'
                         autoComplete="off"
                         value={password}
