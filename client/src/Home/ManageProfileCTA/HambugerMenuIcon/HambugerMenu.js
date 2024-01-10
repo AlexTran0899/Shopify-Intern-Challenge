@@ -10,13 +10,9 @@ export default function HambugerMenu() {
     };
 
     const closeMenu = () => {
-
         setIsShowingMenu(false)
     }
 
-    useEffect(() => {
-        console.log(isShowingMenu); // This will log the updated state after re-render
-    }, [isShowingMenu]);
 
     return (
         <div className={style.menu}>
