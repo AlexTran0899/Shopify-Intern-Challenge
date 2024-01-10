@@ -16,7 +16,6 @@ export default function HambugerMenu() {
                 onClick={openMenu}
             >
                 {showingMenu && <LoginAndRegisterForm/>}
-
                 {!showingMenu && <img
                     src={hamburgerMenuSVG}
                     alt="Menu"

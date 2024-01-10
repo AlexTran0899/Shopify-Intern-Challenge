@@ -12,3 +12,27 @@
     animation-delay: 0.3s;
 }
 
+.inputField {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 30px;
+
+}
+
+.inputBox {
+    box-sizing: border-box;
+    outline: none;
+    padding: 10px 20px;
+    border: 4px solid #BBBBBB;
+    width: 300px;
+    font-size: 18px;
+}
+
+.inputBox:hover {
+    border: 4px solid black;
+}
+
+
+
+
