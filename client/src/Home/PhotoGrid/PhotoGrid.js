@@ -6,7 +6,7 @@ export default function PhotoGrid({imageArray}) {
     const assignIndex = (images) =>{
         let counter = 0
         const index_assigned_images = images.map(image => {
-            image.index = counter
+            image.column = counter
             counter = (counter + 1) % 4
             return image
         })
@@ -20,16 +20,16 @@ export default function PhotoGrid({imageArray}) {
     return (
         <div className={style.row}>
             <div className={style.column}>
-                {images && images.filter((image) => image.index === 0).map(image => <img src={image.url} alt='img'/>)}
+                {images && images.filter((image) => image.column === 0).map(image => <img key={image.image_id} src={image.url} alt='img'/>)}
             </div>
             <div className={style.column}>
-                {images && images.filter((image) => image.index === 1).map(image => <img src={image.url} alt='img' />)}
+                {images && images.filter((image) => image.column === 1).map(image => <img key={image.image_id} src={image.url} alt='img' />)}
             </div>
             <div className={style.column}>
-                {images && images.filter((image) => image.index === 2).map(image => <img src={image.url} alt='img' />)}
+                {images && images.filter((image) => image.column === 2).map(image => <img key={image.image_id} src={image.url} alt='img' />)}
             </div>
             <div className={style.column}>
-                {images && images.filter((image) => image.index === 3).map(image => <img src={image.url} alt='img' />)}
+                {images && images.filter((image) => image.column === 3).map(image => <img key={image.image_id} src={image.url} alt='img' />)}
             </div>
         </div>
     )

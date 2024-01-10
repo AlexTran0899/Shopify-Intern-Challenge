@@ -19,7 +19,7 @@ server.use('/api/payment', Payment)
 
 server.use('/api/uploadImage', uploadImage)
 server.use('/api/images', images)
-  
+
 server.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
 })

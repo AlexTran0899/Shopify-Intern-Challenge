@@ -3,7 +3,7 @@ import style from './Home.module.css';
 import axios from "axios";
 import SearchBar from "./SearchBar/SearchBar";
 import PhotoGrid from "./PhotoGrid/PhotoGrid";
-import HambugerMenu from "./ManageProfileCTA/HambugerMenu";
+import HambugerMenu from "./ManageProfileCTA/HambugerMenuIcon/HambugerMenu";
 
 export default function Home() {
     const [images, setImages] = useState([]);
