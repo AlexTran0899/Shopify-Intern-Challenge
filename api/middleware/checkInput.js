@@ -20,6 +20,7 @@ const checkUsernameUnique = async (req, res, next) => {
     Auth.getByEmail(email)
       .then(data => {
         if (data) {
+            console.log("here")
           res.status(400).json({message:`email: ${email} is already exists`})
         } else {
           next()

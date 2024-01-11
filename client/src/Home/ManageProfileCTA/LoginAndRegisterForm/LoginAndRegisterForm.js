@@ -7,6 +7,10 @@ export default function LoginAndRegisterForm({closeMenu}) {
     const [password, setPassword] = useState('');
     const [isRegisteringChecked, setIsRegisteringChecked] = useState(false);
 
+    const displayErrorAlert = (error) => {
+        const friendlyErrorMessage = error.response.data.message
+        alert(friendlyErrorMessage)
+    }
     const loginNetworkRequest = () => {
         const loginCredential = {email, password}
         console.log(loginCredential)
@@ -17,13 +21,25 @@ export default function LoginAndRegisterForm({closeMenu}) {
                 localStorage.setItem('email',email );
                 localStorage.setItem('token',token );
             })
-            .catch(err => console.log(err))
+            .catch(displayErrorAlert)
+    }
+    const registerNetworkRequest = () => {
+        const credential = {email, password}
+        axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, credential)
+            .then(res => {
+
+                const email = res.data.email
+                const token = res.data.token
+                localStorage.setItem('email',email );
+                localStorage.setItem('token',token );
+            })
+            .catch(displayErrorAlert)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if(isRegisteringChecked) {
-            console.log("registering")
+            registerNetworkRequest()
         } else {
             loginNetworkRequest()
         }
@@ -50,7 +66,7 @@ export default function LoginAndRegisterForm({closeMenu}) {
                     <input
                         type="password"
                         id="password"
-                        minLength='6'
+                        minLength='3'
                         maxLength='255'
                         placeholder='Please enter your password'
                         autoComplete="off"

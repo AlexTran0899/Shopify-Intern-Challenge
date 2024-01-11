@@ -6,6 +6,7 @@ const { checkCreateAccount, checkUsernameUnique } = require('../middleware/check
 
 router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, next) => {
   let user = req.body
+    console.log("here")
   user.email = user.email.toLowerCase()
   const hash = bcrypt.hashSync(user.password, 8)
   user.password = hash
