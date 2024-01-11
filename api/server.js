@@ -16,7 +16,6 @@ server.use(cors())
 
 server.use('/api/auth', Auth)
 server.use('/api/payment', Payment)
-
 server.use('/api/uploadImage', uploadImage)
 server.use('/api/images', images)
 

@@ -2,9 +2,8 @@ const yup = require('yup');
 const Auth = require('../Auth/auth-model');
 
 const registerCheck = yup.object({
-    username: yup.string().required(),
-    password: yup.string().min(3).required(),
-    email: yup.string().email().required()
+    email: yup.string().email().required(),
+    password: yup.string().min(3).required()
 })
 
 const checkCreateAccount = async (req, res, next) => {
@@ -17,10 +16,11 @@ const checkCreateAccount = async (req, res, next) => {
     }
 }
 const checkUsernameUnique = async (req, res, next) => {
-    Auth.getByUsername(req.body.username.toLowerCase())
+    const email = req.body.email.toLowerCase()
+    Auth.getByEmail(email)
       .then(data => {
         if (data) {
-          res.status(400).json({message:`username ${req.body.username.toLowerCase()} is taken`})
+          res.status(400).json({message:`email: ${email} is already exists`})
         } else {
           next()
         }

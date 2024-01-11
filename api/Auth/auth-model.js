@@ -1,7 +1,7 @@
 const db = require('../data/db-config')
 
-function getByUsername(username) {
-    return db('users').where({ username }).first()
+function getByEmail(email) {
+    return db('users').where({ email }).first()
 }
 
 function getAll() {
@@ -23,6 +23,6 @@ module.exports = {
     Add,
     findBy,
     getAll,
-    getByUsername,
+    getByEmail,
     update
 }

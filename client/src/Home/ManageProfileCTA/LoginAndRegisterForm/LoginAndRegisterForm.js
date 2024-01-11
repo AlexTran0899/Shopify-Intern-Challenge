@@ -1,13 +1,32 @@
 import React, {useState} from 'react'
 import style from './LoginAndRegisterForm.module.css'
 import {ReactComponent as CloseIconSVG} from "../../../svg-icon/close-icon.svg";
+import axios from "axios";
 export default function LoginAndRegisterForm({closeMenu}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isRegisteringChecked, setIsRegisteringChecked] = useState(false);
 
+    const loginNetworkRequest = () => {
+        const loginCredential = {email, password}
+        console.log(loginCredential)
+        axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, loginCredential)
+            .then(res => {
+                const email = res.data.email
+                const token = res.data.token
+                localStorage.setItem('email',email );
+                localStorage.setItem('token',token );
+            })
+            .catch(err => console.log(err))
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        if(isRegisteringChecked) {
+            console.log("registering")
+        } else {
+            loginNetworkRequest()
+        }
     };
     return (
         <div className={style.main}>

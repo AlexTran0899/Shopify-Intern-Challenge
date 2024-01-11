@@ -6,7 +6,7 @@ const { checkCreateAccount, checkUsernameUnique } = require('../middleware/check
 
 router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, next) => {
   let user = req.body
-  user.username = user.username.toLowerCase()
+  user.email = user.email.toLowerCase()
   const hash = bcrypt.hashSync(user.password, 8)
   user.password = hash
   Auth.Add(user)
@@ -14,7 +14,7 @@ router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, nex
       const token = buildToken(data[0])
       res.status(200).json({
         user_id: data.user_id,
-        username: data.username,
+        email: data.email,
         token
       })
     })
@@ -29,15 +29,15 @@ router.get('/getall', (req, res) => {
 })
 
 router.post('/login', (req, res, next) => {
-  req.body.username = req.body.username.toLowerCase()
-  const { username, password } = req.body
-  Auth.findBy({ username })
+  req.body.email = req.body.email.toLowerCase()
+  const { email, password } = req.body
+  Auth.findBy({ email })
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = buildToken(user)
         res.status(200).json({
           user_id: user.user_id,
-          username: user.username,
+          email: user.email,
           token
         })
       } else {

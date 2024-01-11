@@ -5,10 +5,10 @@ export default function ImageModal({isShowingModal, selectedImage, setIsModalSho
     return (
     <div>
         {selectedImage &&
-        <div className={`${style.modal} ${isShowingModal ? style.openModal : style.closeModal}`}>
+        <div className={`${style.modal} ${isShowingModal ? style.openModal :''}`}>
             <div className={style.modalContent}>
                 <img src={selectedImage.url} alt={`image of ${selectedImage.image_title}`}/>
-                <h1 >Image title</h1>
+                <h1>{selectedImage.image_title}</h1>
                 <div className={style.footer}>
                     <button className={style.btn} >PURCHASE</button>
                     <CloseIconSVG className={style.closeButton} onClick={() => setIsModalShowing(false)}/>
