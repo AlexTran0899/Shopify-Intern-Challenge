@@ -4,9 +4,13 @@ import axios from "axios";
 import SearchBar from "./SearchBar/SearchBar";
 import PhotoGrid from "./PhotoGrid/PhotoGrid";
 import HambugerMenu from "./ManageProfileCTA/HambugerMenuIcon/HambugerMenu";
+import ImageModal from './ImageModal/ImageModal'
 
 export default function Home() {
     const [images, setImages] = useState([]);
+    const [isModalShowing, setIsModalShowing] = useState(false)
+    const [selectedImage, setSelectedImage] = useState(null)
+
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/images`).then(
@@ -14,11 +18,20 @@ export default function Home() {
         ).catch(err => console.log(err));
     }, []);
 
+    useEffect(() => {
+    }, []);
+
+    const openImageModalWithImage = (image) => {
+        setSelectedImage(image)
+        setIsModalShowing(true)
+    }
+
     return (
         <div className={style.body}>
-            <HambugerMenu/>
+            {!isModalShowing && <HambugerMenu/>}
             <SearchBar/>
-            {images && <PhotoGrid imageArray={images}/>}
+            {isModalShowing && <ImageModal isShowingModal={isModalShowing} selectedImage={selectedImage}/>}
+            {images && <PhotoGrid imageArray={images} openImageModalWithImage={openImageModalWithImage}/>}
         </div>
     );
 }

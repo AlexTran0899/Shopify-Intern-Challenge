@@ -1,0 +1,40 @@
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.openModal {
+    display: block;
+}
+.closeModal {
+    display: none;
+}
+
+.modalContent {
+    background-color: white;
+    margin: 0 auto;
+    width: 600px;
+    height: auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modalContent img{
+    width: 100%;
+    height: auto;
+    /*padding: 20px;*/
+}
+
+
+.modalContent h1{
+    font-size: 24px;
+}
