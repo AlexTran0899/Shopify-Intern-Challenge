@@ -8,8 +8,8 @@ function getAll() {
 function Add(data) {
   return db('image').insert(data, ['*'])
 }
-function getMyImage(user_id) {
-  return db('image').where({ user_id }).orderBy('image_id')
+function getAllUserImage(user_id) {
+  return db('image').where({ user_id }).orderBy('views')
 }
 
 function getImageByKey(image_key) {
@@ -29,7 +29,7 @@ async function find(char) {
     .andWhere({ public: 1 })
     .select('url','price','image_key')
 }
-function findMyImage(user_id, char) {
+function findUserImage(user_id, char) {
   return db('image').where('image_title', 'ilike', `%${char}%`)
     .andWhere({ user_id })
     .orWhere('tags', 'ilike', `%${char}%`)
@@ -44,15 +44,16 @@ async function incrementViews(image_key){
 function deleteAllImage(user_id) {
   return db('image').where({ user_id }).del(['image_key'])
 }
+
 module.exports = {
   getAll,
   Add,
-  getMyImage,
+  getAllUserImage,
   updateImage,
   deleteOneImage,
   deleteAllImage,
   find,
-  findMyImage,
+  findUserImage,
   getImageByKey,
   incrementViews
 }

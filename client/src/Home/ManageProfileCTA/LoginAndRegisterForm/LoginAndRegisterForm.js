@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import style from './LoginAndRegisterForm.module.css'
-import {ReactComponent as CloseIconSVG} from "../../../svg-icon/close-icon.svg";
+import {ReactComponent as CloseIconSVG} from "../../../Svg-Icon/close-icon.svg";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import displayErrorAlert from '../../../Utils/DisplayErrorAlert'
 
 export default function LoginAndRegisterForm({closeMenu}) {
     const [email, setEmail] = useState('');
@@ -11,10 +12,6 @@ export default function LoginAndRegisterForm({closeMenu}) {
 
     const navigate = useNavigate()
 
-    const displayErrorAlert = (error) => {
-        const friendlyErrorMessage = error.response.data.message
-        alert(friendlyErrorMessage)
-    }
     const loginNetworkRequest = () => {
         const loginCredential = {email, password}
         axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, loginCredential)

@@ -1,6 +1,6 @@
 import React from 'react'
 import style from './ImageModal.module.css'
-import {ReactComponent as CloseIconSVG} from "../../svg-icon/close-icon.svg";
+import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
 export default function ImageModal({isShowingModal, selectedImage, setIsModalShowing}) {
     return (
     <div>

@@ -24,8 +24,10 @@ router.get('/', (req, res, next) => {
         .then(data => res.json(data))
         .catch(next)
 })
-router.get('/Myimage', restricted, (req, res, next) => {
-    image.getMyImage(req.decodedJwt.subject)
+
+router.get('/user-image', restricted, (req, res, next) => {
+    console.log(req.decodedJwt.subject)
+    image.getAllUserImage(req.decodedJwt.subject)
         .then(data => res.json(data))
         .catch(next)
 })
@@ -37,7 +39,7 @@ router.put('/:image_key', restricted, (req, res, next) => {
         .then(data => res.json(data))
         .catch(next)
 })
-router.delete('/deleteOneImage/:image_key', restricted, (req, res, next) => {
+router.delete('/delete-image/:image_key', restricted, (req, res, next) => {
     deleteImage(req.params.image_key)
     image.deleteOneImage(req.decodedJwt.subject, req.params.image_key)
         .then(() => res.json("image deleted"))
@@ -48,13 +50,13 @@ router.get('/find/:item_name', (req, res, next) => {
         .then(data => res.json(data))
         .catch(next)
 })
-router.get('/findMyImage/:item_name', restricted, (req, res, next) => {
-    image.findMyImage(req.decodedJwt.subject, req.params.item_name)
+router.get('/find-user-image/:item_name', restricted, (req, res, next) => {
+    image.findUserImage(req.decodedJwt.subject, req.params.item_name)
         .then(data => res.json(data))
         .catch(next)
 })
 
-router.delete('/deleteAll', restricted, (req, res, next) => {
+router.delete('/delete-all-user-image', restricted, (req, res, next) => {
     image.deleteAllImage(req.decodedJwt.subject)
         .then(data => data.map(each => deleteImage(each.image_key)))
         .then(() => res.json("deleted all images"))
