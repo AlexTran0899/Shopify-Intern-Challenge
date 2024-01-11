@@ -30,7 +30,7 @@ export default function Home() {
         <div className={style.body}>
             {!isModalShowing && <HambugerMenu/>}
             <SearchBar/>
-            {isModalShowing && <ImageModal isShowingModal={isModalShowing} selectedImage={selectedImage}/>}
+            {isModalShowing && <ImageModal setIsModalShowing={setIsModalShowing} isShowingModal={isModalShowing} selectedImage={selectedImage}/>}
             {images && <PhotoGrid imageArray={images} openImageModalWithImage={openImageModalWithImage}/>}
         </div>
     );
