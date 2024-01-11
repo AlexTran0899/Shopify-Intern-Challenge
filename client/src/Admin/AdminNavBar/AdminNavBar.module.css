@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    min-width: 0;
 }
 
 .body {
@@ -14,6 +15,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
+}
+
+.navBarButton {
+    text-align: center;
+    font-size: 24px;
+    background: white;
+    cursor: pointer;
+    outline: inherit;
+    color: black;
+    height: 70px;
+    transition: all 0.3s ease, transform 0.1s ease;
+    border: 3px solid black;
+    width: auto;
+    padding:20px 40px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.navBarButton:hover {
+    background: #228D8A;
+    cursor: pointer;
+    color: white;
+}
+
+.navBarButton:active {
+    transform: scale(0.95);
 }
 
 
