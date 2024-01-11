@@ -2,10 +2,14 @@ import React, {useState} from 'react'
 import style from './LoginAndRegisterForm.module.css'
 import {ReactComponent as CloseIconSVG} from "../../../svg-icon/close-icon.svg";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
+
 export default function LoginAndRegisterForm({closeMenu}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isRegisteringChecked, setIsRegisteringChecked] = useState(false);
+
+    const navigate = useNavigate()
 
     const displayErrorAlert = (error) => {
         const friendlyErrorMessage = error.response.data.message
@@ -13,13 +17,13 @@ export default function LoginAndRegisterForm({closeMenu}) {
     }
     const loginNetworkRequest = () => {
         const loginCredential = {email, password}
-        console.log(loginCredential)
         axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, loginCredential)
             .then(res => {
                 const email = res.data.email
                 const token = res.data.token
                 localStorage.setItem('email',email );
                 localStorage.setItem('token',token );
+                setTimeout(() => navigate('/admin'), 500)
             })
             .catch(displayErrorAlert)
     }
@@ -27,11 +31,11 @@ export default function LoginAndRegisterForm({closeMenu}) {
         const credential = {email, password}
         axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, credential)
             .then(res => {
-
                 const email = res.data.email
                 const token = res.data.token
                 localStorage.setItem('email',email );
                 localStorage.setItem('token',token );
+                setTimeout(() => navigate('/admin'), 500)
             })
             .catch(displayErrorAlert)
     }
