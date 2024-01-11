@@ -13,7 +13,6 @@ export default function ImageCard({image}) {
                     <h1 style={{marginLeft:'auto'}}>{image.views}</h1>
                 </div>
             </div>
-
         </div>
     )
 }
