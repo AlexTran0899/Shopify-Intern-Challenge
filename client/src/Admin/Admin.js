@@ -3,8 +3,10 @@ import style from './Admin.module.css'
 import axiosWithAuth from "../Utils/AxiosWithAuth";
 import displayErrorAlert from "../Utils/DisplayErrorAlert";
 import ImageContainer from "./ImageContainer/ImageContainer";
+import AdminNavBar from "./AdminNavBar/AdminNavBar";
 export default function Admin() {
     const [images, setImages] = useState([])
+    const [searchText, setSearchText] = useState("")
 
     useEffect(() => {
         fetchUserImage()
@@ -17,6 +19,7 @@ export default function Admin() {
 
     return (
         <div className={style.body}>
+            <AdminNavBar/>
             {images && <ImageContainer images={images} />}
         </div>
     )

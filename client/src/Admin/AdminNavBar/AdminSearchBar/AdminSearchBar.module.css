@@ -1,0 +1,40 @@
+.body {
+    box-sizing: border-box;
+    height: 130px;
+}
+.searchBar{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    min-width: 300px;
+}
+.searchBar button {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 70px;
+    height: 70px;
+    background-color: black;
+}
+
+.searchBar button:hover{
+    cursor: pointer;
+}
+
+.searchBar input {
+    /*background-color: black;*/
+    text-align: center;
+    font-size: 32px;
+    outline: none;
+    width: 50vw;
+    padding: 20px;
+    height: 70px;
+    border: 3px solid black;
+    transition: all 0.2s ease-in;
+}
+
+.searchIcon {
+}

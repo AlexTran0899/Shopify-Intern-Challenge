@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+}
+
+.body {
+    width: 100vw;
+    height: 130px;
+    background-color: white;
+    margin-bottom: 10px;
+    box-shadow:
+            rgba(149, 157, 165, 0.2) 0px 10px 15px,   /* center shadow, larger and more blurred */
+            rgba(149, 157, 165, 0.2) -5px 8px 10px,   /* left shadow, smaller and less blurred */
+            rgba(149, 157, 165, 0.2) 5px 8px 10px;    /* right shadow, smaller and less blurred */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+

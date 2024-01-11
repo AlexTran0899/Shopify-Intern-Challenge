@@ -1,6 +1,7 @@
 *{
     box-sizing: border-box;
 }
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -14,8 +15,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 16px 24px;
     animation: fadeIn 0.3s ease-in-out forwards;
 }
 
@@ -46,7 +46,6 @@
     object-fit: cover;
     width: 364px;
     height: 364px;
-    border-radius: 10px;
 }
 
 .container span{
