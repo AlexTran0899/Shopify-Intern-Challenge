@@ -58,6 +58,7 @@ export default function LoginAndRegisterForm({closeMenu}) {
                         type="email"
                         id="email"
                         placeholder='Please enter your email'
+                        minLength='3'
                         maxLength='255'
                         autoComplete="off"
                         value={email}
