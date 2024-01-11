@@ -9,7 +9,7 @@ exports.up = async (knex) => {
         .onDelete('cascade')
         .onUpdate('cascade')
         .notNullable()
-        image.string('image_title', 200)
+        image.string('image_title', 255)
         image.string('url')
         image.integer('views').defaultTo(1)
         image.integer('inventory').defaultTo(1)
