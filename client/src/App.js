@@ -1,6 +1,6 @@
 import Home from "./Home/Home.js"
 import Admin from "./Admin/Admin";
-import {Link, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 
 function App() {
   return (

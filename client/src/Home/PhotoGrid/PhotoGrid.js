@@ -4,6 +4,7 @@ import style from './PhotoGrid.module.css'
 export default function PhotoGrid({imageArray, openImageModalWithImage}) {
     const [images, setImages] = useState([])
     const assignIndex = (images) =>{
+        if (images.length === 0) { return }
         let counter = 0
         const index_assigned_images = images.map(image => {
             image.column = counter
