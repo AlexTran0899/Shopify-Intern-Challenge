@@ -40,6 +40,7 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
         while(files.length > 0) {
             await uploadImage(files.pop())
         }
+        closeUploadModal()
     }
 
     return (
