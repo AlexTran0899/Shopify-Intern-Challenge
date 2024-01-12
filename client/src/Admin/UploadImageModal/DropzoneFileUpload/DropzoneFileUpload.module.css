@@ -1,0 +1,32 @@
+.dropArea {
+    width: 540px;
+    height: 540px;
+    border: 7px dashed black;
+    transition: all 0.3s ease-out;
+}
+
+.active {
+    opacity: 1;
+}
+
+.notActive {
+    opacity: 0.3;
+}
+
+.dropAreaContent {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    text-align: center;
+}
+
+.dropAreaContent h1{
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+.dropAreaContent p{
+    font-size: 18px;
+}

@@ -1,0 +1,15 @@
+.welcomeMessage {
+    text-align: center;
+    height: 100vh;
+}
+
+.welcomeMessage h1 {
+    margin-top: 100px;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.welcomeMessage p {
+    font-size: 24px;
+    margin-top: 50px;
+}

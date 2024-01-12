@@ -5,6 +5,7 @@ import displayErrorAlert from "../Utils/DisplayErrorAlert";
 import ImageContainer from "./ImageContainer/ImageContainer";
 import AdminNavBar from "./AdminNavBar/AdminNavBar";
 import UploadImageModal from './UploadImageModal/UploadImageModal'
+import WelcomeNewUserScreen from "./WelcomeNewUserScreen/WelcomeNewUserScreen";
 
 export default function Admin() {
     const [images, setImages] = useState([])
@@ -32,7 +33,9 @@ export default function Admin() {
         <div className={style.body}>
             {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal}  />}
             <AdminNavBar openUploadModal={openUploadModal}/>
-            {images && <ImageContainer images={images} />}
+            {images.length === 0 && <WelcomeNewUserScreen/>}
+            {images.length > 0 && <ImageContainer images={images} />}
+
         </div>
     )
 }
