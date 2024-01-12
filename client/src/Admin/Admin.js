@@ -35,7 +35,6 @@ export default function Admin() {
             <AdminNavBar openUploadModal={openUploadModal}/>
             {images.length === 0 && <WelcomeNewUserScreen/>}
             {images.length > 0 && <ImageContainer images={images} />}
-
         </div>
     )
 }

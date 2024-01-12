@@ -13,7 +13,8 @@
     "seedh": "heroku run knex seed:run -a imageforsale",
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand",
     "heroku-postbuild": "cd client && npm i && npm run build",
-    "deploy": "git push heroku main"
+    "railway-postbuild": "cd client && npm i && npm run build",
+    "deploy": "git push railway main"
   },
   "engines": {
     "node": "18.16.0",
