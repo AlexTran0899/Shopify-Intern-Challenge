@@ -17,6 +17,11 @@
     gap: 20px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 16px 24px;
     animation: fadeIn 0.3s ease-in-out forwards;
+    transition: all 0.2s ease;
+}
+.container:hover {
+    box-shadow: rgba(149, 157, 165, 0.9) 0px 16px 24px;
+    cursor: pointer;
 }
 
 .container .info {

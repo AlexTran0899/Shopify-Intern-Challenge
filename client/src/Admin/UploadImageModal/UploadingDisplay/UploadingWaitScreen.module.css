@@ -1,0 +1,13 @@
+.main {
+    width: 540px;
+    height: 540px;
+    display: flex;
+    flex-direction: column;
+    padding: 200px 0;
+}
+
+.main h1{
+    font-size: 100px;
+    text-align: center;
+    color: gray;
+}

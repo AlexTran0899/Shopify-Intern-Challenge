@@ -6,11 +6,14 @@ import ImageContainer from "./ImageContainer/ImageContainer";
 import AdminNavBar from "./AdminNavBar/AdminNavBar";
 import UploadImageModal from './UploadImageModal/UploadImageModal'
 import WelcomeNewUserScreen from "./WelcomeNewUserScreen/WelcomeNewUserScreen";
+import EditImageModal from "./EditImageModal/EditImageModal";
 
 export default function Admin() {
     const [images, setImages] = useState([])
     const [searchText, setSearchText] = useState("")
     const [isShowingUploadModal, setIsShowingUploadModal] = useState(false)
+    const [isShowingEditImageModal, setIsShowingEditImageModal] = useState(false)
+    const [selectedImage, setSelectedImage] = useState({})
 
     useEffect(() => {
         fetchUserImage()
@@ -33,12 +36,24 @@ export default function Admin() {
         setImages(old => [...old,image_data] )
     }
 
+    const openEditImageModal = (image) => {
+        console.log("here")
+        setIsShowingEditImageModal(true)
+        setSelectedImage(image)
+    }
+
+    const closeEditImageModal = () => {
+        setIsShowingEditImageModal(false)
+        setSelectedImage({})
+    }
+
     return (
         <div className={style.body}>
-            {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal} addImage={addImage} />}
             <AdminNavBar openUploadModal={openUploadModal}/>
             {images.length === 0 && <WelcomeNewUserScreen/>}
-            {images.length > 0 && <ImageContainer images={images} />}
+            {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal} addImage={addImage} />}
+            {isShowingEditImageModal && <EditImageModal selectedImage={selectedImage} closeEditImageModal={closeEditImageModal}/>}
+            {images.length > 0 && <ImageContainer images={images} openEditImageModal={openEditImageModal} />}
         </div>
     )
 }
