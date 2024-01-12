@@ -11,7 +11,15 @@ const Payment = require('./Payment/payment-router')
 
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use(express.json())
-server.use(helmet())
+server.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            imgSrc: ["'self'", "https://lawstufflab37.s3.amazonaws.com"],
+            // Add other directives as needed
+        },
+    },
+}));
 server.use(cors())
 
 server.use('/api/auth', Auth)
