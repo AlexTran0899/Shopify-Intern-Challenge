@@ -1,4 +1,4 @@
-const displayErrorAlert = (error) => {
+const displayNetworkErrorAlert = (error) => {
     if(error.response?.data?.message){
         const friendlyErrorMessage = error.response.data.message
         alert(friendlyErrorMessage)
@@ -7,4 +7,4 @@ const displayErrorAlert = (error) => {
     }
 
 }
-export default displayErrorAlert;
+export default displayNetworkErrorAlert;

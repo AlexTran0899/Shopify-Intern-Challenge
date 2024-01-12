@@ -3,10 +3,24 @@ import {useDropzone} from 'react-dropzone'
 import style from './DropzoneFileUpload.module.css'
 
 export default function DropzoneFileUpload({setFiles}) {
-    const onDrop = useCallback(acceptedFiles => {
+    const alertUserOfRejectedFile = (rejectedFile) => {
+        alert(`we're unable to upload these file, make sure that they are jpeg or png image file \n \n` + rejectedFile)
+    }
+
+    const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+        if(rejectedFiles) {
+            alertUserOfRejectedFile(rejectedFiles.map(file => file.file.name))
+        }
         setFiles(acceptedFiles)
     }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({
+        onDrop,
+        accept: {
+            'image/png': ['.png'],
+            'image/jpeg': ['.jpeg', '.jpg'],
+        }
+    })
 
     return (
         <div {...getRootProps()}>
@@ -20,9 +34,7 @@ export default function DropzoneFileUpload({setFiles}) {
                             <p>Or click to here select files</p>
                         </div>}
                 </div>
-
             </div>
-
         </div>
     )
 }

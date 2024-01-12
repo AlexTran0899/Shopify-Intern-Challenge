@@ -3,7 +3,7 @@ import style from './LoginAndRegisterForm.module.css'
 import {ReactComponent as CloseIconSVG} from "../../../Svg-Icon/close-icon.svg";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import displayErrorAlert from '../../../Utils/DisplayErrorAlert'
+import displayNetworkErrorAlert from '../../../Utils/DisplayNetworkErrorAlert'
 
 export default function LoginAndRegisterForm({closeMenu}) {
     const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ export default function LoginAndRegisterForm({closeMenu}) {
                 localStorage.setItem('token',token );
                 setTimeout(() => navigate('/admin'), 500)
             })
-            .catch(displayErrorAlert)
+            .catch(displayNetworkErrorAlert)
     }
     const registerNetworkRequest = () => {
         const credential = {email, password}
@@ -34,7 +34,7 @@ export default function LoginAndRegisterForm({closeMenu}) {
                 localStorage.setItem('token',token );
                 setTimeout(() => navigate('/admin'), 500)
             })
-            .catch(displayErrorAlert)
+            .catch(displayNetworkErrorAlert)
     }
 
     const handleSubmit = (event) => {

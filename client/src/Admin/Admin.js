@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import style from './Admin.module.css'
 import axiosWithAuth from "../Utils/AxiosWithAuth";
-import displayErrorAlert from "../Utils/DisplayErrorAlert";
+import displayNetworkErrorAlert from "../Utils/DisplayNetworkErrorAlert";
 import ImageContainer from "./ImageContainer/ImageContainer";
 import AdminNavBar from "./AdminNavBar/AdminNavBar";
 import UploadImageModal from './UploadImageModal/UploadImageModal'
@@ -18,7 +18,7 @@ export default function Admin() {
     const fetchUserImage = () => {
         axiosWithAuth().get(`${process.env.REACT_APP_API_URL}/api/images/user-image`)
             .then(res => setImages(res.data))
-            .catch(displayErrorAlert)
+            .catch(displayNetworkErrorAlert)
     }
 
     const closeUploadModal = () =>{
