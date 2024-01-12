@@ -46,6 +46,7 @@
     "pg": "8.7.1",
     "sqlite3": "^5.0.2",
     "stripe": "^8.175.0",
+    "styled-components": "^6.1.8",
     "yup": "^0.32.9"
   },
   "devDependencies": {

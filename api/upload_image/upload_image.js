@@ -32,8 +32,7 @@ async function imageLabeling(url) {
 
 router.post('/', restricted, (req, res) => {
   singleUpload(req, res, async (err) => {
-    if (req?.file?.key) {
-      console.log(req.file.location)
+    if (!err) {
       const data = {
         image_key: req.file.key,
         user_id: req.decodedJwt.subject,

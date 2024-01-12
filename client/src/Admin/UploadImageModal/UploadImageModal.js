@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import style from './UploadImageModal.module.css'
 import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
 import DropZoneFileUpload from './DropzoneFileUpload/DropzoneFileUpload'
@@ -7,6 +7,7 @@ import AxiosWithAuth from "../../Utils/AxiosWithAuth";
 
 export default function UploadImageModal({isShowingUploadModal, closeUploadModal,addImage}) {
     const [files, setFiles] = useState([])
+    const [isUploading, setIsUploading] = useState(false)
 
     const uploadCompressedImage = async (image_file) => {
         const formData = new FormData();
@@ -37,19 +38,27 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
     }
 
     const uploadAllImage = async () => {
+        setIsUploading(true)
         while(files.length > 0) {
             await uploadImage(files.pop())
         }
+        setIsUploading(false)
         closeUploadModal()
+
+    }
+
+    const addFileToBeUpload = (more_files) => {
+        setFiles(old => [...old,...more_files])
     }
 
     return (
     <div>
         <div className={`${style.modal} ${isShowingUploadModal ? style.openModal :''}`}>
             <div className={style.modalContent}>
-                <DropZoneFileUpload setFiles={setFiles}/>
+                <DropZoneFileUpload addFileToBeUpload={addFileToBeUpload} setFiles={setFiles}/>
                 <div className={style.footer}>
-                    <button className={style.btn} onClick={uploadAllImage}>UPLOAD</button>
+                    {files.length + 1 > 1 && !isUploading && <button className={style.btn} onClick={uploadAllImage}>UPLOAD {files.length} FILE(S)</button>}
+                    {files.length + 1 > 1 && isUploading && <button disabled className={style.btn}>{files.length} FILE(S) REMAINING</button>}
                     <CloseIconSVG className={style.closeButton} onClick={closeUploadModal}/>
                 </div>
             </div>

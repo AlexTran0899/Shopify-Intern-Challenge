@@ -2,7 +2,7 @@ import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 import style from './DropzoneFileUpload.module.css'
 
-export default function DropzoneFileUpload({setFiles}) {
+export default function DropzoneFileUpload({addFileToBeUpload, isUploading}) {
     const alertUserOfRejectedFile = (rejectedFile) => {
         alert(`we're unable to upload some of your file, make sure that they are jpeg or png image file \n \n` + rejectedFile)
     }
@@ -11,7 +11,7 @@ export default function DropzoneFileUpload({setFiles}) {
         if(rejectedFiles.length > 0) {
             alertUserOfRejectedFile(rejectedFiles.map(file => file.file.name))
         }
-        setFiles(acceptedFiles)
+        addFileToBeUpload(acceptedFiles)
     }, [])
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({
@@ -26,13 +26,13 @@ export default function DropzoneFileUpload({setFiles}) {
         <div {...getRootProps()}>
             <input {...getInputProps()} />
             <div className={`${style.dropArea} ${isDragActive ? style.active : style.notActive}` }>
-                <div className={style.dropAreaContent}>
-                    {isDragActive &&  <h1>Yup, just drop it here</h1>}
-                    {!isDragActive &&
-                        <div>
-                            <h1>Drag 'n' drop some files here</h1>
-                            <p>Or click to here select files</p>
-                        </div>}
+                 <div className={style.dropAreaContent}>
+                {isDragActive &&  <h1>Yup, just drop it here</h1>}
+                {!isDragActive &&
+                    <div>
+                        <h1>Drag 'n' drop some files here</h1>
+                        <p>Or click to here select files</p>
+                    </div>}
                 </div>
             </div>
         </div>
