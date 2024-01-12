@@ -5,6 +5,10 @@
     transition: all 0.3s ease-out;
 }
 
+.dropArea:hover {
+    cursor: pointer;
+}
+
 .active {
     opacity: 1;
 }
