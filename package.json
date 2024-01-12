@@ -14,7 +14,7 @@
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand",
     "heroku-postbuild": "cd client && npm i && npm run build",
     "railway-postbuild": "cd client && npm i && npm run build",
-    "deploy": "git push railway main"
+    "deploy": "git push heroku main"
   },
   "engines": {
     "node": "18.16.0",
