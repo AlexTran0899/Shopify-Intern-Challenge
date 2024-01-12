@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import style from './UploadImageModal.module.css'
 import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
 import DropZoneFileUpload from './DropzoneFileUpload/DropzoneFileUpload'
