@@ -29,9 +29,13 @@ export default function Admin() {
         setIsShowingUploadModal(true)
     }
 
+    const addImage = (image_data) => {
+        setImages(old => [...old,image_data] )
+    }
+
     return (
         <div className={style.body}>
-            {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal}  />}
+            {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal} addImage={addImage} />}
             <AdminNavBar openUploadModal={openUploadModal}/>
             {images.length === 0 && <WelcomeNewUserScreen/>}
             {images.length > 0 && <ImageContainer images={images} />}

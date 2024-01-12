@@ -4,11 +4,11 @@ import style from './DropzoneFileUpload.module.css'
 
 export default function DropzoneFileUpload({setFiles}) {
     const alertUserOfRejectedFile = (rejectedFile) => {
-        alert(`we're unable to upload these file, make sure that they are jpeg or png image file \n \n` + rejectedFile)
+        alert(`we're unable to upload some of your file, make sure that they are jpeg or png image file \n \n` + rejectedFile)
     }
 
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-        if(rejectedFiles) {
+        if(rejectedFiles.length > 0) {
             alertUserOfRejectedFile(rejectedFiles.map(file => file.file.name))
         }
         setFiles(acceptedFiles)
