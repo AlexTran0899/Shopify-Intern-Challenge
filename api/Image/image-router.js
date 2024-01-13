@@ -53,7 +53,7 @@ router.get('/find/:item_name', (req, res, next) => {
         .then(data => res.json(data))
         .catch(next)
 })
-router.get('/find-user-image/:item_name', restricted, (req, res, next) => {
+router.get('/find-admin-image/:item_name', restricted, (req, res, next) => {
     image.findUserImage(req.decodedJwt.subject, req.params.item_name)
         .then(data => res.json(data))
         .catch(next)
