@@ -22,19 +22,19 @@ export default function PhotoGrid({imageArray, openImageModalWithImage}) {
         <div className={style.row}>
             <div className={style.column}>
                 {images && images.filter((image) => image.column === 0).map(image =>
-                    <img key={image.image_id} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
+                    <img key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
             </div>
             <div className={style.column}>
                 {images && images.filter((image) => image.column === 1).map(image =>
-                    <img key={image.image_id} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
+                    <img key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
             </div>
             <div className={style.column}>
                 {images && images.filter((image) => image.column === 2).map(image =>
-                    <img key={image.image_id} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
+                    <img key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
             </div>
             <div className={style.column}>
                 {images && images.filter((image) => image.column === 3).map(image =>
-                    <img key={image.image_id} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
+                    <img key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)}/>)}
             </div>
         </div>
     )

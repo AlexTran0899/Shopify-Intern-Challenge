@@ -4,17 +4,23 @@ import './Fonts/fontStyles.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import {loadStripe} from "@stripe/stripe-js";
+import {Elements} from '@stripe/react-stripe-js';
+import axios from "axios";
+
+
+const {publishableKey} = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/config`).then(res => res.data)
+const stripePromise = loadStripe(publishableKey)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
-  // </React.StrictMode>
+    // <React.StrictMode>
+    <BrowserRouter>
+        <Elements stripe={stripePromise}>
+            <App />
+        </Elements>
+    </BrowserRouter>
+    // </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
