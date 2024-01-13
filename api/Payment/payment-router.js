@@ -52,4 +52,8 @@ router.get('/confirm/:id', async (req, res) => {
   }
 })
 
+router.get('/config', async (req, res) => {
+  res.json({publishableKey:process.env.STRIPE_PUBLIC_KEY})
+})
+
 module.exports = router;

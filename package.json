@@ -23,6 +23,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^1.17.1",
     "aws-sdk": "^2.987.0",
     "axios": "^1.6.5",
