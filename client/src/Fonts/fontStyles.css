@@ -1,9 +1,11 @@
 @font-face {
     font-family: 'Roboto';
-    src: local('Roboto'), url('./ttfFiles/Roboto-Regular.ttf') format('.ttf'),
-    url('./ttfFiles/Roboto-Regular.ttf') format('.ttf');
-    font-weight: normal;
-    font-style: normal;
+    src: url('ttf/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'ComicCode';
+    src: url('otf/ComicCode-Regular.otf');
 }
 
 

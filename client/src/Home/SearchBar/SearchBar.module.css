@@ -4,9 +4,11 @@
     height: 120px;
     display: flex;
     margin: 40px 0 20px 0;
+
 }
 
 .inputBox {
+    font-family: ComicCode,sans-serif;
     margin: 0 auto;
     text-align: center;
     font-size: 48px;
@@ -17,6 +19,7 @@
     border-bottom: 5px solid rgba(0, 0, 0, 0.2);
     transition: all 0.2s ease-in;
 }
+
 
 .inputBox:hover {
     border-bottom: 5px solid rgba(0, 0, 0, 0.6);
