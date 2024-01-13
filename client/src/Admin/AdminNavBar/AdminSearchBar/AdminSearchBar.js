@@ -1,13 +1,20 @@
 import React, {useState} from 'react'
 import style from './AdminSearchBar.module.css'
 import {ReactComponent as SearchIcon} from "../../../Svg-Icon/search_icon.svg";
+import AxiosWithAuth from "../../../Utils/AxiosWithAuth";
 
-export default function AdminSearchBar() {
+export default function AdminSearchBar({setImages,fetchAllAdminImage}) {
     const [searchText, setSearchText] = useState("")
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        alert("here")
+    const handleSubmit = async (e) =>{
+        e.preventDefault()
+
+        if(searchText === "" || searchText == null) {return fetchAllAdminImage()}
+
+        const result = await AxiosWithAuth().get(`${process.env.REACT_APP_API_URL}/api/images/find-admin-image/${searchText}`)
+            .then(res => res.data)
+            .catch(err => console.log(err))
+        setImages(result)
     }
 
     return (
@@ -15,7 +22,7 @@ export default function AdminSearchBar() {
             <form onSubmit={handleSubmit} className={style.searchBar}>
                 <input type="text"
                        placeholder="Find Your Photos"
-                       className={style.inputBox}
+                       // className={style.inputBox}
                        id="searchText"
                        maxLength='255'
                        value={searchText}

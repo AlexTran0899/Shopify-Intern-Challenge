@@ -8,13 +8,14 @@ import UploadImageModal from './UploadImageModal/UploadImageModal'
 import WelcomeNewUserScreen from "./WelcomeNewUserScreen/WelcomeNewUserScreen";
 import EditImageModal from "./EditImageModal/EditImageModal";
 import {useNavigate} from "react-router-dom";
+import ImageNotFoundScreen from "./ImageNotFoundScreen/ImageNotFoundScreen";
 
 export default function Admin() {
     const [images, setImages] = useState([])
-    const [searchText, setSearchText] = useState("")
     const [isShowingUploadModal, setIsShowingUploadModal] = useState(false)
     const [isShowingEditImageModal, setIsShowingEditImageModal] = useState(false)
     const [selectedImage, setSelectedImage] = useState({})
+    const [isNewUser, setIsNewUser] = useState(false)
 
     const navigate = useNavigate()
     const checkLoggedIn = () =>{
@@ -27,11 +28,16 @@ export default function Admin() {
             return navigate('/')
         }
 
-        fetchUserImage()
+        fetchAllAdminImage()
     }, []);
-    const fetchUserImage = () => {
+
+    const fetchAllAdminImage = () => {
         axiosWithAuth().get(`${process.env.REACT_APP_API_URL}/api/images/user-image`)
-            .then(res => setImages(res.data))
+            .then(res => {
+                const image_data = res.data
+                if (image_data.length === 0) {setIsNewUser(true)}
+                setImages(image_data)
+            })
             .catch(displayNetworkErrorAlert)
     }
 
@@ -66,8 +72,9 @@ export default function Admin() {
 
     return (
         <div className={style.body}>
-            <AdminNavBar openUploadModal={openUploadModal}/>
-            {images.length === 0 && <WelcomeNewUserScreen/>}
+            <AdminNavBar openUploadModal={openUploadModal} fetchAllAdminImage={fetchAllAdminImage} setImages={setImages}/>
+            {isNewUser && <WelcomeNewUserScreen/>}
+            {images.length === 0 && !isNewUser && <ImageNotFoundScreen/>}
             {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal} addImage={addImage} />}
             {isShowingEditImageModal && <EditImageModal updateImageInfo={updateImageInfo} selectedImage={selectedImage} closeEditImageModal={closeEditImageModal}/>}
             {images.length > 0 && <ImageContainer images={images} openEditImageModal={openEditImageModal} />}
