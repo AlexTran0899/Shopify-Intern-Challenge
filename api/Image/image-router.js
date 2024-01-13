@@ -33,6 +33,8 @@ router.get('/user-image', restricted, (req, res, next) => {
 })
 
 router.put('/:image_key', restricted, (req, res, next) => {
+    if(parseInt(req.body.price) < 50) { req.body.price = 50}
+
     const new_data = {
         image_title:req.body.image_title,
         price:parseInt(req.body.price * 100),
@@ -54,7 +56,7 @@ router.get('/find/:item_name', (req, res, next) => {
         .catch(next)
 })
 router.get('/find-admin-image/:item_name', restricted, (req, res, next) => {
-    image.findUserImage(req.decodedJwt.subject, req.params.item_name)
+    image.findAdminImages(req.decodedJwt.subject, req.params.item_name)
         .then(data => res.json(data))
         .catch(next)
 })

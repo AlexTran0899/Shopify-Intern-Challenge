@@ -5,10 +5,10 @@ export default function UploadingDisplay() {
     const [dots, setDots] = useState(1);
 
     useEffect(() => {
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             setDots(prevDots => (prevDots % 5) + 1);
         }, 500);
-
+        return () => clearInterval(intervalId);
     }, []);
 
     return (
