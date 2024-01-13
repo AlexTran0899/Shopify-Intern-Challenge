@@ -28,12 +28,12 @@ async function imageLabeling(url) {
     .then(() => data.labelAnnotations.map(each => word.push(each.description)))
     .then(() => word = word.join())
     .then(() => Upload.addingTags(url, word))
+      .catch(() => console.log("error in image labeling"))
 }
 
-router.post('/', restricted, (req, res,next) => {
+router.post('/', restricted, (req, res) => {
   singleUpload(req, res, async (err) => {
-    if (req?.file?.key) {
-      console.log(req.file.location)
+    if (!err) {
       const data = {
         image_key: req.file.key,
         user_id: req.decodedJwt.subject,
@@ -43,6 +43,7 @@ router.post('/', restricted, (req, res,next) => {
       Upload.Add(data)
         .then(() => res.json({ image_key: req?.file?.key }))
         .then(() => imageLabeling(req.file.location))
+          .catch(() => {res.status(400).json("image labeling error")})
     } else {
       res.status(400).json(err)
     }

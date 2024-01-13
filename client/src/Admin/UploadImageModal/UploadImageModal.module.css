@@ -44,7 +44,6 @@
     font-size: 24px;
     background: white;
     padding: 0;
-    cursor: pointer;
     outline: inherit;
     color: black;
     height: 50px;
@@ -81,6 +80,20 @@
 
 .closeButton:active {
     transform: scale(0.95);
+}
+
+.timeRemainingDisplay {
+    text-align: center;
+    font-size: 24px;
+    background: white;
+    padding: 0;
+    outline: inherit;
+    color: black;
+    height: 50px;
+    transition: all 0.3s ease, transform 0.1s ease;
+    border: 1px solid black;
+    width: 100%;
+    margin-right: 10px;
 }
 
 

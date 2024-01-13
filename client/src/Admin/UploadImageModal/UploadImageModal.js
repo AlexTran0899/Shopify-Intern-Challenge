@@ -60,7 +60,7 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
                 {isUploading && <UploadingWaitScreen/>}
                 <div className={style.footer}>
                     {files.length > 0 && !isUploading && <button className={style.btn} onClick={uploadAllImage}>UPLOAD {files.length} FILE(S)</button>}
-                    {files.length > 0 && isUploading && <button disabled className={style.btn}>{files.length + 1} FILE(S) REMAINING</button>}
+                    {files.length > 0 && isUploading && <button className={style.timeRemainingDisplay}>{files.length + 1} FILE(S) REMAINING</button>}
                     <CloseIconSVG className={style.closeButton} onClick={closeUploadModal}/>
                 </div>
             </div>

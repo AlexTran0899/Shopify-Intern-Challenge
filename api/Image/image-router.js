@@ -66,9 +66,10 @@ router.delete('/delete-all-user-image', restricted, (req, res, next) => {
         .catch(next)
 })
 
-router.put('/views/:image_key', (req, res) => {
+router.put('/views/:image_key', (req, res,next) => {
     image.incrementViews(req.params.image_key)
     .then(data => res.json(data))
+        .catch(next)
 })
 
 module.exports = router;
