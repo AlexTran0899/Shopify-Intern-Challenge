@@ -16,7 +16,7 @@ function getImageByKey(image_key) {
   return db('image').where({ image_key }).select(['original_image', 'price']).first()
 }
 function updateImage(user_id, image_key, data) {
-  return db('image').where({ user_id, image_key }).update(data, ['*'])
+  return db('image').where({ user_id }).andWhere({image_key}).update(data, ['*'])
 }
 
 function deleteOneImage(user_id, image_key) {
