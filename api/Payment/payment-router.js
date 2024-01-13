@@ -4,7 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 stripe.applePayDomains.create({
   domain_name: process.env.REACT_APP_API_URI
-}).catch(() => process.env.NODE_ENV !== 'testing' ? console.log("Apple pay require https"): null);
+}).catch(() => process.env.NODE_ENV !== 'development' ? console.log("Apple pay require https"): null);
 
 
 router.post('/create-payment-intent', async (req, res) => {
@@ -16,6 +16,7 @@ router.post('/create-payment-intent', async (req, res) => {
     currency: 'usd',
     description: image_key
   }
+
   if (paymentMethodType === 'acss_debit') {
     params.payment_method_options = {
       acss_debit: {
