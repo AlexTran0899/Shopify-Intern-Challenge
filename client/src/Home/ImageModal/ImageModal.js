@@ -1,7 +1,7 @@
 import React from 'react'
 import style from './ImageModal.module.css'
 import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
-import ApplePay from "../../Admin/Components/ApplePay/ApplePay";
+import ApplePay from "../../Components/ApplePay/ApplePay";
 export default function ImageModal({isShowingModal, selectedImage, setIsModalShowing}) {
     return (
     <div>

@@ -10,7 +10,7 @@ export default function ApplePay() {
     const elements = useElements()
 
     useEffect(() => {
-        if(!stripe || elements) {
+        if(!stripe || !elements) {
             return;
         }
         const pr = stripe.paymentRequest({
