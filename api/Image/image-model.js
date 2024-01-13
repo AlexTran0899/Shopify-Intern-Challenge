@@ -26,7 +26,7 @@ async function find(char) {
     .andWhere({ public: 1 })
     .orWhere('tags', 'ilike', `%${char}%`)
     .andWhere({ public: 1 })
-    .select('url','price','image_key')
+    .select('url','price','image_key','image_title')
 }
 function findUserImage(user_id, char) {
   return db('image').where('image_title', 'ilike', `%${char}%`)
