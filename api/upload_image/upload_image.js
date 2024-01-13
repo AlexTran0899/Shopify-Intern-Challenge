@@ -30,7 +30,7 @@ async function imageLabeling(url) {
     .then(() => Upload.addingTags(url, word))
 }
 
-router.post('/', restricted, (req, res) => {
+router.post('/', restricted, (req, res,next) => {
   singleUpload(req, res, async (err) => {
     if (req?.file?.key) {
       console.log(req.file.location)
@@ -42,7 +42,7 @@ router.post('/', restricted, (req, res) => {
       }
       Upload.Add(data)
         .then(() => res.json({ image_key: req?.file?.key }))
-        // .then(() => imageLabeling(req.file.location))
+        .then(() => imageLabeling(req.file.location))
     } else {
       res.status(400).json(err)
     }
