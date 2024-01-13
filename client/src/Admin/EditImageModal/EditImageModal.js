@@ -3,7 +3,7 @@ import style from "./EditImageModal.module.css";
 import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
 import AxiosWithAuth from "../../Utils/AxiosWithAuth";
 
-export default function EditImageModal({closeEditImageModal, selectedImage}) {
+export default function EditImageModal({updateImageInfo,closeEditImageModal, selectedImage}) {
     const defaultValue = {...selectedImage, price: (selectedImage.price / 100).toFixed(2)}
     const [editedImageInfo,setEditedImageInfo] = useState(defaultValue)
     const [minPriceWarning, setMinPriceWaring] = useState(false)
@@ -13,11 +13,15 @@ export default function EditImageModal({closeEditImageModal, selectedImage}) {
         return true
     }
     const onChange = (e) => {
+
         setMinPriceWaring(false)
         if(e.target.id === 'price') {
             let new_price = e.target.value.replace(/[^\d.]/g, '');
             if(!isPriceValid(new_price)) {setMinPriceWaring(true)}
             e.target.value = new_price
+        } else if (e.target.id === 'public') {
+            setEditedImageInfo({...editedImageInfo,[e.target.id]: e.target.checked})
+            return
         }
         setEditedImageInfo({...editedImageInfo,[e.target.id]: e.target.value})
     }
@@ -28,7 +32,9 @@ export default function EditImageModal({closeEditImageModal, selectedImage}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(!isPriceValid(editedImageInfo.price)){ setMinPriceWaring(true); return}
-        await updateImageInfoNetworkRequest()
+        const {data} = await updateImageInfoNetworkRequest()
+        const new_image_info = data[0]
+        updateImageInfo(new_image_info)
         closeEditImageModal()
     }
     return (
@@ -62,6 +68,18 @@ export default function EditImageModal({closeEditImageModal, selectedImage}) {
                                 required
                                 value={editedImageInfo.price}
                                 className={style.inputBox}
+                                onChange={onChange}
+                            />
+                        </div>
+                        <div className={style.checkbox}>
+                            <label>
+                                <p>Set image to public: </p>
+                            </label>
+                            <input
+                                type="checkbox"
+                                id="public"
+                                checked={editedImageInfo.public}
+                                style={{transform: "scale(1.5)"}}
                                 onChange={onChange}
                             />
                         </div>

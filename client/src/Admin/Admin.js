@@ -37,7 +37,6 @@ export default function Admin() {
     }
 
     const openEditImageModal = (image) => {
-        console.log("here")
         setIsShowingEditImageModal(true)
         setSelectedImage(image)
     }
@@ -47,12 +46,19 @@ export default function Admin() {
         setSelectedImage({})
     }
 
+    const updateImageInfo = (new_image_info) =>{
+        const index = images.findIndex(image => image.image_key === new_image_info.image_key)
+        const new_arr = [...images]
+        new_arr[index] = new_image_info
+        setImages(new_arr)
+    }
+
     return (
         <div className={style.body}>
             <AdminNavBar openUploadModal={openUploadModal}/>
             {images.length === 0 && <WelcomeNewUserScreen/>}
             {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal} addImage={addImage} />}
-            {isShowingEditImageModal && <EditImageModal selectedImage={selectedImage} closeEditImageModal={closeEditImageModal}/>}
+            {isShowingEditImageModal && <EditImageModal updateImageInfo={updateImageInfo} selectedImage={selectedImage} closeEditImageModal={closeEditImageModal}/>}
             {images.length > 0 && <ImageContainer images={images} openEditImageModal={openEditImageModal} />}
         </div>
     )

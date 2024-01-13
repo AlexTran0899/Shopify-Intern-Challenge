@@ -39,7 +39,7 @@ router.put('/:image_key', restricted, (req, res, next) => {
         public: req.body.public === true ? 1 : 0
     }
     image.updateImage(req.decodedJwt.subject, req.params.image_key, new_data)
-        .then(data => console.log(data))
+        .then(data => res.json(data))
         .catch(next)
 })
 router.delete('/delete-image/:image_key', restricted, (req, res, next) => {
