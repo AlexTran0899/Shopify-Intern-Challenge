@@ -6,6 +6,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: 0 4px;
+    min-width: 100vw;
 }
 
 .column {

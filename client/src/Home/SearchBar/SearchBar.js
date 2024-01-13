@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import style from './SearchBar.module.css'
-export default function SearchBar() {
+import axios from "axios";
+export default function SearchBar({setImages,getAllImages}) {
     const [searchText, setSearchText] = useState("")
     const [placeHolderText, setPlaceHolderText] = useState(null)
     const [isInputBoxFocus, setIsInputBoxFocus] = useState(false)
@@ -36,15 +37,27 @@ export default function SearchBar() {
     useEffect(() => {
         type()
     }, [])
+    const onSubmit = async (e) =>{
+        e.preventDefault()
+
+        if(searchText === "" || searchText == null) {return getAllImages()}
+
+        const result = await axios.get(`${process.env.REACT_APP_API_URL}/api/images/find/${searchText}`)
+            .then(res => res.data)
+            .catch(err => console.log(err))
+        setImages(result)
+    }
 
     return (
-        <div  className={style.searchBar}>
-            <input type="text"
-                   maxLength='255'
-                   className={style.inputBox}
-                   placeholder={`Search for ${placeHolderText}`}
-                   onChange={(e) => setSearchText(e.target.value)}
-            />
+        <div  >
+            <form onSubmit={onSubmit} className={style.searchBar}>
+                <input type="text"
+                       maxLength='255'
+                       className={style.inputBox}
+                       placeholder={`Search for ${placeHolderText}`}
+                       onChange={(e) => setSearchText(e.target.value)}
+                />
+            </form>
         </div>
     )
 }

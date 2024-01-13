@@ -11,14 +11,14 @@ export default function Home() {
     const [isModalShowing, setIsModalShowing] = useState(false)
     const [selectedImage, setSelectedImage] = useState(null)
 
-
-    useEffect(() => {
+    const getAllImages = () => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/images`).then(
             res => setImages(res.data)
         ).catch(err => console.log(err));
-    }, []);
+    }
 
     useEffect(() => {
+        getAllImages()
     }, []);
 
     const openImageModalWithImage = (image) => {
@@ -29,7 +29,7 @@ export default function Home() {
     return (
         <div className={style.body}>
             {!isModalShowing && <HambugerMenu/>}
-            <SearchBar/>
+            <SearchBar setImages={setImages} getAllImages={getAllImages}/>
             {isModalShowing && <ImageModal setIsModalShowing={setIsModalShowing} isShowingModal={isModalShowing} selectedImage={selectedImage}/>}
             {images && <PhotoGrid imageArray={images} openImageModalWithImage={openImageModalWithImage}/>}
         </div>
