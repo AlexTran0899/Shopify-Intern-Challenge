@@ -10,7 +10,7 @@ import axios from "axios";
 
 
 const {publishableKey} = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/config`).then(res => res.data)
-console.log(publishableKey)
+console.log(process.env.REACT_APP_API_URL)
 const stripePromise = loadStripe(publishableKey)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
