@@ -16,7 +16,6 @@ server.use(helmet({
         directives: {
             defaultSrc: ["'self'"],
             imgSrc: ["'self'", "https://lawstufflab37.s3.amazonaws.com"],
-            // Add other directives as needed
         },
     },
 }));
@@ -32,9 +31,9 @@ server.use('*', (req, res) => {
 })
 
 server.use((err, req, res, next) => {
-    res.status(500).json({
-        message: err.message,
-        stack: err.stack
+    res?.status(500).json({
+        message: err?.message,
+        stack: err?.stack
     })
 })
 

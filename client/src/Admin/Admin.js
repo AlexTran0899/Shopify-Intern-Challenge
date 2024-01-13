@@ -7,6 +7,7 @@ import AdminNavBar from "./AdminNavBar/AdminNavBar";
 import UploadImageModal from './UploadImageModal/UploadImageModal'
 import WelcomeNewUserScreen from "./WelcomeNewUserScreen/WelcomeNewUserScreen";
 import EditImageModal from "./EditImageModal/EditImageModal";
+import {useNavigate} from "react-router-dom";
 
 export default function Admin() {
     const [images, setImages] = useState([])
@@ -15,7 +16,17 @@ export default function Admin() {
     const [isShowingEditImageModal, setIsShowingEditImageModal] = useState(false)
     const [selectedImage, setSelectedImage] = useState({})
 
+    const navigate = useNavigate()
+    const checkLoggedIn = () =>{
+        return localStorage.getItem("token") !== null
+    }
+
     useEffect(() => {
+        if(!checkLoggedIn()) {
+            alert('Please login first')
+            return navigate('/')
+        }
+
         fetchUserImage()
     }, []);
     const fetchUserImage = () => {
