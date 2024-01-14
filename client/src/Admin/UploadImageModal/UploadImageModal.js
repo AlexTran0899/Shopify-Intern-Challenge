@@ -18,10 +18,10 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
             .catch(DisplayNetworkErrorAlert)
     }
 
-    const uploadOriginalImage = (image_file,image_key_in_DB) => {
+    const uploadOriginalImage = async  (image_file,image_key_in_DB) => {
         const formData = new FormData();
         formData.append('image', image_file);
-        return AxiosWithAuth().put(`${process.env.REACT_APP_API_URL}/api/uploadImage/original_image/${image_key_in_DB}`, formData)
+        return await AxiosWithAuth().put(`${process.env.REACT_APP_API_URL}/api/uploadImage/original_image/${image_key_in_DB}`, formData)
             .catch(DisplayNetworkErrorAlert)
     }
 
@@ -38,8 +38,9 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
         const compressed = await compressImage(image_file)
         const image_key = await uploadCompressedImage(compressed)
         if(!image_key) {return alert('skipping current file')}
-        const {data} = await uploadOriginalImage(image_file, image_key)
-        addImage(data[0])
+        const result = await uploadOriginalImage(image_file, image_key)
+        if(!result) { return alert('skipping current file')}
+        addImage(result.data[0])
     }
 
     const uploadAllImage = async () => {

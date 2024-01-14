@@ -3,6 +3,7 @@ const router = express.Router();
 const upload = require('./fileupload');
 const singleUpload = upload.single('image');
 const Upload = require('./upload_image-model')
+const image = require('../Image/image-model')
 const restricted = require('../middleware/restricted')
 const axios = require('axios')
 
@@ -65,10 +66,16 @@ router.put('/original_image/:image_key', restricted, (req, res,next) => {
 
   singleUpload(req, res, (err) => {
     if (err) {
+      console.log("in the error")
+      image.deleteOneImage(user_id,image_key)
+          .then()
+          .catch(err => console.log(err))
       return next(err)
     }
-
     if (!req.file) {
+      image.deleteOneImage(user_id,image_key)
+          .then()
+          .catch(err => console.log(err))
       return res.status(400).json({ message: 'No file uploaded' });
     }
 

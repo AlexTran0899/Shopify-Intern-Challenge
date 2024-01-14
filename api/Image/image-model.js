@@ -19,8 +19,10 @@ function updateImage(user_id, image_key, data) {
 }
 
 function deleteOneImage(user_id, image_key) {
-  return db('image').where({ user_id, image_key }).del()
+  console.log("in the model", user_id,image_key)
+  return db('image').where({ user_id }).andWhere({ image_key}).del()
 }
+
 async function find(char) {
   return db('image').where('image_title', 'ilike', `%${char}%`)
     .andWhere({ public: 1 })
