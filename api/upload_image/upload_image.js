@@ -40,11 +40,18 @@ const imageLabeling = async (url, next) => {
     }
 };
 const compressImage = async (imageData, fileExtension) => {
-    return sharp(imageData)
+    const buffer = await sharp(imageData)
         .resize(1000, 1000, { fit: sharp.fit.inside, withoutEnlargement: true })
         .toFormat(fileExtension)
         .webp({ quality: 95 })
         .toBuffer();
+
+    const metadata = await sharp(buffer).metadata();
+    return {
+        buffer,
+        width: metadata.width,
+        height: metadata.height
+    };
 };
 
 const createS3UploadParams = (imageData, bucket, fileExtension, mimeType) => ({
@@ -55,13 +62,15 @@ const createS3UploadParams = (imageData, bucket, fileExtension, mimeType) => ({
     ACL: 'public-read'
 });
 
-const addImageToDatabase = async (userId, compressedResult, originalResult) => {
+const addImageToDatabase = async (userId, compressedResult, originalResult, width, height) => {
     const imageData = {
         image_key: compressedResult.key,
         user_id: userId,
         image_title: '',
         url: compressedResult.Location,
-        original_image: originalResult.Location
+        original_image: originalResult.Location,
+        compressed_width: width,
+        compressed_height: height
     };
 
     const data = await Upload.Add(imageData);
@@ -70,6 +79,7 @@ const addImageToDatabase = async (userId, compressedResult, originalResult) => {
     }
     return data[0];
 };
+
 
 function getFileExtensionFromMimeType(mimeType) {
   const mimeTypes = {
@@ -91,11 +101,10 @@ router.post('/', restricted,
             const fileExtension = getFileExtensionFromMimeType(mimeType)
             const bucket = process.env.AWS_BUCKET;
 
-          const compressedImage = await compressImage(originalImageData, 'webp');
-          const compressedResult = await uploadToS3(createS3UploadParams(compressedImage, bucket, 'webp', 'image/webp' ));
-
-          const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimeType));
-          const data = await addImageToDatabase(req.decodedJwt.subject, compressedResult, originalResult);
+            const { buffer: compressedImage, width, height } = await compressImage(originalImageData, 'webp');
+            const compressedResult = await uploadToS3(createS3UploadParams(compressedImage, bucket, 'webp', 'image/webp' ));
+            const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimeType));
+            const data = await addImageToDatabase(req.decodedJwt.subject, compressedResult, originalResult, width, height);
 
             await imageLabeling(compressedResult.Location, next);
             res.json(data);

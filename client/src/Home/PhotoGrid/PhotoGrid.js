@@ -3,15 +3,18 @@ import style from './PhotoGrid.module.css'
 
 export default function PhotoGrid({imageArray, openImageModalWithImage}) {
     const [images, setImages] = useState([])
-    const assignIndex = (images) =>{
-        if (images.length === 0) { return setImages([])}
-        let counter = 0
+    const assignIndex = (images) => {
+        if (images.length === 0) { return setImages([]); }
+        let columnHeights = [0, 0, 0, 0];
+
         const index_assigned_images = images.map(image => {
-            image.column = counter
-            counter = (counter + 1) % 4
-            return image
-        })
-        setImages(index_assigned_images)
+            let minColumn = columnHeights.indexOf(Math.min(...columnHeights));
+            image.column = minColumn;
+            columnHeights[minColumn] += image.compressed_height;
+            return image;
+        });
+
+        setImages(index_assigned_images);
     }
 
     useEffect(() => {
