@@ -26,7 +26,7 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
     }
 
     const compressImage = async (imageFile) => {
-        const options = {maxSizeMB: 0.5, useWebWorker: true,}
+        const options = {maxSizeMB: 0.2, useWebWorker: true,}
         try {
             return await imageCompression(imageFile, options)
         } catch (error) {
@@ -50,7 +50,6 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
         }
         setIsUploading(false)
         closeUploadModal()
-
     }
 
     const addFileToBeUpload = (more_files) => {
