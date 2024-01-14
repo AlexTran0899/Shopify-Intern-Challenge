@@ -4,7 +4,10 @@ import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
 import AxiosWithAuth from "../../Utils/AxiosWithAuth";
 
 export default function EditImageModal({updateImageInfo,closeEditImageModal, selectedImage}) {
-    const defaultValue = {...selectedImage, price: (selectedImage.price / 100).toFixed(2)}
+    const defaultValue = {...selectedImage,
+        price: (selectedImage.price / 100).toFixed(2),
+        public: selectedImage.public === 1
+    }
     const [editedImageInfo,setEditedImageInfo] = useState(defaultValue)
     const [minPriceWarning, setMinPriceWaring] = useState(false)
 
@@ -20,6 +23,7 @@ export default function EditImageModal({updateImageInfo,closeEditImageModal, sel
             if(!isPriceValid(new_price)) {setMinPriceWaring(true)}
             e.target.value = new_price
         } else if (e.target.id === 'public') {
+            console.log(e.target.checked)
             setEditedImageInfo({...editedImageInfo,[e.target.id]: e.target.checked})
             return
         }

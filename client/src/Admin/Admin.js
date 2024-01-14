@@ -36,6 +36,7 @@ export default function Admin() {
             .then(res => {
                 const image_data = res.data
                 if (image_data.length === 0) {setIsNewUser(true)}
+                console.log(image_data)
                 setImages(image_data)
             })
             .catch(displayNetworkErrorAlert)
