@@ -43,7 +43,7 @@ const compressImage = async (imageData, fileExtension) => {
     return sharp(imageData)
         .resize(1000, 1000, { fit: sharp.fit.inside, withoutEnlargement: true })
         .toFormat(fileExtension)
-        .webp({ quality: 80 })
+        .webp({ quality: 95 })
         .toBuffer();
 };
 
