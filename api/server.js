@@ -16,14 +16,10 @@ server.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
-            imgSrc: ["'self'", "https://imagemarketplace.s3.amazonaws.com","https://imageforsale.s3.amazonaws.com"],
+            imgSrc: ["'self'", "https://imagemarketplace.s3.amazonaws.com"],
         },
     },
 }));
-
-server.use(cors({
-    origin:"*",
-}))
 
 server.use('/api/auth', Auth)
 server.use('/api/payment', Payment)
