@@ -15,7 +15,7 @@ server.use(express.json())
 server.use(helmet({
     contentSecurityPolicy: {
         directives: {
-            defaultSrc: ["'self'"],
+            defaultSrc: ["'self'","https://js.stripe.com/v3"],
             imgSrc: ["'self'", "https://imagemarketplace.s3.amazonaws.com"],
         },
     },
