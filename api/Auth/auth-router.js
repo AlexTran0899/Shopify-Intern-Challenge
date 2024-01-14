@@ -22,13 +22,6 @@ router.post('/register', checkCreateAccount, checkUsernameUnique, (req, res, nex
     .catch(next)
 });
 
-router.get('/getall', (req, res) => {
-  Auth.getAll()
-    .then(data => {
-      res.json(data)
-    })
-})
-
 router.post('/login', (req, res, next) => {
   req.body.email = req.body.email.toLowerCase()
   const { email, password } = req.body
@@ -51,10 +44,10 @@ router.post('/login', (req, res, next) => {
     .catch(next)
 });
 
-router.put('/update', (req, res, next) => {
-  router.update(req.body)
-    .then(data => res.json(data))
-    .catch(next)
-})
+// router.put('/update', (req, res, next) => {
+//   router.update(req.body)
+//     .then(data => res.json(data))
+//     .catch(next)
+// })
 
 module.exports = router;

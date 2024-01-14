@@ -22,7 +22,6 @@ async function imageLabeling(url) {
     }
     ]
   }
-
   axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_API_KEY}`, requests)
     .then(res => data = res.data.responses[0])
     .then(() => data.labelAnnotations.map(each => word.push(each.description)))
