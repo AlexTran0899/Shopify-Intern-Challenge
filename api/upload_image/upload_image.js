@@ -30,23 +30,34 @@ async function imageLabeling(url) {
       .catch(() => console.log("error in image labeling"))
 }
 
-router.post('/', restricted, (req, res) => {
-  singleUpload(req, res, async (err) => {
-    if (req?.file?.key) {
-      const data = {
-        image_key: req.file.key,
-        user_id: req.decodedJwt.subject,
-        image_title: '',
-        url: req.file.location,
-      }
-      Upload.Add(data)
+
+router.post('/', restricted, (req, res,next) => {
+  singleUpload(req, res, function (err) {
+    // Check for multer error
+    if (err) {
+      return next(err);
+    }
+
+    // Check if file is uploaded
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const data = {
+      image_key: req.file.key,
+      user_id: req.decodedJwt.subject,
+      image_title: '',
+      url: req.file.location,
+    };
+
+    Upload.Add(data)
         .then(() => res.json({ image_key: req.file.key }))
         .then(() => imageLabeling(req.file.location))
-          .catch(() => {res.status(400).json("image labeling error")})
-    } else {
-      res.status(400).json(err)
-    }
-  })
+        .catch((error) => {
+          console.error('Image Labeling Error:', error);
+          res.status(400).json("image labeling error");
+        });
+  });
 });
 
 router.put('/original_image/:image_key', restricted, (req, res) => {

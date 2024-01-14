@@ -5,6 +5,7 @@ import DropZoneFileUpload from './DropzoneFileUpload/DropzoneFileUpload'
 import imageCompression from 'browser-image-compression';
 import AxiosWithAuth from "../../Utils/AxiosWithAuth";
 import UploadingWaitScreen from "./UploadingDisplay/UploadingWaitScreen";
+import DisplayNetworkErrorAlert from "../../Utils/DisplayNetworkErrorAlert";
 
 export default function UploadImageModal({isShowingUploadModal, closeUploadModal,addImage}) {
     const [files, setFiles] = useState([])
@@ -14,12 +15,14 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
         const formData = new FormData();
         formData.append('image', image_file);
         return AxiosWithAuth().post(`${process.env.REACT_APP_API_URL}/api/uploadImage`, formData).then(res => res.data.image_key)
+            .catch(DisplayNetworkErrorAlert)
     }
 
     const uploadOriginalImage = (image_file,image_key_in_DB) => {
         const formData = new FormData();
         formData.append('image', image_file);
         return AxiosWithAuth().put(`${process.env.REACT_APP_API_URL}/api/uploadImage/original_image/${image_key_in_DB}`, formData)
+            .catch(DisplayNetworkErrorAlert)
     }
 
     const compressImage = async (imageFile) => {
@@ -33,8 +36,8 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
 
     const uploadImage = async  (image_file) => {
         const compressed = await compressImage(image_file)
-        console.log(compressed)
         const image_key = await uploadCompressedImage(compressed)
+        if(!image_key) {return alert('skipping current file')}
         const {data} = await uploadOriginalImage(image_file, image_key)
         addImage(data[0])
     }
