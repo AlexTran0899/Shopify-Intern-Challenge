@@ -54,24 +54,31 @@ router.post('/', restricted, (req, res,next) => {
         .then(() => res.json({ image_key: req.file.key }))
         .then(() => imageLabeling(req.file.location))
         .catch((error) => {
-          console.error('Image Labeling Error:', error);
-          res.status(400).json("image labeling error");
+          res.status(400).json(error);
         });
   });
 });
 
-router.put('/original_image/:image_key', restricted, (req, res) => {
-  const image_key = req.params.image_key
-  const user_id =   req.decodedJwt.subject
+router.put('/original_image/:image_key', restricted, (req, res,next) => {
+  const image_key = req.params.image_key;
+  const user_id = req.decodedJwt.subject;
+
   singleUpload(req, res, (err) => {
-    if (!err) {
-      Upload.updateOriginalImage( user_id ,image_key, req.file.location)
-        .then(data => res.json(data))
-          .catch(err => console.log(err))
-    } else {
-      res.status(400).json(err)
+    if (err) {
+      return next(err)
     }
-  })
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    Upload.updateOriginalImage(user_id, image_key, req.file.location)
+        .then(data => res.json(data))
+        .catch(err => {
+          next(err)
+        });
+  });
 });
+
 
 module.exports = router;
