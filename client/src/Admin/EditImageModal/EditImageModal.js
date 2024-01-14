@@ -54,7 +54,7 @@ export default function EditImageModal({updateImageInfo,closeEditImageModal, sel
                                 type="text"
                                 id="image_title"
                                 minLength='3'
-                                maxLength='255'
+                                maxLength='30'
                                 autoComplete="off"
                                 required
                                 value={editedImageInfo.image_title}
