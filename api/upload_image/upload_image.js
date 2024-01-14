@@ -33,7 +33,7 @@ async function imageLabeling(url) {
 
 router.post('/', restricted, (req, res) => {
   singleUpload(req, res, async (err) => {
-    if (!err) {
+    if (req?.file?.key) {
       const data = {
         image_key: req.file.key,
         user_id: req.decodedJwt.subject,
@@ -41,7 +41,7 @@ router.post('/', restricted, (req, res) => {
         url: req.file.location,
       }
       Upload.Add(data)
-        .then(() => res.json({ image_key: req?.file?.key }))
+        .then(() => res.json({ image_key: req.file.key }))
         .then(() => imageLabeling(req.file.location))
           .catch(() => {res.status(400).json("image labeling error")})
     } else {
@@ -59,7 +59,7 @@ router.put('/original_image/:image_key', restricted, (req, res) => {
         .then(data => res.json(data))
           .catch(err => console.log(err))
     } else {
-      res.status(400).send({message: err})
+      res.status(400).json(err)
     }
   })
 });

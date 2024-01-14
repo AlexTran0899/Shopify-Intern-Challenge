@@ -33,6 +33,7 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
 
     const uploadImage = async  (image_file) => {
         const compressed = await compressImage(image_file)
+        console.log(compressed)
         const image_key = await uploadCompressedImage(compressed)
         const {data} = await uploadOriginalImage(image_file, image_key)
         addImage(data[0])

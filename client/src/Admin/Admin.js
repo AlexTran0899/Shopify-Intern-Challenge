@@ -73,7 +73,7 @@ export default function Admin() {
     return (
         <div className={style.body}>
             <AdminNavBar openUploadModal={openUploadModal} fetchAllAdminImage={fetchAllAdminImage} setImages={setImages}/>
-            {isNewUser && <WelcomeNewUserScreen/>}
+            {images.length === 0 && isNewUser && <WelcomeNewUserScreen/>}
             {images.length === 0 && !isNewUser && <ImageNotFoundScreen/>}
             {isShowingUploadModal && <UploadImageModal isShowingUploadModal={isShowingUploadModal} closeUploadModal={closeUploadModal} addImage={addImage} />}
             {isShowingEditImageModal && <EditImageModal updateImageInfo={updateImageInfo} selectedImage={selectedImage} closeEditImageModal={closeEditImageModal}/>}
