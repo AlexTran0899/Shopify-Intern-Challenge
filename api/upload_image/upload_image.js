@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const sharp = require('sharp');
 const Upload = require('./upload_image-model')
-const image = require('../Image/image-model')
 const restricted = require('../middleware/restricted')
 const AWS = require('aws-sdk')
 const fileUpload = require("express-fileupload");
 const axios = require('axios')
-
 const { v4: uuidv4 } = require('uuid');
 
 AWS.config.update({region:process.env.AWS_REGION})
@@ -40,42 +39,58 @@ const imageLabeling = async (url, next) => {
         next(error);
     }
 };
+const compressImage = async (imageData, fileExtension) => {
+    return sharp(imageData)
+        .resize(1000, 1000, { fit: sharp.fit.inside, withoutEnlargement: true })
+        .toFormat(fileExtension)
+        .jpeg({ quality: 98 })
+        .toBuffer();
+};
 
-router.post('/', restricted,
-    fileUpload({ limits: { fileSize: 2 * 1024 * 1024 }}),
-    async (req, res, next) => {
-        console.log(req.files)
-    try {
+const createS3UploadParams = (imageData, bucket, fileExtension, mimeType) => ({
+    Bucket: bucket,
+    Key: `${uuidv4()}.${fileExtension}`,
+    Body: imageData,
+    ContentType: mimeType,
+    ACL: 'public-read'
+});
 
-        const image = req.files.image;
-        const fileExtension = image.name.split('.').pop();
-        const uploadParams = {
-            Bucket: process.env.AWS_BUCKET,
-            Key: `${uuidv4()}.${fileExtension}`,
-            Body: Buffer.from(image.data),
-            ContentType: image.mimeType,
-            ACL: 'public-read'
-        };
+const addImageToDatabase = async (userId, compressedResult, originalResult) => {
+    const imageData = {
+        image_key: compressedResult.key,
+        user_id: userId,
+        image_title: '',
+        url: compressedResult.Location,
+        original_image: originalResult.Location
+    };
 
-        const data = await uploadToS3(uploadParams);
-
-        const image_data = {
-            image_key: data.key,
-            user_id: req.decodedJwt.subject,
-            image_title: '',
-            url: data.Location,
-        };
-
-        const image_key = await Upload.Add(image_data);
-        if (!image_key || image_key.length === 0) {
-            throw new Error('Error adding image to the database');
-        }
-
-        await imageLabeling(image_data.url, next);
-        res.json({ image_key: image_key[0].image_key });
-    } catch (error) {
-        next(error);
+    const data = await Upload.Add(imageData);
+    if (!data[0].image_key || data[0].image_key.length === 0) {
+        throw new Error('Error adding image to the database');
     }
+    return data[0];
+};
+router.post('/', restricted,
+    fileUpload({ limits: { fileSize: 50 * 1024 * 1024 }}),
+    async (req, res, next) => {
+        try {
+            const { image } = req.files;
+            const { data: originalImageData, mimeType } = image;
+            const fileExtension = 'jpeg';
+            const bucket = process.env.AWS_BUCKET;
+
+            const compressedImage = await compressImage(originalImageData, fileExtension);
+            const compressedResult = await uploadToS3(createS3UploadParams(compressedImage, bucket, fileExtension, mimeType));
+
+            const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimeType));
+            const data = await addImageToDatabase(req.decodedJwt.subject, compressedResult, originalResult);
+
+            await imageLabeling(compressedResult.Location, next);
+            console.log(data)
+            res.json(data);
+        } catch (error) {
+            next(error);
+        }
 });
 
 async function uploadToS3(uploadParams) {
@@ -89,34 +104,6 @@ async function uploadToS3(uploadParams) {
         });
     });
 }
-
-
-router.put('/original_image/:image_key', restricted, (req, res,next) => {
-  const image_key = req.params.image_key;
-  const user_id = req.decodedJwt.subject;
-  //
-  // singleUpload(req, res, (err) => {
-  //   if (err) {
-  //     console.log("in the error")
-  //     image.deleteOneImage(user_id,image_key)
-  //         .then()
-  //         .catch(err => console.log(err))
-  //     return next(err)
-  //   }
-  //   if (!req.file) {
-  //     image.deleteOneImage(user_id,image_key)
-  //         .then()
-  //         .catch(err => console.log(err))
-  //     return res.status(400).json({ message: 'No file uploaded' });
-  //   }
-  //
-  //   Upload.updateOriginalImage(user_id, image_key, req.file.location)
-  //       .then(data => res.json(data))
-  //       .catch(err => {
-  //         next(err)
-  //       });
-  // });
-});
 
 
 module.exports = router;

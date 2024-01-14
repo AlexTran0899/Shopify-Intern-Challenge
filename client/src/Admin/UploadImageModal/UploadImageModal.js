@@ -11,43 +11,22 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
     const [files, setFiles] = useState([])
     const [isUploading, setIsUploading] = useState(false)
 
-    const uploadCompressedImage = async (image_file) => {
+    const uploadImageNetworkRequest = async (image_file) => {
         const formData = new FormData();
-        formData.append('image', image_file); // Ensure the key matches what the backend expects
-
+        formData.append('image', image_file);
         try {
             const response = await AxiosWithAuth().post(`${process.env.REACT_APP_API_URL}/api/uploadImage`, formData, {
                 headers: {'Content-Type': 'multipart/form-data'}});
-            return response.data.image_key;
+            return response.data;
         } catch (error) {
             DisplayNetworkErrorAlert(error);
         }
     }
 
-
-    const uploadOriginalImage = async  (image_file,image_key_in_DB) => {
-        const formData = new FormData();
-        formData.append('image', image_file);
-        return await AxiosWithAuth().put(`${process.env.REACT_APP_API_URL}/api/uploadImage/original_image/${image_key_in_DB}`, formData)
-            .catch(DisplayNetworkErrorAlert)
-    }
-
-    const compressImage = async (imageFile) => {
-        const options = {maxSizeMB: 0.2, useWebWorker: true,}
-        try {
-            return await imageCompression(imageFile, options)
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     const uploadImage = async  (image_file) => {
-        const compressed = await compressImage(image_file)
-        const image_key = await uploadCompressedImage(compressed)
-        if(!image_key) {return alert('skipping current file')}
-        const result = await uploadOriginalImage(image_file, image_key)
-        if(!result) { return alert('skipping current file')}
-        addImage(result.data[0])
+        const data = await uploadImageNetworkRequest(image_file)
+        if(!data.image_key) {return alert('skipping current file')}
+        addImage(data)
     }
 
     const uploadAllImage = async () => {
