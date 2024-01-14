@@ -30,17 +30,20 @@
 }
 
 .container .imageTitle {
+    height: 40px;
     text-transform: capitalize;
-    width: 230px;
+    width: 320px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: bold;
+
 }
 
 .container .views{
     display: flex;
     flex-direction: column;
+
 }
 
 .container h1{
