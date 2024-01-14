@@ -33,9 +33,7 @@ router.get('/user-image', restricted, (req, res, next) => {
 })
 
 router.put('/:image_key', restricted, (req, res, next) => {
-    if(parseInt(req.body.price) < 0.50) { req.body.price = 0.50}
-    console.log(req.body.public)
-    console.log(req.body.public === true ? 1 : 0)
+    if(parseFloat(req.body.price) < 0.50) { req.body.price = 0.50}
     const new_data = {
         image_title:req.body.image_title,
         price:parseInt(req.body.price * 100),
