@@ -33,7 +33,7 @@ function findAdminImages(user_id, char) {
     .andWhere({ user_id })
     .orWhere('tags', 'ilike', `%${char}%`)
     .andWhere({ user_id })
-      .select('url','price','image_key','image_title')
+      .select('url','price','image_key','image_title','views')
 }
 
 async function incrementViews(image_key){
