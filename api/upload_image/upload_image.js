@@ -43,7 +43,7 @@ const compressImage = async (imageData, fileExtension) => {
     return sharp(imageData)
         .resize(1000, 1000, { fit: sharp.fit.inside, withoutEnlargement: true })
         .toFormat(fileExtension)
-        .jpeg({ quality: 98 })
+        .webp({ quality: 80 })
         .toBuffer();
 };
 
@@ -70,23 +70,34 @@ const addImageToDatabase = async (userId, compressedResult, originalResult) => {
     }
     return data[0];
 };
+
+function getFileExtensionFromMimeType(mimeType) {
+  const mimeTypes = {
+    'image/jpeg': 'jpeg',
+    'image/png': 'png',
+    'image/gif': 'gif',
+    'image/webp': 'webp',
+    // Add other MIME types if necessary
+  };
+  return mimeTypes[mimeType] || '';
+}
+
 router.post('/', restricted,
     fileUpload({ limits: { fileSize: 50 * 1024 * 1024 }}),
     async (req, res, next) => {
         try {
             const { image } = req.files;
             const { data: originalImageData, mimeType } = image;
-            const fileExtension = 'jpeg';
+            const fileExtension = getFileExtensionFromMimeType(mimeType)
             const bucket = process.env.AWS_BUCKET;
 
-            const compressedImage = await compressImage(originalImageData, fileExtension);
-            const compressedResult = await uploadToS3(createS3UploadParams(compressedImage, bucket, fileExtension, mimeType));
+          const compressedImage = await compressImage(originalImageData, 'webp');
+          const compressedResult = await uploadToS3(createS3UploadParams(compressedImage, bucket, 'webp', 'image/webp' ));
 
-            const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimeType));
-            const data = await addImageToDatabase(req.decodedJwt.subject, compressedResult, originalResult);
+          const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimeType));
+          const data = await addImageToDatabase(req.decodedJwt.subject, compressedResult, originalResult);
 
             await imageLabeling(compressedResult.Location, next);
-            console.log(data)
             res.json(data);
         } catch (error) {
             next(error);
