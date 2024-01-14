@@ -13,10 +13,17 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
 
     const uploadCompressedImage = async (image_file) => {
         const formData = new FormData();
-        formData.append('image', image_file);
-        return AxiosWithAuth().post(`${process.env.REACT_APP_API_URL}/api/uploadImage`, formData).then(res => res.data.image_key)
-            .catch(DisplayNetworkErrorAlert)
+        formData.append('image', image_file); // Ensure the key matches what the backend expects
+
+        try {
+            const response = await AxiosWithAuth().post(`${process.env.REACT_APP_API_URL}/api/uploadImage`, formData, {
+                headers: {'Content-Type': 'multipart/form-data'}});
+            return response.data.image_key;
+        } catch (error) {
+            DisplayNetworkErrorAlert(error);
+        }
     }
+
 
     const uploadOriginalImage = async  (image_file,image_key_in_DB) => {
         const formData = new FormData();

@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-// const upload = require('./fileupload');
-// const singleUpload = upload.single('image');
 const Upload = require('./upload_image-model')
 const image = require('../Image/image-model')
 const restricted = require('../middleware/restricted')
 const AWS = require('aws-sdk')
 const fileUpload = require("express-fileupload");
+const axios = require('axios')
+
 const { v4: uuidv4 } = require('uuid');
 
 AWS.config.update({region:process.env.AWS_REGION})
@@ -17,51 +17,83 @@ const S3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   }
 })
-async function imageLabeling(url) {
-  let data = null
-  let word = []
-  const requests =
-  {
-    "requests": [{
-      "image": { "source": { "imageUri": url } },
-      "features": [
-        {
-          "type": "LABEL_DETECTION",
-          "maxResults": 10
-        }
-      ]
-    }
-    ]
-  }
-  axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_API_KEY}`, requests)
-    .then(res => data = res.data.responses[0])
-    .then(() => data.labelAnnotations.map(each => word.push(each.description)))
-    .then(() => word = word.join())
-    .then(() => Upload.addingTags(url, word))
-      .catch(() => console.log("error in image labeling"))
-}
+const imageLabeling = async (url, next) => {
+    const requests = {
+        "requests": [{
+            "image": { "source": { "imageUri": url } },
+            "features": [
+                {"type": "LABEL_DETECTION", "maxResults": 10}
+            ]
+        }]
+    };
 
-router.post('/', restricted, fileUpload({
-  limits: { fileSize: 2 * 1024 * 1024 }}),
-    async ( req, res,next) => {
-      const image = req.files.image
-      const fileExtension = image.name.split('.').pop();
-      const uploadParams = {
-      Bucket: process.env.AWS_BUCKET,
-      Key: `${uuidv4()}.${fileExtension}`,
-      Body: Buffer.from(image.data),
-      ContentType: image.mimeType,
-      ACL: 'public-read'
-  }
-  S3.upload(uploadParams, (err,data) => {
-    err && console.log('err',err)
-    data && console.log('data',data.Location)
-  })
+    try {
+        const response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_API_KEY}`, requests);
+        const labels = response.data.responses[0].labelAnnotations;
+
+        if (!labels) {
+            throw new Error('No labels found');
+        }
+        const tagString = labels.map(each => each.description).join();
+        await Upload.addingTags(url, tagString);
+    } catch (error) {
+        next(error);
+    }
+};
+
+router.post('/', restricted,
+    fileUpload({ limits: { fileSize: 2 * 1024 * 1024 }}),
+    async (req, res, next) => {
+        console.log(req.files)
+    try {
+
+        const image = req.files.image;
+        const fileExtension = image.name.split('.').pop();
+        const uploadParams = {
+            Bucket: process.env.AWS_BUCKET,
+            Key: `${uuidv4()}.${fileExtension}`,
+            Body: Buffer.from(image.data),
+            ContentType: image.mimeType,
+            ACL: 'public-read'
+        };
+
+        const data = await uploadToS3(uploadParams);
+
+        const image_data = {
+            image_key: data.key,
+            user_id: req.decodedJwt.subject,
+            image_title: '',
+            url: data.Location,
+        };
+
+        const image_key = await Upload.Add(image_data);
+        if (!image_key || image_key.length === 0) {
+            throw new Error('Error adding image to the database');
+        }
+
+        await imageLabeling(image_data.url, next);
+        res.json({ image_key: image_key[0].image_key });
+    } catch (error) {
+        next(error);
+    }
 });
 
+async function uploadToS3(uploadParams) {
+    return new Promise((resolve, reject) => {
+        S3.upload(uploadParams, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+
 router.put('/original_image/:image_key', restricted, (req, res,next) => {
-  // const image_key = req.params.image_key;
-  // const user_id = req.decodedJwt.subject;
+  const image_key = req.params.image_key;
+  const user_id = req.decodedJwt.subject;
   //
   // singleUpload(req, res, (err) => {
   //   if (err) {
