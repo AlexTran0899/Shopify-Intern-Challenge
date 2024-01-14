@@ -15,15 +15,12 @@ server.use(express.json())
 server.use(helmet({
     contentSecurityPolicy: {
         directives: {
+            scriptSrc: ["'self'", "https://js.stripe.com"],
             defaultSrc: ["'self'"],
             imgSrc: ["'self'", "https://imagemarketplace.s3.amazonaws.com"],
         },
     },
 }));
-
-server.use(cors({
-    origin:"https://js.stripe.com/v3",
-}))
 
 server.use('/api/auth', Auth)
 server.use('/api/payment', Payment)
