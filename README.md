@@ -5,5 +5,4 @@ app link: https://alex-shopify-challenge-backend.herokuapp.com
 
 
 
-
-<img width="1440" alt="Screen Shot 2021-09-27 at 12 26 21 PM (2)" src="https://user-images.githubusercontent.com/76791231/134957805-517a3f64-154d-4465-9c6b-b66a7b05009d.png">
+![Screenshot 2024-01-13 at 10 20 27 PM](https://github.com/AlexTran0899/Shopify-Intern-Challenge/assets/76791231/07fb55ae-c033-4d8d-be15-e479606e78c2)
