@@ -32,6 +32,7 @@ export default function Home() {
             <SearchBar setImages={setImages} getAllImages={getAllImages}/>
             {isModalShowing && <ImageModal setIsModalShowing={setIsModalShowing} isShowingModal={isModalShowing} selectedImage={selectedImage}/>}
             {images && <PhotoGrid imageArray={images} openImageModalWithImage={openImageModalWithImage}/>}
+            <div style={{height: '300px'}}></div>
         </div>
     );
 }
