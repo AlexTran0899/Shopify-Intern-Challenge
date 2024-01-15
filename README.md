@@ -1,7 +1,7 @@
 Video demo: https://www.youtube.com/watch?v=nGhwP0m6vnk
 
 
-app link: https://alex-shopify-challenge-backend.herokuapp.com
+app link:[ https://alex-shopify-challenge-backend.herokuapp.com](https://shopify-intern-challenge-production.up.railway.app)
 
 
 
