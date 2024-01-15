@@ -7,7 +7,7 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
     const [columnStyle, setColumnStyle] = useState(style.column4)
     const [numColumn, setNumColumn] = useState(4)
 
-    const assignIndex = (images, numColumns) => {
+    const assignIndex = async (images, numColumns) => {
         if (images.length === 0) { return setImages([]); }
 
         let columnHeights = numColumns === 4 ? [0,-300,-300,0] : [0,0];
@@ -27,16 +27,17 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
             setScreenWidth(window.innerWidth);
         }
         window.addEventListener('resize', handleResize);
-
         return () => {
             window.removeEventListener('resize', handleResize);
         }
     }, []);
 
     useEffect(() => {
-        setNumColumn(screenWidth >= 1000 ? 4 : 2)
-        setColumnStyle(numColumn === 4 ? style.column4 : style.column2)
-        assignIndex(imageArray, numColumn);
+        const numCol = screenWidth >= 1000 ? 4 : 2
+        setNumColumn(numCol)
+        const colStyle = numCol === 4 ? style.column4 : style.column2
+        setColumnStyle(colStyle)
+        assignIndex(imageArray, numCol);
     }, [imageArray, screenWidth]);
 
     return (
