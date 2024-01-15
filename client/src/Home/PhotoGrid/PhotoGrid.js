@@ -4,6 +4,8 @@ import style from './PhotoGrid.module.css';
 export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
     const [images, setImages] = useState([]);
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [columnStyle, setColumnStyle] = useState(style.column4)
+    const [numColumn, setNumColumn] = useState(4)
 
     const assignIndex = (images, numColumns) => {
         if (images.length === 0) { return setImages([]); }
@@ -20,29 +22,26 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
     }
 
     useEffect(() => {
-        // Function to handle screen resize
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
         }
-
-        // Add resize event listener
         window.addEventListener('resize', handleResize);
 
-        // Clean up
         return () => {
             window.removeEventListener('resize', handleResize);
         }
     }, []);
 
     useEffect(() => {
-        const numColumns = screenWidth >= 1000 ? 4 : 2;
-        assignIndex(imageArray, numColumns);
+        setNumColumn(screenWidth >= 1000 ? 4 : 2)
+        setColumnStyle(numColumn === 4 ? style.column4 : style.column2)
+        assignIndex(imageArray, numColumn);
     }, [imageArray, screenWidth]);
 
     return (
         <div className={style.row}>
-            {[...Array(screenWidth >= 1000 ? 4 : 2)].map((_, colIndex) => (
-                <div key={colIndex} className={`${screenWidth >= 1000 ? `${style.column4}` : `${style.column2}`}`}>
+            {[...Array(numColumn)].map((_, colIndex) => (
+                <div key={colIndex} className={columnStyle}>
                     {images && images.filter((image) => image.column === colIndex).map(image => (
                         <img key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)} />
                     ))}
