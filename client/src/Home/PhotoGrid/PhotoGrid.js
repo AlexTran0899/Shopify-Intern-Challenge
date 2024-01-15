@@ -10,7 +10,8 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
     const assignIndex = (images, numColumns) => {
         if (images.length === 0) { return setImages([]); }
 
-        let columnHeights = [0,-300,-300,0];
+        let columnHeights = numColumns === 4 ? [0,-300,-300,0] : [0,0];
+
         const index_assigned_images = images.map(image => {
             let minColumn = columnHeights.indexOf(Math.min(...columnHeights));
             image.column = minColumn;
