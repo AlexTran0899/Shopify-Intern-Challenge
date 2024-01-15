@@ -23,7 +23,7 @@ server.use(helmet({
     },
 }));
 
-server.use(cors())
+// server.use(cors())
 
 server.use('/api/auth', Auth)
 server.use('/api/payment', Payment)
