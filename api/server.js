@@ -12,8 +12,6 @@ const Payment = require('./Payment/payment-router')
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use(express.json())
 
-
-
 server.use(helmet({
     contentSecurityPolicy: {
         directives: {
