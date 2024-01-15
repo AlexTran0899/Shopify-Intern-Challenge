@@ -46,7 +46,6 @@ router.get('/confirm/:id', async (req, res) => {
   const charges = intent.status;
   const image_key = intent.description
 
-  console.log(charges,image_key)
   if(charges === 'succeeded') {
     const image = await Image.getImageByKey(image_key)
     res.json(image)
