@@ -43,7 +43,6 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
         <div className={style.row}>
             {[...Array(screenWidth >= 1000 ? 4 : 2)].map((_, colIndex) => (
                 <div key={colIndex} className={`${screenWidth >= 1000 ? `${style.column4}` : `${style.column2}`}`}>
-                    {console.log()}
                     {images && images.filter((image) => image.column === colIndex).map(image => (
                         <img key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)} />
                     ))}
