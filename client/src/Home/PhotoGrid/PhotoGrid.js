@@ -37,7 +37,7 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
         setNumColumn(numCol)
         const colStyle = numCol === 4 ? style.column4 : style.column2
         setColumnStyle(colStyle)
-        assignIndex(imageArray, numCol);
+        assignIndex(imageArray, numCol).then();
     }, [imageArray, screenWidth]);
 
     return (

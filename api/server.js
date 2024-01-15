@@ -12,6 +12,8 @@ const Payment = require('./Payment/payment-router')
 server.use(express.static(path.join(__dirname, '../client/build')))
 server.use(express.json())
 
+
+
 server.use(helmet({
     contentSecurityPolicy: {
         directives: {
@@ -23,7 +25,10 @@ server.use(helmet({
     },
 }));
 
-server.use(cors())
+if(process.env.NODE_ENV !== 'production') {
+    server.use(cors())
+}
+
 
 server.use('/api/auth', Auth)
 server.use('/api/payment', Payment)
