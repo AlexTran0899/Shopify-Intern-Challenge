@@ -17,7 +17,7 @@ export default function ImageModal({isShowingModal, selectedImage, setIsModalSho
                     {!originalImageLink && <div className={style.btn}>
                         <ApplePay item_info={selectedImage} setOriginalImageLink={setOriginalImageLink}/>
                     </div>}
-                    {originalImageLink && <a className={style.downloadButton} href={originalImageLink} download={selectedImage.image_title}><h1>DOWNLOAD IMAGE</h1></a>}
+                    {originalImageLink && <a className={style.downloadButton} href={originalImageLink} download >DOWNLOAD IMAGE</a>}
                     <CloseIconSVG className={style.closeButton} onClick={() => setIsModalShowing(false)}/>
                 </div>
             </div>
