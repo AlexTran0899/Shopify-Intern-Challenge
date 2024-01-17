@@ -45,7 +45,7 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
             {[...Array(numColumn)].map((_, colIndex) => (
                 <div key={colIndex} className={columnStyle}>
                     {images && images.filter((image) => image.column === colIndex).map(image => (
-                        <img key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)} />
+                        <img height={image.compressed_height} key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)} />
                     ))}
                 </div>
             ))}
