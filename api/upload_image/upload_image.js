@@ -97,9 +97,7 @@ router.post('/', restricted,
         try {
             const { image } = req.files;
             const { data: originalImageData, mimetype } = image;
-            console.log('mime type',mimetype)
             const fileExtension = getFileExtensionFromMimeType(mimetype)
-            console.log('file extension', fileExtension)
             const bucket = process.env.AWS_BUCKET;
 
             const { buffer: compressedImage, width, height } = await compressImage(originalImageData, 'webp');
@@ -107,8 +105,8 @@ router.post('/', restricted,
             const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimetype));
             const data = await addImageToDatabase(req.decodedJwt.subject, compressedResult, originalResult, width, height);
 
-            await imageLabeling(compressedResult.Location, next);
             res.json(data);
+            await imageLabeling(compressedResult.Location, next);
         } catch (error) {
             next(error);
         }
