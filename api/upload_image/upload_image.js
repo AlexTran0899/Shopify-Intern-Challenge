@@ -7,6 +7,7 @@ const AWS = require('aws-sdk')
 const fileUpload = require("express-fileupload");
 const axios = require('axios')
 const { v4: uuidv4 } = require('uuid');
+const {ImageAnnotatorClient} = require('@google-cloud/vision').v1
 
 AWS.config.update({region:process.env.AWS_REGION})
 
@@ -16,25 +17,22 @@ const S3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   }
 })
-const imageLabeling = async (url, next) => {
-    const requests = {
-        "requests": [{
-            "image": { "source": { "imageUri": url } },
-            "features": [
-                {"type": "LABEL_DETECTION", "maxResults": 10}
-            ]
-        }]
-    };
 
+const GCP = new ImageAnnotatorClient({
+    credentials: {
+        private_key: process.env.GOOGLE_PRIVATE_KEY,
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    }
+});
+
+const imageLabeling = async (image_key, image_data, next) => {
     try {
-        const response = await axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_API_KEY}`, requests);
-        const labels = response.data.responses[0].labelAnnotations;
-
-        if (!labels) {
+        const [result] = await GCP.labelDetection(image_data);
+        if (!result) {
             throw new Error('No labels found');
         }
-        const tagString = labels.map(each => each.description).join();
-        await Upload.addingTags(url, tagString);
+        const tags = result.labelAnnotations.map(each => each.description).join();
+        await Upload.addingTags(image_key, tags);
     } catch (error) {
         next(error);
     }
@@ -62,9 +60,9 @@ const createS3UploadParams = (imageData, bucket, fileExtension, mimeType) => ({
     ACL: 'public-read'
 });
 
-const addImageToDatabase = async (userId, compressedResult, originalResult, width, height) => {
+const addImageToDatabase = async (image_key, userId, compressedResult, originalResult, width, height) => {
     const imageData = {
-        image_key: compressedResult.key,
+        image_key: image_key,
         user_id: userId,
         image_title: '',
         url: compressedResult.Location,
@@ -99,14 +97,14 @@ router.post('/', restricted,
             const { data: originalImageData, mimetype } = image;
             const fileExtension = getFileExtensionFromMimeType(mimetype)
             const bucket = process.env.AWS_BUCKET;
-
+            const image_key = uuidv4()
             const { buffer: compressedImage, width, height } = await compressImage(originalImageData, 'webp');
             const compressedResult = await uploadToS3(createS3UploadParams(compressedImage, bucket, 'webp', 'image/webp' ));
             const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimetype));
-            const data = await addImageToDatabase(req.decodedJwt.subject, compressedResult, originalResult, width, height);
+            const data = await addImageToDatabase(image_key, req.decodedJwt.subject, compressedResult, originalResult, width, height);
 
             res.json(data);
-            await imageLabeling(compressedResult.Location, next);
+            await imageLabeling(image_key, compressedImage, next); // usually takes around 7 to 14 second to process
         } catch (error) {
             next(error);
         }

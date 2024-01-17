@@ -12,8 +12,8 @@ function updateOriginalImage(user_id,image_key, location) {
     return db('image').where({ image_key }).andWhere({user_id}).update({original_image: location},['*'])
 }
 
-function addingTags(url, data) {
-    return db('image').where({ url }).update({ tags: data }, ['*'])
+function addingTags(image_key, data) {
+    return db('image').where({ image_key }).update({ tags: data }, ['*'])
 }
 
 module.exports = {
