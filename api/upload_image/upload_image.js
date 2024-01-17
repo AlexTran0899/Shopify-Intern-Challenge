@@ -31,8 +31,7 @@ const imageLabeling = async (image_key, image_data, next) => {
         if (!result) {
             throw new Error('No labels found');
         }
-        const tags = result.labelAnnotations.map(each => each.description).join();
-        await Upload.addingTags(image_key, tags);
+        return result.labelAnnotations.map(each => each.description).join();
     } catch (error) {
         next(error);
     }
@@ -60,12 +59,13 @@ const createS3UploadParams = (imageData, bucket, fileExtension, mimeType) => ({
     ACL: 'public-read'
 });
 
-const addImageToDatabase = async (image_key, userId, compressedResult, originalResult, width, height) => {
+const addImageToDatabase = async (image_key, userId, compressedResult, originalResult, labelResult, width, height) => {
     const imageData = {
         image_key: image_key,
         user_id: userId,
         image_title: '',
         url: compressedResult.Location,
+        tags: labelResult,
         original_image: originalResult.Location,
         compressed_width: width,
         compressed_height: height
@@ -99,12 +99,12 @@ router.post('/', restricted,
             const bucket = process.env.AWS_BUCKET;
             const image_key = uuidv4()
             const { buffer: compressedImage, width, height } = await compressImage(originalImageData, 'webp');
-            const compressedResult = await uploadToS3(createS3UploadParams(compressedImage, bucket, 'webp', 'image/webp' ));
-            const originalResult = await uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimetype));
-            const data = await addImageToDatabase(image_key, req.decodedJwt.subject, compressedResult, originalResult, width, height);
-
+            const compressedResultPromise =  uploadToS3(createS3UploadParams(compressedImage, bucket, 'webp', 'image/webp' ));
+            const originalResultPromise =  uploadToS3(createS3UploadParams(originalImageData, bucket, fileExtension, mimetype));
+            const labelResultPromise = imageLabeling(image_key, compressedImage, next);
+            const [compressedResult, originalResult,labelResult] = await Promise.all([compressedResultPromise, originalResultPromise,labelResultPromise]);
+            const data = await addImageToDatabase(image_key, req.decodedJwt.subject, compressedResult, originalResult, labelResult, width, height);
             res.json(data);
-            await imageLabeling(image_key, compressedImage, next); // usually takes around 7 to 14 second to process
         } catch (error) {
             next(error);
         }
