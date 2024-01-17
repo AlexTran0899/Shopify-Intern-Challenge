@@ -2,7 +2,7 @@ const db = require('../data/db-config')
 
 
 function getAll() {
-  return db('image').where({ public: 1 }).select('url','price','image_key','image_title','compressed_height')
+  return db('image').where({ public: 1 }).select('url','price','image_key','image_title','compressed_height').limit(20)
 }
 function Add(data) {
   return db('image').insert(data, ['*'])
