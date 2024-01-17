@@ -105,6 +105,7 @@ router.post('/', restricted,
             const [compressedResult, originalResult,labelResult] = await Promise.all([compressedResultPromise, originalResultPromise,labelResultPromise]);
             const data = await addImageToDatabase(image_key, req.decodedJwt.subject, compressedResult, originalResult, labelResult, width, height);
             res.json(data);
+
         } catch (error) {
             next(error);
         }
