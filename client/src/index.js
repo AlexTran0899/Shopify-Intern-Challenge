@@ -24,4 +24,4 @@ import axios from "axios";
     );
 
     reportWebVitals();
-})
+})()
