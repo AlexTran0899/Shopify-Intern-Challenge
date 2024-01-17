@@ -8,17 +8,7 @@ function update(data) { // done for you
     return db('image').where({ image_id: data.image_id }).update(data, ['*'])
 }
 
-function addOriginalImage(user_id, image_key, location) {
-    return db('image').where({ image_key }).andWhere({user_id}).update({original_image: location},['*'])
-}
-
-function addingTags(image_key, data) {
-    return db('image').where({ image_key }).update({ tags: data }, ['*'])
-}
-
 module.exports = {
     Add,
     update,
-    addingTags,
-    addOriginalImage
 }
