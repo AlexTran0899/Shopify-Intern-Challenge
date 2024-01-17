@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import style from './PhotoGrid.module.css';
 
 export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
@@ -6,6 +6,9 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
     const [columnStyle, setColumnStyle] = useState(style.column4)
     const [numColumn, setNumColumn] = useState(4)
+    const [didUserResizedScreen,setDidUserResizedScreen] = useState(false)
+    const [originalColumnWidth, setOriginalColumnWidth] = useState(1)
+    const columnRef = useRef(null);
 
     const assignIndex = async (images, numColumns) => {
         if (images.length === 0) { return setImages([]); }
@@ -23,8 +26,12 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
     }
 
     useEffect(() => {
+        if (columnRef.current) {
+            setOriginalColumnWidth(columnRef.current.offsetWidth)
+        }
         const handleResize = () => {
             setScreenWidth(window.innerWidth);
+            setDidUserResizedScreen(true)
         }
         window.addEventListener('resize', handleResize);
         return () => {
@@ -43,9 +50,9 @@ export default function PhotoGrid({ imageArray, openImageModalWithImage }) {
     return (
         <div className={style.row}>
             {[...Array(numColumn)].map((_, colIndex) => (
-                <div key={colIndex} className={columnStyle}>
+                <div ref={colIndex === 0 ? columnRef : null} key={colIndex} className={columnStyle}>
                     {images && images.filter((image) => image.column === colIndex).map(image => (
-                        <img height={image.compressed_height} key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)} />
+                        <img height={didUserResizedScreen ? 'auto' : (image.compressed_width / originalColumnWidth) * image.compressed_height } key={image.image_key} src={image.url} alt='img' onClick={() => openImageModalWithImage(image)} />
                     ))}
                 </div>
             ))}
