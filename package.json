@@ -12,6 +12,7 @@
     "databaseh": "heroku pg:psql -a imageforsale",
     "seedh": "heroku run knex seed:run -a imageforsale",
     "test": "cross-env NODE_ENV=testing jest --watchAll --verbose --runInBand",
+    "docker-postbuild":"cd client && npm i && npm run build && cd .. && npm i",
     "heroku-postbuild": "cd client && npm i && npm run build",
     "railway-postbuild": "cd client && npm i && npm run build",
     "railwayPostBuild": "cd client && npm i && npm run build",
