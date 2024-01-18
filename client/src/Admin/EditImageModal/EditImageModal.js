@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import style from "./EditImageModal.module.css";
 import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
 import AxiosWithAuth from "../../Utils/AxiosWithAuth";
+import {REACT_APP_API_URL} from '../../Utils/Config';
 
 export default function EditImageModal({updateImageInfo,closeEditImageModal, selectedImage}) {
     const defaultValue = {...selectedImage,
@@ -31,7 +32,7 @@ export default function EditImageModal({updateImageInfo,closeEditImageModal, sel
     }
 
     const updateImageInfoNetworkRequest =  () => {
-        return AxiosWithAuth().put(`${process.env.REACT_APP_API_URL}/api/images/${selectedImage.image_key}`,editedImageInfo)
+        return AxiosWithAuth().put(`${REACT_APP_API_URL}/api/images/${selectedImage.image_key}`,editedImageInfo)
     }
     const handleSubmit = async (e) => {
         e.preventDefault()

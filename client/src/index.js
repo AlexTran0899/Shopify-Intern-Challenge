@@ -9,8 +9,9 @@ import {BrowserRouter} from "react-router-dom";
 import {loadStripe} from "@stripe/stripe-js";
 import {Elements} from '@stripe/react-stripe-js';
 import axios from "axios";
+import {REACT_APP_API_URL} from './Utils/Config'
 
-const {publishableKey} = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/config`).then(res => res.data)
+const {publishableKey} = await axios.get(`${REACT_APP_API_URL}/api/payment/config`).then(res => res.data)
 const stripePromise = loadStripe(publishableKey)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

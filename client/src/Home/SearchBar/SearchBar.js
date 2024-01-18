@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import style from './SearchBar.module.css';
 import axios from "axios";
+import {REACT_APP_API_URL} from '../../Utils/Config'
 
 export default function SearchBar({ setImages, getAllImages }) {
     const [searchText, setSearchText] = useState("");
@@ -54,7 +55,7 @@ export default function SearchBar({ setImages, getAllImages }) {
             return getAllImages();
         }
 
-        const result = await axios.get(`${process.env.REACT_APP_API_URL}/api/images/find/${searchText}`)
+        const result = await axios.get(`${REACT_APP_API_URL}/api/images/find/${searchText}`)
             .then(res => res.data)
             .catch(err => console.log(err));
 

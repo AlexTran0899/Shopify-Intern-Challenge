@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import style from './AdminSearchBar.module.css'
 import {ReactComponent as SearchIcon} from "../../../Svg-Icon/search_icon.svg";
 import AxiosWithAuth from "../../../Utils/AxiosWithAuth";
+import {REACT_APP_API_URL} from '../../../Utils/Config'
 
 export default function AdminSearchBar({setImages,fetchAllAdminImage}) {
     const [searchText, setSearchText] = useState("")
@@ -11,7 +12,7 @@ export default function AdminSearchBar({setImages,fetchAllAdminImage}) {
 
         if(searchText === "" || searchText == null) {return fetchAllAdminImage()}
 
-        const result = await AxiosWithAuth().get(`${process.env.REACT_APP_API_URL}/api/images/find-admin-image/${searchText}`)
+        const result = await AxiosWithAuth().get(`${REACT_APP_API_URL}/api/images/find-admin-image/${searchText}`)
             .then(res => res.data)
             .catch(err => console.log(err))
         setImages(result)

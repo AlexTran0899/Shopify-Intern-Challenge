@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import style from './UploadImageModal.module.css'
 import {ReactComponent as CloseIconSVG} from "../../Svg-Icon/close-icon.svg";
 import DropZoneFileUpload from './DropzoneFileUpload/DropzoneFileUpload'
-import imageCompression from 'browser-image-compression';
 import AxiosWithAuth from "../../Utils/AxiosWithAuth";
 import UploadingWaitScreen from "./UploadingDisplay/UploadingWaitScreen";
 import DisplayNetworkErrorAlert from "../../Utils/DisplayNetworkErrorAlert";
-
+import {REACT_APP_API_URL} from '../../Utils/Config'
 export default function UploadImageModal({isShowingUploadModal, closeUploadModal,addImage}) {
     const [files, setFiles] = useState([])
     const [isUploading, setIsUploading] = useState(false)
@@ -15,7 +14,7 @@ export default function UploadImageModal({isShowingUploadModal, closeUploadModal
         const formData = new FormData();
         formData.append('image', image_file);
         try {
-            const response = await AxiosWithAuth().post(`${process.env.REACT_APP_API_URL}/api/uploadImage`, formData, {
+            const response = await AxiosWithAuth().post(`${REACT_APP_API_URL}/api/uploadImage`, formData, {
                 headers: {'Content-Type': 'multipart/form-data'}});
             return response.data;
         } catch (error) {

@@ -9,6 +9,7 @@ import WelcomeNewUserScreen from "./WelcomeNewUserScreen/WelcomeNewUserScreen";
 import EditImageModal from "./EditImageModal/EditImageModal";
 import {useNavigate} from "react-router-dom";
 import ImageNotFoundScreen from "./ImageNotFoundScreen/ImageNotFoundScreen";
+import {REACT_APP_API_URL} from '../Utils/Config'
 
 export default function Admin() {
     const [images, setImages] = useState([])
@@ -32,7 +33,7 @@ export default function Admin() {
     }, []);
 
     const fetchAllAdminImage = () => {
-        axiosWithAuth().get(`${process.env.REACT_APP_API_URL}/api/images/user-image`)
+        axiosWithAuth().get(`${REACT_APP_API_URL}/api/images/user-image`)
             .then(res => {
                 const image_data = res.data
                 if (image_data.length === 0) {setIsNewUser(true)}

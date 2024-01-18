@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar/SearchBar";
 import PhotoGrid from "./PhotoGrid/PhotoGrid";
 import HambugerMenu from "./ManageProfileCTA/HambugerMenuIcon/HambugerMenu";
 import ImageModal from './ImageModal/ImageModal'
+import {REACT_APP_API_URL} from '../Utils/Config'
 
 export default function Home() {
     const [images, setImages] = useState([]);
@@ -12,7 +13,7 @@ export default function Home() {
     const [selectedImage, setSelectedImage] = useState(null)
 
     const getAllImages = () => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/images`).then(
+        axios.get(`${REACT_APP_API_URL}/api/images`).then(
             res => setImages(res.data)
         ).catch(err => console.log(err));
     }

@@ -4,6 +4,7 @@ import {ReactComponent as CloseIconSVG} from "../../../Svg-Icon/close-icon.svg";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import displayNetworkErrorAlert from '../../../Utils/DisplayNetworkErrorAlert'
+import {REACT_APP_API_URL} from '../../../Utils/Config'
 
 export default function LoginAndRegisterForm({closeMenu}) {
     const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ export default function LoginAndRegisterForm({closeMenu}) {
 
     const loginNetworkRequest = () => {
         const loginCredential = {email, password}
-        axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, loginCredential)
+        axios.post(`${REACT_APP_API_URL}/api/auth/login`, loginCredential)
             .then(res => {
                 const email = res.data.email
                 const token = res.data.token
@@ -26,7 +27,7 @@ export default function LoginAndRegisterForm({closeMenu}) {
     }
     const registerNetworkRequest = () => {
         const credential = {email, password}
-        axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, credential)
+        axios.post(`${REACT_APP_API_URL}/api/auth/register`, credential)
             .then(res => {
                 const email = res.data.email
                 const token = res.data.token
