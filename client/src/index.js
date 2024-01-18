@@ -10,17 +10,15 @@ import {loadStripe} from "@stripe/stripe-js";
 import {Elements} from '@stripe/react-stripe-js';
 import axios from "axios";
 
-(async () => {
-    const {publishableKey} = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/config`).then(res => res.data)
-    const stripePromise = loadStripe(publishableKey)
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(
-        <BrowserRouter>
-            <Elements stripe={stripePromise}>
-                <App />
-            </Elements>
-        </BrowserRouter>
-    );
+const {publishableKey} = await axios.get(`${process.env.REACT_APP_API_URL}/api/payment/config`).then(res => res.data)
+const stripePromise = loadStripe(publishableKey)
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <BrowserRouter>
+        <Elements stripe={stripePromise}>
+            <App />
+        </Elements>
+    </BrowserRouter>
+);
 
-    reportWebVitals();
-})()
+reportWebVitals();
