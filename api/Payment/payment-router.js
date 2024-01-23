@@ -2,11 +2,6 @@ const router = require('express').Router()
 const Image = require('../Image/image-model')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-stripe.applePayDomains.create({
-  domain_name: process.env.REACT_APP_API_URI
-}).catch(() => process.env.NODE_ENV !== 'development' ? console.log("Apple pay require https"): null);
-
-
 router.post('/create-payment-intent', async (req, res) => {
   const { paymentMethodType , image_key} = req.body;
   const {price} = await Image.getImageByKey(image_key)
