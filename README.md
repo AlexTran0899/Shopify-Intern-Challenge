@@ -1,6 +1,6 @@
 Video demo: https://www.youtube.com/watch?v=nGhwP0m6vnk
 
-
+The website is not cached so initial load time will be a little slow. 
 app link: https://shopify-intern-challenge-production.up.railway.app
 
 
