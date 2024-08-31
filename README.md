@@ -10,3 +10,6 @@ app link: https://shopify-intern-challenge-production.up.railway.app
 ![admin page](https://github.com/AlexTran0899/Shopify-Intern-Challenge/assets/76791231/e57c777a-4bc0-42d6-bc8c-dd8c202363b3)
 **edit image**
 ![edit image](https://github.com/AlexTran0899/Shopify-Intern-Challenge/assets/76791231/aa7111f3-a51d-4f94-8cbe-dc1122ae2e07)
+
+
+common key 2
