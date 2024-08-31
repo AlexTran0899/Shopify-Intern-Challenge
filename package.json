@@ -20,8 +20,8 @@
     "deploy": "git push heroku main"
   },
   "engines": {
-    "node": "18.16.0",
-    "npm": "9.5.1"
+    "node": "20.17.0",
+    "npm": "10.8.2"
   },
   "license": "ISC",
   "dependencies": {
